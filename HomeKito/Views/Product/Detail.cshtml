@@ -287,6 +287,312 @@
             </div>
 
         </section>
+        @if (Model.CompletelyProducts.Count() > 0)
+        {
+            <section class="secMostSale">
+                <div class="rowCustom Promotion2">
+                    <div class="col">
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>محصولات همراه</label>
+                                <a href="/Products/More/@Model.P_Id/3/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                            </h3>
+                            <div class="contentCard">
+                                <div class="SlidPromotion6 arrowCustom swiper-container">
+                                    <div class="swiper-wrapper">
+                                        @foreach (var item in Model.CompletelyProducts)
+                                        {
+                                            var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                            var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                            var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                            var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                            <div class="swiper-slide">
+                                                <div class="todayRecomended">
+                                                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                             alt="@item.P_Title">
+                                                    </div>
+                                                    <h2 class="title">@item.P_Title</h2>
+                                                    @if (item.IsAvailable)
+                                                    {
+                                                        <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!-- Add Arrows -->
+                                    <div class="NextPrevSlider">
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+        <div class="contentTabsDP">
+            <div class="tabDetailProduct">
+                <button class="btnTabDP active" data-tabdp="Review">نقد و بررسی تخصصی</button>
+                <button class="btnTabDP" data-tabdp="TechnicalSpecifications">مشخصات فنی</button>
+                <button class="btnTabDP" data-tabdp="Manuals">دفترچه راهنمای استفاده</button>
+                <button class="btnTabDP" data-tabdp="UserExperience">ویدئو ها</button>
+                <button class="btnTabDP" data-tabdp="Comments">نظرات کاربران</button>
+                <button class="btnTabDP" data-tabdp="SendComment">ارسال نظر</button>
+            </div>
+        </div>
+        <section class="secDiscriptionsDetail contentTabDP active" data-tabdp="Review">
+            <div class="rowCustom fullCenter">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label> نقد و بررسی تخصصی </label>
+                        </h3>
+                        <div class="contentCard flexDir">
+                            <div class="contextBody">
+                                @Html.Raw(Model.P_TechnicalInfo)
+                                <div class="accordionsInnerBox">
+                                    @foreach (var item in exview.OrderBy(x => x.E_Sort))
+                                    {
+                                        <div class="accItem">
+                                            <h3 class="titleAccItem">@item.E_Title</h3>
+                                            <div class="contentAddItem">
+                                                @Html.Raw(item.E_Description)
+                                                <br>
+                                                @if (item.E_Image != null)
+                                                {
+                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.E_Image" alt="@item.E_Title">
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="secPropertiesDetail contentTabDP" data-tabdp="TechnicalSpecifications">
+            <div class="rowCustom fullCenter">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label> مشخصات فنی </label>
+                        </h3>
+                        <div class="contentCard flexDir">
+                            <div class="propertiesRows">
+                                <label class="titleCats">مشخصات فنی</label>
+
+                                @foreach (var item in (List<Barayand.OutModels.Miscellaneous.AttributeStructure>)Model.P_AttributeStructures)
+                                {<div class="rowProp">
+                                        <div class="col1">@item.AttributeTitle</div>
+                                        <div class="col2">@item.AnswerTitle</div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="secDiscriptionsDetail contentTabDP" data-tabdp="Manuals">
+            <div class="rowCustom fullCenter">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label> دفترچه راهنمای استفاده </label>
+                        </h3>
+                        <div class="contentCard flexDir">
+                            <div class="contextBody">
+                                @Html.Raw(@Model.P_Manuals)
+                            </div>
+                            <div class="rowCustom center">
+                                <button class="submit bf-primary itemModal " data-modalName="ManualsModal">
+                                    خرید
+                                    دفترچه راهنما
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="secVideoDetail contentTabDP" data-tabdp="UserExperience">
+            <div class="rowCustom fullCenter">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label>ویدئوها</label>
+                        </h3>
+                        <div class="contentCard flexDir">
+                            <div class="contextBody">
+                                @Html.Raw(Model.P_Description)
+                            </div>
+                            @if (!string.IsNullOrEmpty(Model.P_Video))
+                            {
+                                <div class="videoProduct">
+                                    <div class="h_iframe-aparat_embed_frame">
+                                        <span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash/@Model.P_Video/vt/frame"
+                                                                                                     allowfullscreen="true" webkitallowfullscreen="true"
+                                                                                                     mozallowfullscreen="true" style="pointer-events: auto;"></iframe>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="SecViewComment contentTabDP" data-tabdp="Comments">
+            <div class="rowCustom fullCenter">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label>نظرات کاربران</label>
+                        </h3>
+                        <div class="contentCard jcenter">
+                            <div class="showCM" id="listcomment">
+                                @await Html.PartialAsync("_CommentList", Model.Comments)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="SecSendComment contentTabDP" data-tabdp="SendComment">
+            <div class="rowCustom fullCenter">
+                <div class="col">
+                    <div class="card Contact">
+                        <h3 class="titleCard">
+                            <label>ارسال نظر</label>
+                        </h3>
+                        <input type="hidden" id="E" value="@Model.P_Id" />
+                        <input type="hidden" id="T" value="1" />
+                        <div class="contentCard jcenter">
+                            <div class="SendCM">
+                                <div class="ContentFormCM">
+                                    <div class="boxInput">
+                                        <input name="User" type="text" placeholder="نام و نام خانوادگی" required>
+                                    </div>
+                                    <div class="boxInput">
+                                        <input type="email" name="Email" placeholder="ایمیل">
+                                    </div>
+                                    <div class="boxInput full">
+                                        <textarea name="Msg" required placeholder="متن نظر"></textarea>
+                                    </div>
+                                    <div class="RowButton center">
+                                        <button class="inputFrm btnsend bg-primary" type="button" onclick="SubmitComment();">ارسال نظر</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @if (Model.RelatedProducts.Count() > 0)
+        {
+            <section class="secMostSale">
+                <div class="rowCustom Promotion2">
+                    <div class="col">
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>محصولات مرتبط</label>
+                                <a href="/Products/More/@Model.P_Id/1/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                            </h3>
+                            <div class="contentCard">
+                                <div class="SlidPromotion6 arrowCustom swiper-container">
+                                    <div class="swiper-wrapper">
+                                        @foreach (var item in Model.RelatedProducts)
+                                        {
+                                            var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                            var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                            var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                            var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                            <div class="swiper-slide">
+                                                <div class="todayRecomended">
+                                                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                             alt="@item.P_Title">
+                                                    </div>
+                                                    <h2 class="title">@item.P_Title</h2>
+                                                    @if (item.IsAvailable)
+                                                    {
+                                                        <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!-- Add Arrows -->
+                                    <div class="NextPrevSlider">
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </section>
+        }
+        @if (Model.SetProducts.Count() > 0)
+        {
+            <section class="secMostVisit">
+                <div class="rowCustom Promotion2">
+                    <div class="col">
+
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>محصولات ست</label>
+                                <a href="/Products/More/@Model.P_Id/2/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                            </h3>
+                            <div class="contentCard">
+                                <div class="SlidPromotion6 arrowCustom swiper-container">
+                                    <div class="swiper-wrapper">
+                                        @foreach (var item in Model.SetProducts)
+                                        {
+                                            var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                            var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                            var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                            var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                            <div class="swiper-slide">
+                                                <div class="todayRecomended">
+                                                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                             alt="@item.P_Title">
+                                                    </div>
+                                                    <h2 class="title">@item.P_Title</h2>
+                                                    @if (item.IsAvailable)
+                                                    {
+                                                        <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!-- Add Arrows -->
+                                    <div class="NextPrevSlider">
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
     </div>
 
     <div class="modal m400 round10" data-modalName="share">
@@ -474,312 +780,7 @@
             </div>
         </div>
     </div>
-    @if (Model.CompletelyProducts.Count() > 0)
-    {
-        <section class="secMostSale">
-            <div class="rowCustom Promotion2">
-                <div class="col">
-                    <div class="card">
-                        <h3 class="titleCard">
-                            <label>محصولات همراه</label>
-                            <a href="/Products/More/@Model.P_Id/3/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
-                        </h3>
-                        <div class="contentCard">
-                            <div class="SlidPromotion6 arrowCustom swiper-container">
-                                <div class="swiper-wrapper">
-                                    @foreach (var item in Model.CompletelyProducts)
-                                    {
-                                        var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
-                                        var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
-                                        var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
-                                        var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
-                                        <div class="swiper-slide">
-                                            <div class="todayRecomended">
-                                                <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
-                                                <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
-                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
-                                                         alt="@item.P_Title">
-                                                </div>
-                                                <h2 class="title">@item.P_Title</h2>
-                                                @if (item.IsAvailable)
-                                                {
-                                                    <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
-                                                }
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                                <!-- Add Arrows -->
-                                <div class="NextPrevSlider">
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    }
-    <div class="contentTabsDP">
-        <div class="tabDetailProduct">
-            <button class="btnTabDP active" data-tabdp="Review">نقد و بررسی تخصصی</button>
-            <button class="btnTabDP" data-tabdp="TechnicalSpecifications">مشخصات فنی</button>
-            <button class="btnTabDP" data-tabdp="Manuals">دفترچه راهنمای استفاده</button>
-            <button class="btnTabDP" data-tabdp="UserExperience">ویدئو ها</button>
-            <button class="btnTabDP" data-tabdp="Comments">نظرات کاربران</button>
-            <button class="btnTabDP" data-tabdp="SendComment">ارسال نظر</button>
-        </div>
-    </div>
-    <section class="secDiscriptionsDetail contentTabDP active" data-tabdp="Review">
-        <div class="rowCustom fullCenter">
-            <div class="col">
-                <div class="card">
-                    <h3 class="titleCard">
-                        <label> نقد و بررسی تخصصی </label>
-                    </h3>
-                    <div class="contentCard flexDir">
-                        <div class="contextBody">
-                            @Html.Raw(Model.P_TechnicalInfo)
-                            <div class="accordionsInnerBox">
-                                @foreach (var item in exview.OrderBy(x => x.E_Sort))
-                                {
-                                    <div class="accItem">
-                                        <h3 class="titleAccItem">@item.E_Title</h3>
-                                        <div class="contentAddItem">
-                                            @Html.Raw(item.E_Description)
-                                            <br>
-                                            @if (item.E_Image != null)
-                                            {
-                                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.E_Image" alt="@item.E_Title">
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="secPropertiesDetail contentTabDP" data-tabdp="TechnicalSpecifications">
-        <div class="rowCustom fullCenter">
-            <div class="col">
-                <div class="card">
-                    <h3 class="titleCard">
-                        <label> مشخصات فنی </label>
-                    </h3>
-                    <div class="contentCard flexDir">
-                        <div class="propertiesRows">
-                            <label class="titleCats">مشخصات فنی</label>
-
-                            @foreach (var item in (List<Barayand.OutModels.Miscellaneous.AttributeStructure>)Model.P_AttributeStructures)
-                            {<div class="rowProp">
-                                    <div class="col1">@item.AttributeTitle</div>
-                                    <div class="col2">@item.AnswerTitle</div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="secDiscriptionsDetail contentTabDP" data-tabdp="Manuals">
-        <div class="rowCustom fullCenter">
-            <div class="col">
-                <div class="card">
-                    <h3 class="titleCard">
-                        <label> دفترچه راهنمای استفاده </label>
-                    </h3>
-                    <div class="contentCard flexDir">
-                        <div class="contextBody">
-                            @Html.Raw(@Model.P_Manuals)
-                        </div>
-                        <div class="rowCustom center">
-                            <button class="submit bf-primary itemModal " data-modalName="ManualsModal">
-                                خرید
-                                دفترچه راهنما
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="secVideoDetail contentTabDP" data-tabdp="UserExperience">
-        <div class="rowCustom fullCenter">
-            <div class="col">
-                <div class="card">
-                    <h3 class="titleCard">
-                        <label>ویدئوها</label>
-                    </h3>
-                    <div class="contentCard flexDir">
-                        <div class="contextBody">
-                            @Html.Raw(Model.P_Description)
-                        </div>
-                        @if (!string.IsNullOrEmpty(Model.P_Video))
-                        {
-                            <div class="videoProduct">
-                                <div class="h_iframe-aparat_embed_frame">
-                                    <span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash/@Model.P_Video/vt/frame"
-                                                                                                 allowfullscreen="true" webkitallowfullscreen="true"
-                                                                                                 mozallowfullscreen="true" style="pointer-events: auto;"></iframe>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="SecViewComment contentTabDP" data-tabdp="Comments">
-        <div class="rowCustom fullCenter">
-            <div class="col">
-                <div class="card">
-                    <h3 class="titleCard">
-                        <label>نظرات کاربران</label>
-                    </h3>
-                    <div class="contentCard jcenter">
-                        <div class="showCM" id="listcomment">
-                            @await Html.PartialAsync("_CommentList", Model.Comments)
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="SecSendComment contentTabDP" data-tabdp="SendComment">
-        <div class="rowCustom fullCenter">
-            <div class="col">
-                <div class="card Contact">
-                    <h3 class="titleCard">
-                        <label>ارسال نظر</label>
-                    </h3>
-                    <input type="hidden" id="E" value="@Model.P_Id" />
-                    <input type="hidden" id="T" value="1" />
-                    <div class="contentCard jcenter">
-                        <div class="SendCM">
-                            <div class="ContentFormCM">
-                                <div class="boxInput">
-                                    <input name="User" type="text" placeholder="نام و نام خانوادگی" required>
-                                </div>
-                                <div class="boxInput">
-                                    <input type="email" name="Email" placeholder="ایمیل">
-                                </div>
-                                <div class="boxInput full">
-                                    <textarea name="Msg" required placeholder="متن نظر"></textarea>
-                                </div>
-                                <div class="RowButton center">
-                                    <button class="inputFrm btnsend bg-primary" type="button" onclick="SubmitComment();">ارسال نظر</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    @if (Model.RelatedProducts.Count() > 0)
-    {
-        <section class="secMostSale">
-            <div class="rowCustom Promotion2">
-                <div class="col">
-                    <div class="card">
-                        <h3 class="titleCard">
-                            <label>محصولات مرتبط</label>
-                            <a href="/Products/More/@Model.P_Id/1/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
-                        </h3>
-                        <div class="contentCard">
-                            <div class="SlidPromotion6 arrowCustom swiper-container">
-                                <div class="swiper-wrapper">
-                                    @foreach (var item in Model.RelatedProducts)
-                                    {
-                                        var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
-                                        var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
-                                        var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
-                                        var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
-                                        <div class="swiper-slide">
-                                            <div class="todayRecomended">
-                                                <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
-                                                <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
-                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
-                                                         alt="@item.P_Title">
-                                                </div>
-                                                <h2 class="title">@item.P_Title</h2>
-                                                @if (item.IsAvailable)
-                                                {
-                                                    <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
-                                                }
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                                <!-- Add Arrows -->
-                                <div class="NextPrevSlider">
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-
-        </section>
-    }
-    @if (Model.SetProducts.Count() > 0)
-    {
-        <section class="secMostVisit">
-            <div class="rowCustom Promotion2">
-                <div class="col">
-
-                    <div class="card">
-                        <h3 class="titleCard">
-                            <label>محصولات ست</label>
-                            <a href="/Products/More/@Model.P_Id/2/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
-                        </h3>
-                        <div class="contentCard">
-                            <div class="SlidPromotion6 arrowCustom swiper-container">
-                                <div class="swiper-wrapper">
-                                    @foreach (var item in Model.SetProducts)
-                                    {
-                                        var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
-                                        var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
-                                        var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
-                                        var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
-                                        <div class="swiper-slide">
-                                            <div class="todayRecomended">
-                                                <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
-                                                <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
-                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
-                                                         alt="@item.P_Title">
-                                                </div>
-                                                <h2 class="title">@item.P_Title</h2>
-                                                @if (item.IsAvailable)
-                                                {
-                                                    <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
-                                                }
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                                <!-- Add Arrows -->
-                                <div class="NextPrevSlider">
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    }
+   
 </div>
 <div class="modal m800 round10 " data-modalName="feedbackBox">
     <i class="bgModal" onclick="closeModal()"></i>
