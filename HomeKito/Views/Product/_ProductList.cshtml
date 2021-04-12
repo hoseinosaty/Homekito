@@ -1,0 +1,137 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+@inject Barayand.DAL.Interfaces.IPCRepository _categories;
+
+
+@{
+    Layout = null;
+    var pagination = (Paging)ViewBag.paging;
+    var GetCatAll = (List<Barayand.Models.Entity.ProductCategoryModel>)(await _categories.GetAll()).Data;
+    int pagetype = ViewBag.pagetype;
+}
+
+<div class="contenShowProduct">
+    @foreach (var item in Model)
+    {
+        var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.P_Seo);
+        if (seo == null)
+        {
+            seo.url = item.P_Title;
+        }
+        // var prodLabels = AllLabelRels.Where(x => x.X_Pid == item.P_Id).ToList();
+    <div class="itemProductBox">
+        <a href="/Product/@item.P_Id/@item.P_Code/@seo.url" target="_blank" class="hoverLink"></a>
+        <div class="labelsProd">
+            @foreach (var lbl in item.P_Labels)
+            {
+                <label class="bdg" style="background-image:@lbl.L_Logo">@lbl.L_Title</label>
+            }
+        </div>
+        <div class="lineTopProd">
+            <div class="mystars">
+                <i class="progressStar" style="width: @((item.ManualRate * 20)+"%")"></i>
+            </div>
+            @if (item.DefaultProductCombine != null && item.DefaultProductCombine.PriceModel.HasDiscount)
+            {
+                <div class="discountProd">
+                    <label>تخفیف</label>
+                    <span>@item.DefaultProductCombine.PriceModel.Discount.ToString("#,#") %</span>
+                </div>
+            }
+        </div>
+        <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image" alt="عنوان محصول در اینجا">
+            <div class="colorProd">
+                @if (item.Colors.Count > 0)
+                {
+                    foreach (var color in item.Colors)
+                    {
+                        <i class="itemColor" style="background-color: @color.ColorCode;"></i>
+                    }
+                }
+            </div>
+        </div>
+        <h3 class="titleProd">
+            @item.P_Title
+        </h3>
+        @if (item.DefaultProductCombine != null && item.DefaultProductCombine.PriceModel.Timer != null)
+        {
+            <div class="discountTimer">
+                <div class="Timer far fa-clock" class="" data="@item.DefaultProductCombine.PriceModel.Timer"></div>
+            </div>
+        }
+        <div class="rowPriceProduct">
+            @if (@*isActiveopt*@true)
+            {
+                if (item.DefaultProductCombine != null)
+                {
+                    if (item.DefaultProductCombine.PriceModel != null && item.DefaultProductCombine.PriceModel.Price > 0 && item.DefaultProductCombine.PriceModel.Avl > 0)
+                    {
+
+                        if (item.DefaultProductCombine.PriceModel.HasDiscount)
+                        {
+                            <div class="priceRealAndPrecent Real">
+                                <label class="valPrice">@item.DefaultProductCombine.PriceModel.Price.ToString("#,#")</label>
+                                <span class="unit">تومان</span>
+                            </div>
+
+                            <div class="priceRealAndPrecent Descount">
+                                <label class="valPrice">@item.DefaultProductCombine.PriceModel.DiscountedPrice.ToString("#,#")</label>
+                                <span class="unit">تومان</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="priceRealAndPrecent Descount">
+                                <label class="valPrice">@item.DefaultProductCombine.PriceModel.Price.ToString("#,#")</label>
+                                <span class="unit">تومان</span>
+                            </div>
+                        }
+
+                    }
+                    else
+                    {
+                        <div class="notAvilable">
+                            <label>ناموجود</label>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="notAvilable">
+                        <label>ناموجود</label>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="priceRealAndPrecent Descount">
+                    <label class="valPrice">لطفا تماس بگیرید</label>
+
+                </div>
+            }
+        </div>
+    </div>
+    }
+</div>
+
+<div class="pagination">
+    @if (pagination.CurrentPage > 1)
+    {
+        <a href="javascript:void(0)" onclick="Pagination(@pagetype,@pagination.CurrentPage-1)" class=" prevPage fal fa-angle-double-right"></a>
+    }
+    @for (int i = 1; i <= pagination.TotalPages; i++)
+    {
+        if (pagination.CurrentPage == i)
+        {
+            <span  class="pageLink">@i</span>
+        }
+        else
+        {
+            <a href="javascript:void(0)" onclick="Pagination(@pagetype,@i)" class="pageLink">@i</a>
+        }
+    }
+    @if (pagination.CurrentPage < pagination.TotalPages)
+    {
+        <a href="javascript:void(0)" onclick="Pagination(@pagetype,@pagination.CurrentPage+1)" class=" nextPage fal fa-angle-double-left"></a>
+    }
+</div>

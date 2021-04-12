@@ -1,0 +1,290 @@
+﻿@inject Barayand.DAL.Interfaces.IPCRepository _ProdCatrepo
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.BrandModel> _brandrepo
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.EnergyUsageModel> _footerlogo
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.ServiceModel> _Profits
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.HeaderNotificationModel> _headernot;
+@{
+    var Profits = ((List<Barayand.Models.Entity.ServiceModel>)(await _Profits.GetAll()).Data).Where(x => x.S_Status && x.S_Type == 2).ToList();
+    var AllCategories = ((List<Barayand.Models.Entity.ProductCategoryModel>)(await _ProdCatrepo.GetAllMenu()).Data).OrderBy(x => x.PC_OrderField).ToList();
+    var catlvl1 = AllCategories.Where(x => x.PC_ParentId == 0 && x.PC_IsDeleted == false && x.PC_Status).OrderBy(x=>x.PC_OrderField).ToList();
+    var catlvl2 = AllCategories.Where(x => x.PC_ParentId != 0 && x.PC_IsDeleted == false && x.PC_Status).OrderBy(x => x.PC_OrderField).ToList();
+    var Brands = ((List<Barayand.Models.Entity.BrandModel>)(await _brandrepo.GetAll()).Data).Where(x => x.B_ShowInIndex && x.B_Status).ToList();
+    var AllPages = ((List<Barayand.Models.Entity.DynamicPagesContent>)(await _dynamicpagerepo.GetAll()).Data);
+    var ContactUs = AllPages.FirstOrDefault(x => x.PageName == "ContactUs");
+    var seoindex = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo");
+    var notif = ((List<Barayand.Models.Entity.HeaderNotificationModel>)(await _headernot.GetAll()).Data).ToList();
+    var footlogo = ((List<Barayand.Models.Entity.EnergyUsageModel>)(await _footerlogo.GetAll()).Data).Where(x => x.E_Status && x.E_Type == 3).ToList();
+    Barayand.OutModels.Miscellaneous.ContactUsData Data = Newtonsoft.Json.JsonConvert.DeserializeObject<Barayand.OutModels.Miscellaneous.ContactUsData>(ContactUs.PageOtherSetting);
+    HomeKito.Models.SeoIndex IndexSeo = Newtonsoft.Json.JsonConvert.DeserializeObject<HomeKito.Models.SeoIndex>(seoindex.PageOtherSetting);
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link defer rel="stylesheet" href="~/css/style.min.css">
+    <link defer rel="stylesheet" href="~/dist/css/fonts.css">
+    @RenderSection("Styles", required: false)
+</head>
+<body class="">
+    <nav class="navbar">
+        @{
+            var notific = notif.FirstOrDefault();
+        }
+        @if (notific != null)
+        {
+            <div class="alertNav" style="background-color:@notific.H_BgColor">
+                <a href="@notific.H_Link" class="fas fa-chevron-left">@notific.H_Title</a>
+                <i class="remove fas fa-times"></i>
+            </div>
+        }
+        <div class="BestServicesNav">
+            <div class="container">
+                @foreach (var item in Profits)
+                {
+                    var profitseo = Barayand.Common.Services.UtilesService.ParseSeoData(item.S_Seo);
+                    <a href="/Profits/@item.S_Id/@profitseo.url" class="linkBSN"
+                       style="background-image:url(@Barayand.Common.Services.UtilesService.MediaUrls("Content")@item.S_Icon);">@item.S_Title</a>
+                }
+
+            </div>
+        </div>
+        <div class="NavContent">
+            <div class="container">
+                <a href="/" class="logoNav">
+                    <img src="/dist/img/logo.png" alt="HomeKito">
+                </a>
+                <div class="SearchNav">
+                    <div class="contentNavSearch">
+                        <input type="text" class="inputSearch" placeholder="جستجو..." />
+                        <button class="btnSearch fas fa-search"></button>
+                        <i class="bgResultSearch"></i>
+                        <div class="resultSearch" id="resultSearch">
+
+                        </div>
+                        <i class="removeVal fas fa-times" onclick="removeVal()"></i>
+                    </div>
+                </div>
+
+                <div class="QuickBtnsNav">
+                    <div class="basketCompare">
+                        <a href="/Basket" class="showBasket"><span id="basketAmountHolder" class="quantity">0</span></a>
+                        <a href="/Compare" class="showCompare">
+                            <span id="compareQuantity" class="quantity">0</span>
+                        </a>
+                        @if (Barayand.Common.Services.TokenService.AuthorizeUser(Context.Request) < 1)
+                        {
+
+                            <a href="/User" class="SignInNav">ورود به حساب کاربری</a>
+                        }
+                        else
+                        {
+                            <a href="/user/Profile" class="SignInNav">پنل کاربری</a>
+
+                        }
+                    </div>
+
+                </div>
+                <div class="showSidebar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div class="MenuTopNav">
+            <div class="container">
+                <div class="MenuTop">
+                    <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "AboutUs").PageSeo).url" class="linkMenuTop"
+                       style="background-image: url(/dist/img/icons/OtherIcons/4.png);">درباره ما</a>
+                    <a href="/Offer" class="linkMenuTop"
+                       style="background-image: url(/dist/img/icons/OtherIcons/5.png);">تخفیفات و پیشنهادات</a>
+                    <a href="/Faq" class="linkMenuTop"
+                       style="background-image: url(/dist/img/icons/OtherIcons/6.png);">سوالات متداول</a>
+                    <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "JobApplication").PageSeo).url" class="linkMenuTop"
+                       style="background-image: url(/dist/img/icons/OtherIcons/7.png);">همکاری با ما</a>
+                    <a href="/Blog" class="linkMenuTop"
+                       style="background-image: url(/dist/img/icons/OtherIcons/8.png);">مجله</a>
+                    <a href="#" class="linkMenuTop"
+                       style="background-image: url(/dist/img/icons/OtherIcons/9.png);">ویدئوها</a>
+                </div>
+                <a href="tel:@IndexSeo.phone" class="CallUs" style="background-image: url(/dist/img/icons/OtherIcons/10.png);">
+                    @IndexSeo.phone
+                </a>
+            </div>
+        </div>
+        <div class="CategoryInNavbar">
+            <div class="container">
+                <div class="menuTopSlider swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach (var item in catlvl1)
+                        {
+                            var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.PC_Seo);
+                            <div class="swiper-slide">
+                                <div class="itemCatNav level1" mega-cat="@item.PC_Id">
+                                    <a href="/Products/@item.PC_Id/@seo.url" class="linkItemCatNav">
+                                        <i class="icon" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductCatMainImage")@item.PC_Logo);"></i>
+                                        <label>@item.PC_Title</label>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="NextPrevSlider">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="SubCategoryInNavbar">
+            @foreach (var item in catlvl1)
+            {
+                var seolvl1 = Barayand.Common.Services.UtilesService.ParseSeoData(item.PC_Seo);
+
+                <div class="MegaMenuContent" mega-cat="@item.PC_Id">
+                    <div class="container">
+                        <div class="menuTopSlider swiper-container">
+                            <div class="swiper-wrapper">
+                                @foreach (var item2 in catlvl2.Where(x => x.PC_ParentId == item.PC_Id).ToList())
+                                {
+                                    var seolvl2 = Barayand.Common.Services.UtilesService.ParseSeoData(item2.PC_Seo);
+                                    <div class="swiper-slide">
+                                        <div class="itemCatNav">
+                                            <a href="/Products/@item.PC_Id/@seolvl1.url/@item2.PC_Id/@seolvl2.url" class="linkItemCatNav">
+                                                <i class="icon" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductCatMainImage")@item2.PC_Logo);"></i>
+                                                <label>@item2.PC_Title</label>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- Add Arrows -->
+                            <div class="NextPrevSlider">
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </nav>
+    <i class="bgsidebar"></i>
+    <div class="sidebar">
+
+        <a href="/" class="logoSidebar">
+            <img src="/dist/img/logo.png" alt="">
+        </a>
+        <div class="contentSidebar">
+            sadad
+        </div>
+        <div class="socialIcons">
+            @foreach (var s in Data.social)
+            {
+                <a href="@s.Url@s.UserName" target="_blank" class="socicon fab @s.Icon"></a>
+            }
+        </div>
+    </div>
+
+    <div class="loading">
+        <div class="boxLoading">
+            <i class="logo" style="background-image: url(/dist/img/logo.png);"></i>
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <footer>
+        <div class="AboutFooter">
+            <div class="container">
+                <h3 class="title">فروشگاه هومکیتو</h3>
+                <div class="text">
+                    @{
+                        var footercontect = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo");
+                    }
+                    @footercontect.PageContent
+                </div>
+                <div class="LogosCertificate">
+                    <div class="LogoCer">
+                        <img src="/dist/img/logoSamandehi.png" alt="">
+                    </div>
+                    <div class="LogoCer">
+                        <img src="/dist/img/LogoEnamad.png" alt="">
+                    </div>
+                    <div class="LogoCer">
+                        <img src="/dist/img/LogoSenf.png" alt="">
+                    </div>
+                </div>
+                <div class="socialIcons">
+                    @foreach (var s in Data.social)
+                    {
+                        <a href="@s.Url@s.UserName" target="_blank" class="socicon fab @s.Icon"></a>
+                    }
+                </div>
+            </div>
+            <div class="helpDeskFooter">
+                <div class="container">
+                    <div class="col">
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "JobApplication").PageSeo).url" class="linkheldesk icon1">همکاری با ما</a>
+                        <a href="/ContactUs" class="linkheldesk icon2">تماس با ما </a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "TermConditions").PageSeo).url" class="linkheldesk icon3">شرایط استفاده</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "PrivacyPolicy").PageSeo).url" class="linkheldesk icon4">حریم خصوصی</a>
+                    </div>
+                    <div class="col">
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "RegistrationGuid").PageSeo).url" class="linkheldesk icon5">راهنمای عضویت</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "PhysicalPurchase").PageSeo).url" class="linkheldesk icon6">راهنمای خرید</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "ReturnProduct").PageSeo).url" class="linkheldesk icon7">راهنمای مرجوعی</a>
+                        <a href="/Faq" class="linkheldesk icon8">سوالات متداول</a>
+                    </div>
+                </div>
+            </div>
+            <div class="BrandFooter swiper-container">
+                <div class="swiper-wrapper">
+
+                    @foreach (var item in footlogo)
+                    {
+                        <div class="swiper-slide">
+                            <a href="@item.E_Link" class="ItemBrandFooter" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image);">
+                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image" alt="@item.E_Title">
+                            </a>
+                        </div>
+                    }
+                </div>
+                <!-- Add Arrows -->
+                <div class="NextPrevSlider">
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+        <div class="subfooter">
+            <span>© 2020 “HomeKito” All Right Reserved</span>
+        </div>
+    </footer>
+    <script src="/dist/js/jquery-3.2.1.min.js"></script>
+    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.min.js"></script>
+    <script src="/dist/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/dist/js/hrb_notify.js"></script>
+    <script src="/dist/js/fivestar.js"></script>
+    <script src="/dist/js/swiper.js"></script>
+    <script src="/dist/js/nouislider.js"></script>
+    <script src="/dist/js/script.js"></script>
+    <script src="/lib/axios.min.js"></script>
+    <script src="/lib/sweetalert.js"></script>
+    <script src="/dist/js/GalleryPopUP.js"></script>
+    <script src="/lib/crypto-js.min.js"></script>
+    <script src="/lib/validate-input.js"></script>
+    <script src="/script/MainAjax.js"></script>
+    <script src="/script/Baske.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

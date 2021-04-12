@@ -1,0 +1,96 @@
+﻿@model Barayand.OutModels.Miscellaneous.BasketViewModel
+@inject Barayand.DAL.Interfaces.IAddressRepository  _Adderes
+@{
+    var userinfo = (Barayand.Models.Entity.UserModel)ViewBag.User;
+}
+@section Styles{
+  <title>سبد خرید</title>
+}
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="#" class="breadc fas fa-chevron-left">سبد خرید</a>
+            </div>
+            <a href="#">Basket</a>
+        </div>
+
+        <section class="basketContainer">
+
+            <div class="contentBasket">
+
+                <div class="rightBasket">
+                    <h2 class="titleSection">
+                        <span>مراحل خرید</span>
+                    </h2>
+                    <div class="stepbystep s1">
+                        <div class="stepe">
+                            <span>
+                                <label>1</label>
+                            </span>
+                            <h4 class="titlestepe"><small>بررسی سفارش</small></h4>
+                        </div>
+                        <div class="stepe ">
+                            <span><label>2</label></span>
+                            <h4 class="titlestepe"><small>مشخصات تحویل گیرنده</small></h4>
+                        </div>
+                        <div class="stepe ">
+                            <span><label>3</label></span>
+                            <h4 class="titlestepe"><small>بررسی و پرداخت</small></h4>
+                        </div>
+                        <div class="stepe ">
+                            <span><label>4</label></span>
+                            <h4 class="titlestepe"><small>کد رهگیری</small></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="leftBasket">
+                    @*step1*@
+                    <div class="StepBasket active" id="StepBasket">
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+@section Scripts{
+
+
+    <script>
+        $(document).ready(function () {
+            LoadStep(1);
+        });
+
+
+        function LoadStep(step, code = null) {
+
+
+
+
+            switch (step) {
+                case 1:
+                    $("#StepBasket").load("/cart/CheckBasket");
+                    break;
+                case 2:
+                    $("#StepBasket").load("/cart/ReciptionInfo");
+                    break;
+                case 3:
+                    $("#StepBasket").load("/cart/PaymentCheckout");
+
+                    break;
+                case 4:
+                    $("#StepBasket").load("/cart/PaymentSuccess/" + code);
+                    break;
+            }
+
+            $('.stepbystep').removeClass('s1').removeClass('s2').removeClass('s3').removeClass('s4');
+            $('.stepbystep').addClass('s' + step);
+        }
+    </script>
+
+
+}
+

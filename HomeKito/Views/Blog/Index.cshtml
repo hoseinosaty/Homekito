@@ -1,0 +1,440 @@
+﻿@model IEnumerable<Barayand.Models.Entity.NoticesModel>
+@inject Barayand.DAL.Interfaces.IPromotionRepository _promotionrepo
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.EnergyUsageModel> _footerlogo
+
+@{
+    Layout = null;
+
+    var AllCategory = (List<Barayand.Models.Entity.NoticesCategoryModel>)ViewBag.Category;
+    var AllProdCategory = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.ProductCategory;
+    var StaticBoxes = await _promotionrepo.GetByType(7);
+    int i = 1;
+    var AllPages = ((List<Barayand.Models.Entity.DynamicPagesContent>)(await _dynamicpagerepo.GetAll()).Data);
+    var ContactUs = AllPages.FirstOrDefault(x => x.PageName == "ContactUs");
+    Barayand.OutModels.Miscellaneous.ContactUsData Data = Newtonsoft.Json.JsonConvert.DeserializeObject<Barayand.OutModels.Miscellaneous.ContactUsData>(ContactUs.PageOtherSetting);
+    var footlogo = ((List<Barayand.Models.Entity.EnergyUsageModel>)(await _footerlogo.GetAll()).Data).Where(x => x.E_Status && x.E_Type == 3).ToList();
+    var seoindex = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo");
+    HomeKito.Models.SeoIndex IndexSeo = Newtonsoft.Json.JsonConvert.DeserializeObject<HomeKito.Models.SeoIndex>(seoindex.PageOtherSetting);
+
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Kito</title>
+    <link rel="stylesheet" href="/dist/css/styleNews.css">
+    <link rel="stylesheet" href="/dist/css/responsiveNews.css">
+    <title>ومجله</title>
+    <meta name="keywords" content="ومجله">
+    <meta name="description" content="ومجله">
+    <meta property='og:image' content="ومجله" />
+    <meta property='og:image:width' content="711" />
+    <meta property='og:image:height' content="309" />
+</head>
+<body class="news">
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logoRight"></a>
+            <div class="MenuTop">
+                <div class="Menu">
+                    @foreach (var item in AllCategory.Take(AllCategory.Count / 2))
+                    {
+                        <a href="/Blog/Cat/@item.NC_Id/@item.NC_SeoUrl" class="itemMenu">@item.NC_Title</a>
+                    }
+                </div>
+                <a href="/" class="logoCenter"></a>
+                <div class="Menu">
+                    @foreach (var item in AllCategory.Skip(AllCategory.Count / 2))
+                    {
+                        <a href="/Blog/Cat/@item.NC_Id/@item.NC_SeoUrl" class="itemMenu">@item.NC_Title</a>
+                    }
+                </div>
+            </div>
+            <a href="#" class="Announcements">اطلاعیه ها</a>
+            <span class="showSidebar fas fa-bars"></span>
+        </div>
+    </nav>
+    <i class="bgsidebar"></i>
+    <div class="sidebar">
+        <a href="#" class="logoSidebar">
+            <img src="dist/img/logo.png" alt="">
+        </a>
+        <div class="contentSidebar">
+            sadad
+        </div>
+        <div class="socialIcons">
+            <a href="#" target="_blank" class="socicon fab fa-telegram"></a>
+            <a href="#" target="_blank" class="socicon fab fa-instagram"></a>
+            <a href="#" target="_blank" class="socicon fab fa-youtube"></a>
+            <a href="#" target="_blank" class="socicon fab fa-whatsapp"></a>
+        </div>
+    </div>
+    <div class="contentMain">
+        <div class="container">
+            <div class="BoxesNewsTop">
+                <div class="sliderTop">
+                    <div class="thisContent">
+                        <div class="SliderOneNews swiper-container">
+                            <div class="swiper-wrapper">
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (var item in Model.Where(x => x.N_IsSlideShow == 3).ToList())
+                                    {
+                                        <div class="swiper-slide">
+                                            <div class="itemTopNews">
+                                                <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="hoverlink"></a>
+                                                <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
+                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
+                                                </div>
+                                                <div class="text">
+                                                    <i class="bg" style="background-color:#0046bf;"></i>
+                                                    <span>
+                                                        @item.N_Title
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                            <!-- Add Arrows -->
+                            <div class="NextPrevSlider">
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model.Where(x => x.N_IsSlideShow == 2).Take(4).ToList())
+                    {
+                        <div class="itemnewstop" data-itme="@i">
+                            <div class="thisContent">
+                                <div class="itemTopNews">
+                                    <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="hoverlink"></a>
+                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
+                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <i class="bg" style="background-color:#f46e71;"></i>
+                                        <span>
+                                            @item.N_Title
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        i++;
+                    }
+                }
+
+
+            </div>
+
+        </div>
+        <div class="NewstNews">
+            <div class="container">
+                <h3 class="titleCard">
+                    <label>جدیدترین مطالب</label>
+                </h3>
+                <div class="slider5 arrowCustom swiper-container">
+                    <div class="swiper-wrapper">
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model.Take(15))
+                            {
+                                <div class="swiper-slide">
+                                    <div class="itemNewest">
+                                        <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="hoverLink"></a>
+                                        <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
+                                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image"
+                                                 alt="@item.N_Title">
+                                        </div>
+                                        <div class="text">
+                                            @item.N_Title
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="NextPrevSlider">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="secQA">
+            <div class="container">
+                <div class="QuickAccessNews">
+                    <div class="side">
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>بررسی محصولات</label>
+                            </h3>
+                            <div class="contentCard">
+
+                                <div class="CheckProducts">
+                                    @if (AllProdCategory != null && AllProdCategory.Any())
+                                    {
+                                        foreach (var item in AllProdCategory.Where(x => x.PC_ParentId == 0))
+                                        {
+                                            <a href="#" class="itemCheckProd">
+                                                <i class="icon" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductCatMainImage")@item.PC_Logo);"></i>
+                                                <label for="title">@item.PC_Title</label>
+                                            </a>
+                                        }
+                                    }
+                                    <a href="/" class="GoToShop fas fa-ellipsis-h">
+                                        ورود به فروشگاه
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="TabBoxNews">
+                            <div class="tabBtns">
+                                <button class="btntab active" data-tab="tab1">پربازدید ترین</button>
+                                <button class="btntab" data-tab="tab2">محبوبترین</button>
+                            </div>
+                            <div class="showTabsContent">
+                                <div class="tabContent active" data-tab="tab1">
+                                    <div class="QAItemsNews">
+                                        @if (Model != null && Model.Any())
+                                        {
+                                            foreach (var item in Model.Take(4))
+                                            {
+                                                <div class="QAitemNews">
+                                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
+                                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
+                                                    </div>
+                                                    <h2 class="title">
+                                                        @item.N_Title
+                                                        <span class="dateTime fas fa-calendar-alt">@item.Created_At</span>
+                                                    </h2>
+                                                    <div class="text">
+                                                        @item.N_Summary
+                                                    </div>
+                                                    <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="showMoreNews">
+                                                        <span>مشاهده</span>
+                                                    </a>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tabContent" data-tab="tab2">
+                                    <div class="allContentTab">
+                                        <div class="QAItemsNews">
+                                            @if (Model != null && Model.Any())
+                                            {
+                                                foreach (var item in Model.Take(4))
+                                                {
+                                                    <div class="QAitemNews">
+                                                        <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
+                                                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
+                                                        </div>
+                                                        <h2 class="title">
+                                                            @item.N_Title
+                                                            <span class="dateTime fas fa-calendar-alt">@item.Created_At</span>
+                                                        </h2>
+                                                        <div class="text">
+                                                            @item.N_Summary
+                                                        </div>
+                                                        <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="showMoreNews">
+                                                            <span>مشاهده</span>
+                                                        </a>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="modal m800 round10 " data-modalName="videoaprat">
+            <i class="bgModal" onclick="closeModal()"></i>
+            <div class="BoxModal">
+                <i class="close fas fa-times" onclick="closeModal()"></i>
+                <h3 class="titleModal"><label>ویدئو</label></h3>
+                <div class="contentModal">
+                    <div class="showVideoAparat">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="container">
+                <div class="BoxHelpReview">
+                    @{
+                        var statbox = StaticBoxes.OrderByDescending(x => Guid.NewGuid()).FirstOrDefault();
+                        var statbox2 = StaticBoxes.OrderByDescending(x => Guid.NewGuid()).FirstOrDefault();
+                    }
+                    <a href="@statbox.B_Link" class="boxItemHR hoverlight" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@statbox.B_Image);"></a>
+                    <a href="@statbox2.B_Link" class="boxItemHR hoverlight" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@statbox2.B_Image);"></a>
+                </div>
+                <div class="boxVideoNotify">
+                    <div class="videoSlider">
+                        <div class="contentVideoSlider">
+                            <h3 class="titleCard">
+                                <label>جدیدترین ویدئوها</label>
+                            </h3>
+                            <div class="SliderOneVideo swiper-container">
+                                <div class="swiper-wrapper">
+                                    @if (Model != null && Model.Any())
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <div class="swiper-slide">
+                                                <div class="itemVideoSlide">
+                                                    <div class="pic itemModal" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);" data-aparat="6lP7b" data-modalName="videoaprat"></div>
+                                                    <label>@item.N_Title</label>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="NextPrevSlider">
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        var statbox3 = StaticBoxes.OrderByDescending(x => Guid.NewGuid()).FirstOrDefault();
+                        var statbox4 = StaticBoxes.OrderByDescending(x => Guid.NewGuid()).FirstOrDefault();
+                        var statbox5 = StaticBoxes.OrderByDescending(x => Guid.NewGuid()).FirstOrDefault();
+                    }
+                    <div class="bannerUsefullink">
+                        <a href="@statbox3.B_Link" class="itemUsefullink hoverlight" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@statbox3.B_Image);"></a>
+                        <a href="@statbox4.B_Link" class="itemUsefullink hoverlight" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@statbox4.B_Image);"></a>
+                        <a href="@statbox5.B_Link" class="itemUsefullink hoverlight" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@statbox5.B_Image);"></a>
+                    </div>
+                    <div class="notifications">
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>اطلاعیه های هومکیتو</label>
+                            </h3>
+                            <div class="contentCard">
+                                <div class="NotificationsContent">
+
+                                    @if (Model != null && Model.Any())
+                                    {
+                                        foreach (var item in Model)
+                                        {
+
+                                            <div class="itemNotifyNews">
+                                                <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="hoverlink"></a>
+
+                                                <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
+                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
+                                                </div>
+                                                <div class="text">
+                                                    @item.N_Title
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <div class="AboutFooter">
+            <div class="container">
+                <h3 class="title">فروشگاه هومکیتو</h3>
+                <div class="text">
+                    @{
+                        var footercontect = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo");
+                    }
+                    @footercontect.PageContent
+                </div>
+                <div class="LogosCertificate">
+                    <div class="LogoCer">
+                        <img src="/dist/img/logoSamandehi.png" alt="">
+                    </div>
+                    <div class="LogoCer">
+                        <img src="/dist/img/LogoEnamad.png" alt="">
+                    </div>
+                    <div class="LogoCer">
+                        <img src="/dist/img/LogoSenf.png" alt="">
+                    </div>
+                </div>
+                <div class="socialIcons">
+                    @foreach (var s in Data.social)
+                    {
+                        <a href="@s.Url@s.UserName" target="_blank" class="socicon fab @s.Icon"></a>
+                    }
+                </div>
+            </div>
+            <div class="helpDeskFooter">
+                <div class="container">
+                    <div class="col">
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "JobApplication").PageSeo).url" class="linkheldesk icon1">همکاری با ما</a>
+                        <a href="/ContactUs" class="linkheldesk icon2">تماس با ما </a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "TermConditions").PageSeo).url" class="linkheldesk icon3">شرایط استفاده</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "PrivacyPolicy").PageSeo).url" class="linkheldesk icon4">حریم خصوصی</a>
+                    </div>
+                    <div class="col">
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "RegistrationGuid").PageSeo).url" class="linkheldesk icon5">راهنمای عضویت</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "PhysicalPurchase").PageSeo).url" class="linkheldesk icon6">راهنمای خرید</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "ReturnProduct").PageSeo).url" class="linkheldesk icon7">راهنمای مرجوعی</a>
+                        <a href="/Faq" class="linkheldesk icon8">سوالات متداول</a>
+                    </div>
+                </div>
+            </div>
+            <div class="BrandFooter swiper-container">
+                <div class="swiper-wrapper">
+
+                    @foreach (var item in footlogo)
+                    {
+                        <div class="swiper-slide">
+                            <a href="@item.E_Link" class="ItemBrandFooter" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image);">
+                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image" alt="@item.E_Title">
+                            </a>
+                        </div>
+                    }
+                </div>
+                <!-- Add Arrows -->
+                <div class="NextPrevSlider">
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+        <div class="subfooter">
+            <span>© 2020 “HomeKito” All Right Reserved</span>
+        </div>
+    </footer>
+    <div class="lightBoxADS" data-img="dist/img/lightbox-test.png" data-link="http://google.com"></div>
+    <script src="/dist/js/jquery-3.2.1.min.js"></script>
+    <script src="/dist/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/dist/js/hrb_notify.js"></script>
+    <script src="/dist/js/fivestar.js"></script>
+    <script src="/dist/js/swiper.js"></script>
+    <script src="/dist/js/script.js"></script>
+
+</body>
+
+
+</html>
+

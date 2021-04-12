@@ -1,0 +1,103 @@
+﻿@model Barayand.Models.Entity.DynamicPagesContent
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DepartmentModel> _departmentrepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
+
+@{
+    ViewData["Title"] = "ContactUs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Barayand.OutModels.Miscellaneous.ContactUsData Data = (Barayand.OutModels.Miscellaneous.ContactUsData)ViewBag.Data;
+    HomeKito.Models.SeoIndex Dataindex = (HomeKito.Models.SeoIndex)ViewBag.IndexSeo;
+    var AllPages = ((List<Barayand.Models.Entity.DynamicPagesContent>)(await _dynamicpagerepo.GetAll()).Data);
+    var seo = AllPages.FirstOrDefault(x => x.PageName == "ContactUs");
+}
+@section Styles{
+    @await Html.PartialAsync("_seo", seo.PageSeo)
+}
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="@(Context.Request.Host+Context.Request.Path)" class="breadc fas fa-chevron-left">@ViewBag.PGNAME</a>
+            </div>
+            <a>Contact Us</a>
+        </div>
+        <section class="secContact">
+            <div class="BoxMapnfo">
+                <div class="js-map" data-zoom="13" data-lat="@Data.coord.lat" data-lng="@Data.coord.lng"></div>
+                <div class="contactInfoBox">
+                    <div class="textInfoBox">
+                        <span class="office">ساختمان مرکزی</span>
+                        <span>@Dataindex.address</span>
+                        <span>تلفن: <a href="tel:02166701104"> 8-66701104 (021)</a></span>
+                        <span>فاکس: <a href="tel:02166701109">(021) 66701109 </a></span>
+                        <span>ایمیل : <a href="mailto:@Dataindex.email">@Dataindex.email</a></span>
+                    </div>
+                    <div class="socialIcons">
+                        @foreach (var s in Data.social)
+                        {
+                            <a href="@s.Url@s.UserName" target="_blank" class="socicon fab @s.Icon"></a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="card Contacts">
+                <h3 class="titleCard center">
+                    <label> تماس با ما </label>
+                </h3>
+                <div class="contentCard flexDir">
+                    <div class="contextBody">
+
+                        <div class="SendCM ContactUsForm">
+                            <div class="ContentFormCM">
+                                <form id="contactusfrm" style="width: 100%;display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                    <div class="boxInput">
+                                        <input type="text" name="User" id="name" placeholder="نام و نام خانوادگی" required />
+                                        <div class="input-error" style="color:red"></div>
+                                    </div>
+                                    <div class="boxInput">
+                                        <input type="tel" id="phone" name="UserPhone" placeholder="شماره تلفن" required />
+                                        <div class="input-error" style="color:red"></div>
+                                    </div>
+                                    <div class="boxInput">
+                                        <input type="text" id="email" name="UserEmail" placeholder="ایمیل" required />
+                                        <div class="input-error" style="color:red"></div>
+                                    </div>
+                                    <div class="boxInput full">
+                                        <textarea id="message" name="F_Msg" placeholder="متن نظر" required></textarea>
+                                        <div class="input-error" style="color:red"></div>
+                                    </div>
+                                    <div class="RowButton center">
+                                        <button type="button" onclick="RegisterContactus();" id="registerBtn" class="inputFrm btnsend bg-primary">ارسال نظر</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="BoxesDepartement">
+
+                <div class="contentDepartementBox">
+                    <h3 class="titleCard center">
+                        <label> تماس با ما </label>
+                    </h3>
+
+                    <div class="Departements">
+                        @foreach (var item in ((List<Barayand.Models.Entity.DepartmentModel>)(await _departmentrepo.GetAll()).Data).OrderBy(x => x.D_SortField).ToList())
+                        {
+                            <div class="itemDep">
+                                <h3 class="titleDep">@item.D_Title</h3>
+                                <a href="mailto:@item.D_Email" class="mail">@item.D_Email</a>
+                                <a href="tel:@item.D_Tel" class="tel">@item.D_Tel</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

@@ -1,0 +1,36 @@
+{
+  "BASEMEDIAROOT": "\\App_Data\\Data\\Upload\\Media\\",
+  "BASEENTITYLOGO": "EntityLogo\\",
+ 
+  "BASESEOIMAGE": "Seo\\",
+  "GALLERY": "Gallery\\",
+  "NOTICES": "NoticeImage\\",
+  "NOTICEMEDIA": "NoticeMedia\\",
+  "DIGITALPRD": "DigitalProduct\\",
+  "USERROOT": "User\\",
+  "INDEX": "Index\\",
+  "SLIDER": "SLIDER\\",
+  "PRODMANUAL": "ProductManual\\",
+  "PRODUCTDEMO": "ProductDemoAudio\\",
+  "UploadAddress": {
+    "NONE": "",
+    "PRDCATIMG": "PrdCatLogo\\",
+    "PRDIMG": "Product\\",
+    "NOTICESCATIMG": "NoticesCatImg\\",
+    "PRDLABEL": "ProductLabelLogo\\",
+    "WARRANTYIMG": "WarrantyLogo\\",
+    "PRDBRANDIMG": "BrandLogo\\",
+    "GALLERYCATIMG": "GalleryCatImg\\",
+    "PRDCATSEOIMG": "prdCatSeoImg\\",
+    "CONTENTSEO": "ContentSeoImg\\",
+    "IMAGEGALLERY": "image-gallery\\",
+    "VIDEOGALLERY": "video-gallery\\",
+    "PRODUCTGALLERY": "product-gallery\\",
+    "VIDEOCOVERIMAGE": "video-gallery-cover\\",
+    "NEWSIMAGE": "News\\",
+    "NEWSMEDIA": "News\\",
+    "PROFILE": "Profile\\",
+    "SECTION": "Sections\\",
+    "CONTENT": "Content\\"
+  }
+}

@@ -1,0 +1,43 @@
+﻿@model List<Barayand.Models.Entity.CommentModel>
+@{
+    Layout = null;
+    System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fa-IR");
+    var pagination = (Paging)ViewBag.paging;
+}
+@foreach (var item in Model)
+{
+    <div class="itemCM">
+        <div class="colAvatar">
+            <span class="cmAvatar"
+                  style="background-image: url(/dist/img/avatarCM.png);"></span>
+        </div>
+        <div class="colText">
+            <h3 class="nameUserCM">@item.C_UserName</h3>
+            <span class="Created_at">@(((DateTime)item.Created_At).ToString("yyyy/MM/dd HH:mm:ss"))</span>
+            <div class="ContextCM">
+                @item.C_Body
+            </div>
+        </div>
+    </div>
+}
+<div class="pagination">
+    @if (pagination.CurrentPage > 1)
+    {
+        <a href="javascrip:void(0)" onclick="PaginationComment(@pagination.CurrentPage-1)" class=" prevPage fal fa-angle-double-right"></a>
+    }
+    @for (int i = 1; i <= pagination.TotalPages; i++)
+    {
+        if (pagination.CurrentPage == i)
+        {
+            <span onclick="PaginationComment(@i)" class="pageLink">@i</span>
+        }
+        else
+        {
+            <a href="javascrip:void(0)" onclick="PaginationComment(@i)" class="pageLink">@i</a>
+        }
+    }
+    @if (pagination.CurrentPage < pagination.TotalPages)
+    {
+        <a href="javascrip:void(0)" onclick="PaginationComment(@pagination.CurrentPage+1)" class=" nextPage fal fa-angle-double-left"></a>
+    }
+</div>

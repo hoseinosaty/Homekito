@@ -1,0 +1,1060 @@
+.contentBasket {
+    position: relative;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+}
+.contentBasket .leftBasket {
+    position: relative;
+    width: calc(100% - 290px);
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px -10px;
+}
+.contentBasket .rightBasket {
+    position: relative;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px -10px;
+    width: 280px;
+}
+.StepBasket {
+    position: relative;
+    width: calc(100% - 30px);
+    margin: 0px auto;
+    max-width: unset;
+    padding: 0;
+    border-top: none;
+    display: none;
+    opacity: 0;
+}
+.StepBasket.active {
+    display: block;
+    transition-delay: 0.5s;
+    opacity: 1;
+}
+.StepBasket h5 {
+    margin: 5px 0;
+}
+.goftyBox {
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 0 20px;
+}
+span.radioGift {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: calc((100% / 4) - 30px);
+    margin: 5px;
+    transition: all 1s;
+    cursor: pointer;
+    background: #f3f3f3;
+    padding: 10px;
+    align-items: center;
+}
+a.backToHome {
+    position: relative;
+    height: 35px;
+    background: #535353;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+    padding: 0 20px 0px 20px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+a.backToHome:hover {
+    filter: brightness(0.9);
+}
+a.backToHome:active {
+    filter: brightness(1.2);
+}
+i.picRadioGift {
+    position: relative;
+    width: 100%;
+    background: no-repeat center / cover;
+}
+i.picRadioGift:before {
+    position: relative;
+    width: 100%;
+    display: block;
+    padding-top: 100%;
+    content: '';
+}
+span.radioGift h2 {
+    position: relative;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    color: #333;
+}
+span.radioGift .spanSelect:before {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    padding: 5px;
+    border: 1px solid #939598;
+    top: 5px;
+    right: 5px;
+    background: #fff;
+    border-radius: 100%;
+}
+span.radioGift .spanSelect:after {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    top: 9px;
+    right: 9px;
+    background: #fff;
+    transition: all 1s;
+    border-radius: 100%;
+}
+span.radioGift.active .spanSelect:after {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    top: 9px;
+    right: 9px;
+    background: #0046bf;
+    border-radius: 100%;
+}
+span.spanSelect {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 30px;
+    color: #858585;
+    padding-right: 30px;
+}
+h4.titlteBasketStep {
+    position: absolute;
+    top: -19px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: #fff;
+    padding: 5px;
+    display: block;
+    width: 120px;
+    text-align: center;
+    width: fit-content;
+    color: #353b43;
+}
+.table {
+    position: relative;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    /* overflow: auto; */
+    overflow: auto;
+    font-weight: bold;
+    padding: 0 0 20px;
+    font-size: 12px;
+}
+.table .Row8 {
+    position: relative;
+    min-width: 960px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #f5f5f5;
+    border-bottom: none;
+    width: fit-content;
+    width: -moz-fit-content;
+    margin: auto;
+}
+.table .Row8:last-child {
+    position: relative;
+    /*min-width: 700px;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #f5f5f5;
+    border-bottom: 1px solid #f5f5f5;
+}
+.table .Row8.Rtitle {
+    background: #0046bf;
+    border: 0px solid #0046bf;
+    border-radius: 0;
+    padding: 5px 0;
+    color: #fff !important;
+}
+.table .Row8.Rtitle .col {
+    border-left: transparent;
+}
+
+.table .Row8 .col {
+    position: relative;
+    min-width: 48px;
+    text-align: center;
+    font-size: 14px;
+    padding: 4px 2px;
+    width: 180px;
+    /*max-width: 180px;*/
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+i.delItemBasket {
+    color: #0046bf;
+    cursor: pointer;
+}
+i.delItemBasket:hover {
+    color: #03b990;
+}
+.table .Row8 .col.xs {
+    min-width: 50px;
+    max-width: 50px;
+    min-width: 50px;
+}
+.table .Row8 .col.sm {
+    min-width: 100px;
+    max-width: 100px;
+}
+.table .Row8 .col.lg {
+    min-width: 120px;
+    max-width: 120px;
+}
+img.sizeBasketImg {
+    position: relative;
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin: auto;
+}
+.contentCustomer .row {
+    flex-wrap: nowrap;
+    margin: 10px 0;
+    text-align: center;
+}
+.contentCustomer .row label {
+    margin-left: 10px;
+    min-width: 100px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.addressAdd {
+    position: relative;
+    width: calc(100% - 40px);
+    margin: 20px auto;
+}
+.row.AddAddress .col {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #bfbfbf;
+    width: 100%;
+    border-bottom: 0;
+    border-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.row.AddAddress:last-child .col {
+    border-bottom: 1px solid #bfbfbf;
+    text-align: right;
+}
+.row.AddAddress .col:last-child {
+    border-left: 1px solid #bfbfbf;
+
+}
+.row.AddAddress .col.xs {
+    max-width: 40px;
+}
+.row.AddAddress .col.sm {
+    max-width: 70px;
+}
+.row.AddAddress .col.lg {
+    max-width: 100%;
+}
+a.addAddressBtn {
+    position: relative;
+    color: #555;
+    margin-right: 40px;
+}
+a.addAddressBtn:before {
+    position: absolute;
+    content: "+";
+    display: block;
+    color: #0046bf;
+    margin-right: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    top: -6px;
+    right: -20px;
+    transition: all 1s;
+    margin: auto;
+}
+span.RadioAddress {
+    position: relative;
+    width: 20px;
+    border: 1px solid #bfbfbf;
+    height: 20px;
+    display: block;
+    border-radius: 50px;
+    margin: auto;
+    cursor: pointer;
+}
+span.RadioAddress:before {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    margin: auto;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    transition: all 1s;
+}
+span.RadioAddress.active:before {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    margin: auto;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #9491c5;
+}
+.contentCustomer .row.AddAddress {
+    flex-wrap: nowrap;
+    margin: 0 0;
+    text-align: center;
+}
+.row.AddAddress.select {
+    background: #ebf1ff;
+}
+.popupAddressAdd {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 10000;
+    background: rgba(255,255,255,0.9);
+    transition: all 0.5s;
+    transform: rotateY(90deg);
+    transition-delay: 0.5s;
+    opacity: 0;
+}
+.popupAddressAdd.active {
+    transition: all 0.5s;
+    transform:  rotateY(0deg);
+    opacity: 1;
+}
+.cntntAddressAdd {
+    position: relative;
+    max-width: 450px;
+    margin: auto;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: #354da2;
+    box-shadow: 0 2px 11px -5px #000;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.5s;
+    transform: perspective(360px) rotateX(90deg);
+    transition-delay: 0.5s;
+    opacity: 0;
+    width: calc(100% - 20px);
+}
+.popupAddressAdd.active .cntntAddressAdd {
+    transition: all 0.5s;
+    transform: perspective(360px) rotateX(0deg);
+    opacity: 1;
+    transition-delay: 0.5s;
+}
+.cntntAddressAdd label {
+    position: relative;
+    display: block;
+    background: transparent;
+    width: 100%;
+    margin: 10px 0;
+    text-align: center!important;
+}
+.cntntAddressAdd input.addRealAddres {
+    position: relative;
+    width: calc(100% - 40px);
+    border: 1px solid #0046bf;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    margin: 10px 0;
+}
+.cntntAddressAdd button.btnaddAddresss {
+    position: relative;
+    width: 160px;
+    height: 40px;
+    background: #1e2e69;
+    border: none;
+    color: #e0e7ff;
+    font-size: 16px;
+    border-radius: 10px 10px 0 0;
+}
+.cntntAddressAdd button.btnaddAddresss:hover {
+    background: #e0e7ff;
+    color: #1e2e69;
+}
+.cntntAddressAdd .closeaddres {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    color: #ffe000;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 100;
+}
+.StepBasket .titleAccordion.nobg {
+    margin: 0 0 20px;
+}
+.stepbystep {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.stepbystep:before {
+    position: absolute;
+    content: "";
+    display: block;
+    height: calc(100% - 110px);
+    width: 2px;
+    background: #dddddd;
+    bottom: 0;
+    top: 0px;
+    margin: auto;
+    right: 20px;
+    z-index: 10;
+}
+.stepbystep:after {
+    position: absolute;
+    content: "";
+    display: block;
+    height: calc(100% - 140px);
+    width: 2px;
+    background: #0046bf;
+    bottom: auto;
+    top: 55px;
+    margin: auto;
+    right: 20px;
+    transition: all 1s ease;
+    z-index: 10;
+}
+.stepbystep.s1:after {
+    height: 25px;
+}
+.stepbystep.s2:after {
+    height: 105px;
+}
+.stepbystep.s3:after {
+    height: 185px;
+}
+.stepbystep.s4:after {
+    height: 265px;
+}
+.stepbystep.s5:after {
+    height: 345px;
+}
+.stepbystep.s6:after {
+    height: 425px;
+}
+h4.titlestepe {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    margin: auto;
+    bottom: 0;
+    width: calc(100% - 20px);
+    font-size: 12px;
+    text-align: center;
+    padding: 0;
+    transition: all 1s;
+    bottom: 0;
+    height: 40px;
+    background: #fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 55px 0 0;
+    border-radius: 50px 0 0 50px;
+    font-weight: normal !important;
+}
+h4.titlestepe small {
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    color: #666;
+    transition: all 1s;
+    font-weight: normal;
+}
+.stepe {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    justify-content: space-between;
+    border-bottom: 1px solid #e0e0e0;
+    z-index: 11;
+}
+.stepe:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: calc(100% - 33px);
+    background: #fff;
+    content: '';
+    transition: all 0.5s;
+    transform-origin: right center;
+    transform: scaleX(0);
+}
+.ProertYContactBox h3 {
+    font-size: 14px;
+    margin: 14px 0;
+    font-size: 14px;
+}
+.stepe span {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background: #fff !important;
+    display: block;
+    right: 0;
+    top: 0;
+    z-index: 1000000000;
+    color: #ffffff;
+    transition: all 0.5s;
+    border: 2px solid #dadae3;
+    border-radius: 100%;
+    bottom: 0;
+    margin: auto;
+    z-index: 10;
+}
+.stepe span:before {
+    position: absolute;
+    left: -6px;
+    top: -6px;
+    width: calc(100% + 4px);
+    border: 4px solid #fff;
+    content: '';
+    height: calc(100% + 4px);
+    background: transparent !important;
+    border-radius: 100%;
+}
+.stepe span i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    transform: rotate(0deg);
+    transition: all 1s;
+}
+
+.stepe span i:after {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #dddddd;
+    display: block;
+    left: auto;
+    border-radius: 100px;
+    margin: auto;
+    bottom: 0;
+    transform-origin: center;
+    transform: rotate(146deg);
+    right: -8px;
+    transition: all 1s;
+    top: 0;
+}
+
+.stepe label {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    color: #7d7d7d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    z-index: 10000000000;
+    transition: all 1s;
+    width: 100%;
+    font-size: 16px;
+    height: 100%;
+    font-weight: bold;
+}
+ h2.titleSection , .titleAccordion {
+    margin: 0;
+    font-size: 18px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #fdf026;
+    font-weight: bold;
+}
+ h2.titleSection span , .titleAccordion label.titleLabel{
+    position: relative;
+    height: calc(100% + 4px);
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #0046bf;
+    padding: 0 5px 0 20px;
+}
+.stepbystep.s1 .stepe:nth-child(1) h4.titlestepe {
+    background-color: #fdf026;
+}
+
+.stepbystep.s1 .stepe:nth-child(1) h4.titlestepe small {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.stepbystep.s1 .stepe:nth-child(1)  span {
+    background: #fff;
+    border-color:#0046bf;
+}
+.stepbystep.s1 .stepe:nth-child(1) span:before {
+    background-color: #0046bf;
+}
+
+.stepbystep.s1 .stepe:nth-child(1) label {
+    color: #0046bf;
+}
+.stepbystep.s2 .stepe:nth-child(-n+2) h4.titlestepe {
+    background-color: #fdf026;
+}
+
+.stepbystep.s2 .stepe:nth-child(-n+2) h4.titlestepe small {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+.stepbystep.s2 .stepe:nth-child(-n+2)  span {
+    background: #fff;
+    border-color:#0046bf;
+}
+.stepbystep.s2 .stepe:nth-child(-n+2) span:before {
+    background-color: #0046bf;
+}
+
+.stepbystep.s2 .stepe:nth-child(-n+2) label {
+    color: #0046bf;
+}
+.stepbystep.s3 .stepe:nth-child(-n+3) h4.titlestepe {
+    background-color: #fdf026;
+}
+.stepbystep.s3 .stepe:nth-child(-n+3) h4.titlestepe small {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+.stepbystep.s3 .stepe:nth-child(-n+3)  span {
+    background: #fff;
+    border-color:#0046bf;
+}
+.stepbystep.s3 .stepe:nth-child(-n+3) span:before {
+    background-color: #0046bf;
+}
+
+.stepbystep.s3 .stepe:nth-child(-n+3) label {
+    color: #0046bf;
+}
+
+
+.stepbystep.s4 .stepe:nth-child(-n+4) h4.titlestepe {
+    background-color: #fdf026;
+}
+.stepbystep.s4 .stepe:nth-child(-n+4) h4.titlestepe small {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+.stepbystep.s4 .stepe:nth-child(-n+4)  span {
+    background: #fff;
+    border-color:#0046bf;
+}
+.stepbystep.s4 .stepe:nth-child(-n+4) span:before {
+    background-color: #0046bf;
+}
+
+.stepbystep.s4 .stepe:nth-child(-n+4) label {
+    color: #0046bf;
+}
+
+.stepbystep.s5 .stepe:nth-child(-n+5) h4.titlestepe {
+    background-color: #fdf026;
+}
+.stepbystep.s5 .stepe:nth-child(-n+5) h4.titlestepe small {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+.stepbystep.s5 .stepe:nth-child(-n+5)  span {
+    background: #fff;
+    border-color:#0046bf;
+}
+.stepbystep.s5 .stepe:nth-child(-n+5) span:before {
+    background-color: #0046bf;
+}
+
+.stepbystep.s5 .stepe:nth-child(-n+5) label {
+    color: #0046bf;
+}
+.discountCode {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 0;
+}
+.discountCode label {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+.discountCode .contentDiscount {
+    position: relative;
+    width: 250px;
+    height: 30px;
+}
+input.dicountInput {
+    height: 30px;
+    background: #fff;
+    border: 1px solid #d4d4d4;
+    border-radius: 30px;
+    padding: 0 10px 0 92px;
+    width: 100%;
+    min-height: unset;
+}
+button.discountBtn {
+    background: #878787;
+    border: none;
+    border-radius: 100px;
+    position: relative;
+    height: 30px;
+    width: 90px;
+    min-height: 30px;
+    top: 0px;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+    padding: 0;
+    cursor: pointer;
+    position: absolute;
+    margin: 0;
+    display: flex;
+}
+button.discountBtn:hover {
+    filter: brightness(0.9);
+}
+button.discountBtn:active {
+    filter: brightness(1.2);
+}
+.row {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+button.btnStep {
+    position: relative;
+    height: 35px;
+    background: #0046bf;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    padding: 0 20px 0px 20px;
+    line-height: 12px;
+}
+button.btnStep:hover {
+    filter: brightness(0.9);
+}
+button.btnStep:active {
+    filter: brightness(1.2);
+}
+button.btnStep.btnbackStep {
+    background: #535353;
+}
+button.btnStep.btnbackStep:before {
+    left: auto;
+    right: 10px;
+}
+
+h4.label small {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.col.btnsENDbasket {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+.col.btnsENDbasket button {
+    position: relative;
+    height: 35px;
+    border: none;
+    padding: 0 20px;
+    margin: 0 2px;
+    cursor: pointer;
+    color: #fff;
+    min-width: 120px;
+    margin: 0 2px;
+    border-radius: 50px;
+}
+.row.AddAddress.Rtitle .col:first-child {
+    border-radius: 0 15px 0 0;
+}
+.row.AddAddress.Rtitle .col:last-child {
+    border-radius:  15px 0 0 0;
+}
+
+button.btnPay {
+    background: #0046bf;
+}
+button.btnPay:hover {
+    background: #8d7140;
+}
+button.btnPayHome {
+    background: #0046bf;
+}
+button.btnPayHome:hover {
+    background: #8d7140;
+}
+button.btnWallet {
+    background: #6a6a6a;
+}
+button.btnWallet:hover {
+    background: #bfbbbb;
+}
+button.btnPayBank {
+    background: #0046bf;
+}
+button.btnPayBank:hover {
+    background: #8d7140;
+}
+.contentCustomer.frmss textarea {
+    min-width: calc(100% - 110px) !important;
+    max-width: calc(100% - 110px) !important;
+}
+.col.btnsENDbasket {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.table .Row8 .col {
+    border-left: 1px solid #f5f5f5;
+}
+.table .Row8 .col.lg.lf {
+    text-align: right;
+    padding: 0 8px 0 0;
+    min-width: 115px;
+    max-width: 115px;
+    border-right: 1px solid #f5f5f5;
+}
+
+.table .tblmore .Row8 .col.lg.lf {
+    text-align: right;
+    padding: 0 8px 0 0;
+    min-width: 120px;
+    max-width: 120px;
+    border-right: 1px solid #f5f5f5;
+}
+.br {
+    border-left: 1px solid #fff!important;
+}
+.contentCustomer .row {
+    flex-wrap: nowrap;
+    margin: 10px 0;
+    text-align: center;
+}
+.contentCustomer .row label {
+    margin-left: 10px;
+    min-width: 100px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    max-width: 100px;
+}
+.contentCustomer .row input, .contentCustomer .row textarea, .contentCustomer .row select {
+    width: calc(100% - 20px);
+    /* background: #fff; */
+    /* border: 1px solid #dcdcdc; */
+    padding: 10px;
+    border-radius: 5px;
+    height: 40px;
+}
+.boxRahgiri:before {
+    font-family: 'Font Awesome 5 Pro';
+    font-weight: 900;
+    position: absolute;
+    right: 8px;
+    top: 0;
+    color: #0046bf;
+}
+.boxRahgiri {
+    position: relative;
+    width: calc(100% - 80px);
+    margin: 10px auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: normal;
+    padding-right: 30px;
+}
+.boxRahgiri label {
+    font-size: 18px;
+    color: #888888;
+    margin: 0 5px;
+}
+label.rahgitiCode {
+    position: relative;
+    width: 300px;
+    display: block;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+.rowDetail.full .socialsshare {
+    width: 100%;
+    margin: 10px 0;
+}
+.titleDetail {
+    position: relative;
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    height: 80px;
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+}
+
+
+.itemAddress {
+    position: relative;
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid #bebebe;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-width: 1px 1px 0 1px;
+}
+.itemAddress:last-child {
+    border-width: 1px ;
+}
+.itemAddress .checkboxs label.lblinput {
+    position: relative;
+    width: 100%;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 40px 0 10px;
+    justify-content: flex-start;
+}
+.formAddress {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0 0;
+}
+.itemAddress .checkboxs input[type=radio]+label.lblinput:before {
+    right: 10px;
+}
+.itemAddress .checkboxs input[type=radio]+label.lblinput:after {
+    right: 13px;
+}
+.itemAddress .checkboxs label.lblinput span {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #bebebe;
+    border-width: 0 1px;
+    margin-left: 5px;
+}
+.itemAddress .checkboxs input[type=radio]+label.lblinput * {
+    color: #666;
+}
+.itemAddress .checkboxs input[type=radio]:checked+label.lblinput * {
+    color: #0046bf;
+}
+.itemAddress .checkboxs input[type=radio]+label.lblinput:after {
+    background: #0046bf;
+    background: radial-gradient(circle, #0046bf 0%, #0e5bdf 100%);
+    transition: all 0.5s cubic-bezier(0.04, 1.13, 0.02, 1.14);
+}
+.tblmore .col.line {
+    position: relative;
+    min-width: 690px !important;
+    max-width: 690px !important;
+    padding: 0 10px;
+}

@@ -1,0 +1,126 @@
+﻿@model Barayand.Models.Entity.VideoGalleryModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@using System.Net;
+@{
+    ViewData["Title"] = "VideoDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="contentMain">
+    <header style="background-image: url(/img/HeaderInner.jpg);">
+        <div class="contentHeader">
+            <h1 class="titleHeader">توضیحات ویدئو</h1>
+            <div class="breadcrumbs">
+                <a href="#" class="bread">خانه</a>
+                <span class="fal fa-chevron-left"></span>
+                <a href="#" class="bread">توضیحات ویدئو</a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="textPage">
+            <div class="videDetails">
+                <video controls style="width:100%" poster="@Barayand.Common.Services.UtilesService.MediaUrls("VideoGalleryCover")@Model.VG_VideoImage">
+                    <source src="@Barayand.Common.Services.UtilesService.MediaUrls("VideoGaller")@Model.VG_VideoUrl" type="video/mp4" />
+                </video>
+            </div>
+            @Html.Raw(WebUtility.HtmlDecode(Model.VG_Description))
+            <div class="getRate">
+                <span class="label">@localizer["RATETHISVIDEO"] :</span>
+
+                <div class="stars">
+                    <div class="btntitleproduct starrateprod">
+                        <div class="ratestar" data-star="">
+                            <div class="showrate"></div>
+                            <div class="showresultrate"></div>
+                            <div class="showactiverate"></div>
+                            <div class="ratelink" entity-id="@Model.VG_Id" data-entity="4">
+                                <ul>
+                                    <li data="1" title="1 ستاره"></li>
+                                    <li data="2" title="2 ستاره"></li>
+                                    <li data="3" title="3 ستاره"></li>
+                                    <li data="4" title="4 ستاره"></li>
+                                    <li data="5" title="5 ستاره"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ItemLIdesc shareAndBtns">
+                <div class="shre">
+                    <span class="fas fa-share">@localizer["SHARETHISVIDEO"]</span>
+                    <div class="ShareBar">
+                        <div class="socialBtn">
+                            <a href="tg://msg_url?url=@Context.Request.Host@Context.Request.Path" class="sociali fab fa-telegram-plane"></a>
+                            <a href="https://api.whatsapp.com/send?text=@Context.Request.Host@Context.Request.Path" class="sociali fab fa-whatsapp"></a>
+                            <a href="http://www.facebook.com/share.php?u=@Context.Request.Host@Context.Request.Path" class="sociali fab fa-facebook-square"></a>
+                            <a href="https://twitter.com/intent/tweet?url=@Context.Request.Host@Context.Request.Path" class="sociali fab fa-twitter-square"></a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=@Context.Request.Host@Context.Request.Path" class="sociali fab fa-linkedin"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="titleCarousel">
+            <div class="col">
+                <span class="fas fa-arrow-left"></span>
+                <label>@localizer["THISVIDEOCOMMENTS"]</label>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+        <div class="showCM">
+            @if (Model.Comments != null)
+            {
+                @foreach (var cmnt in Model.Comments)
+                {
+                    <div class="itemCM">
+                        <div class="colAvatar">
+                            <span class="cmAvatar" style="background-image: url(/img/avatarCM.png);"></span>
+                        </div>
+                        <div class="colText">
+                            <h3 class="nameUserCM">@cmnt.C_UserName</h3>
+                            <span class="Created_at">@(((DateTime)cmnt.Created_At).ToString("MMM dd yyyy ساعت HH:mm:ss"))</span>
+                            <div class="ContextCM">
+                                @cmnt.C_Body
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div>@localizer["COMMENTSEMPTY"]</div>
+            }
+        </div>
+        <div class="titleCarousel">
+            <div class="col">
+                <span class="fas fa-arrow-left"></span>
+                <label>@localizer["CMNTFROMTITLE"]</label>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+        <input type="hidden" id="E" value="@Model.VG_Id" />
+        <input type="hidden" id="T" value="4" />
+        <div class="SendCM">
+            <div class="group-input full">
+                <input type="text" name="User" placeholder="@localizer["CMNTFROMNAME"]" required>
+            </div>
+            <div class="group-input full">
+                <input type="email" name="Email" required placeholder="@localizer["CMNTFROMEMAIL"]">
+            </div>
+            <div class="group-input full">
+                <textarea name="Msg" required placeholder="@localizer["CMNTFROMCOMMENT"]"></textarea>
+            </div>
+            <div class="rowBtn">
+                <button class="btnSubmitCm" type="button" onclick="SubmitComment();">@localizer["CMNTFROMSENDBTN"]</button>
+            </div>
+        </div>
+
+    </div>
+</div>

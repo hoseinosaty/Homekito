@@ -1,0 +1,86 @@
+﻿@model Barayand.Models.Entity.ServiceModel
+@section Styles{
+    @await Html.PartialAsync("_seo", Model.S_Seo)
+}
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a class="breadc fas fa-chevron-left">@Model.S_Title</a>
+            </div>
+            @*<a href="#">Page Text</a>*@
+        </div>
+        <section class="SecPageText" data-tabdp="Manuals">
+            <div class="rowCustom fullCenter">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label>@Model.S_Title </label>
+                        </h3>
+                        <div class="contentCard flexDir">
+                            <div class="contextBody">
+                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Content")@Model.S_Image" alt="@Model.S_Title">
+                                @Html.Raw(Model.S_Content)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="carouselPopup">
+            <div class="card">
+                <h3 class="titleCard">
+                    <label>گالری تصاویر</label>
+                </h3>
+                <div class="contentCard ">
+                    <div class="slider5Item swiper-container">
+                        <div class="swiper-wrapper">
+
+                            @{
+                                var gallery = Model.S_ImageGallery.Split(",");
+                            }
+                            @foreach (var item in gallery)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="ItemOtherPic">
+                                        <a href="#" class="contentItemOtherPic" data-pic="@Barayand.Common.Services.UtilesService.MediaUrls("Content")@item"
+                                           onclick="javascript:lightBoxPic(event,this);"
+                                           style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Content")@item)"></a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Arrows -->
+                        <div class="NextPrevSlider">
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="modal m400 round10" data-modalName="share">
+            <i class="bgModal" onclick="closeModal()"></i>
+            <div class="BoxModal">
+                <i class="close fas fa-times" onclick="closeModal()"></i>
+                <h3 class="titleModal"><label>اشتراک گذاری</label></h3>
+                <div class="contentModal">
+                    <div class="text">
+                        با استفاده از روش‌های زیر می‌توانید این صفحه را با دوستان خود به اشتراک بگذارید.
+                    </div>
+                    <div class="ShareSocials">
+                        <a href="tg://msg_url?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="sociali fab fa-telegram-plane"></a>
+                        <a href="https://api.whatsapp.com/send?text=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-whatsapp"></a>
+                        <a href="http://www.facebook.com/share.php?u=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-facebook"></a>
+                        <a href="https://twitter.com/intent/tweet?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-twitter"></a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-linkedin"></a>
+                        <button class="copyPathUrl fal fa-copy">کپی لینک</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

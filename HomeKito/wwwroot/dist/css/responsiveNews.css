@@ -1,0 +1,209 @@
+
+.card {
+    overflow: hidden;
+}
+a.boxItemHR {
+    width: 100%;
+}
+@media only screen and (max-width: 3000px) {
+
+}
+@media only screen and (max-width: 1350px) {
+
+}
+
+@media only screen and (max-width: 1240px) {
+    
+}
+@media only screen and (max-width: 1120px) {
+
+}
+@media only screen and (max-width: 1100px) {
+    nav.navbar .MenuTop .Menu a.itemMenu {
+        width: 50%;
+    }
+    .boxVideoNotify {
+        grid-template-columns: repeat(2 , 1fr);
+        grid-template-areas: "videoSlider videoSlider"
+                             "Usefullink Notifications";
+        grid-gap: 10px;
+    }
+    .itemVideoSlide .pic {
+        height: 40vw;
+    }
+    .itemVideoSlide {
+        height: 50vw;
+    }
+    .bannerUsefullink {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+@media only screen and (max-width: 980px) {
+    .container {
+        width: calc(100% - 40px);
+    }
+    header.headerNews {
+        height: 30vw;
+    }
+    .BoxesNewsTop {
+        grid-template-columns: repeat(4 , 1fr);
+        grid-template-areas:
+            "SliderNewsTop SliderNewsTop SliderNewsTop SliderNewsTop"
+            "itemnews1 itemnews1 itemnews2 itemnews2"
+            "itemnews3 itemnews3 itemnews4 itemnews4";
+    }
+    .itemNewsDetailSlide .pic {
+        height: 45vw;
+    }
+    .sliderTop {
+        height: 50vw;
+    }
+    .QuickAccessNews {
+        flex-wrap: wrap;
+    }
+    .QuickAccessNews .side {
+        width: 100%;
+    }
+    .QuickAccessNews .content {
+        position: relative;
+        width: 100%;
+        margin: 20px 0 0;
+    }
+}
+@media only screen and (max-width: 940px) {
+
+}
+@media only screen and (max-width: 890px) {
+   
+}
+@media only screen and (max-width: 768px) {
+    .boxVideoNotify {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    a.itemUsefullink {
+        position: relative;
+        height: 36vw;
+        border-radius: 5px;
+        background: no-repeat center / cover;
+    }
+    
+    .itemNewsDetailSlide .pic {
+        height: 65vw;
+    }
+    .BoxHelpReview {
+        grid-template-columns: 1fr;
+    }
+    a.boxItemHR {
+        height: 34vw;
+    }
+}
+@media only screen and (max-width: 680px) {
+    .tabContent.active {
+        max-height: 10000px;
+    }
+    .QAitemNews {
+        position: relative;
+        width: 100%;
+        margin: 0 0 10px 0;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding-right: 0;
+        padding-bottom: 30px;
+    }
+    .QAitemNews .pic {
+        position: relative;
+        width: 100%;
+        height: 60vw;
+        border-radius: 10px 10px 0 0;
+    }
+    .sliderTop {
+        height: 67vw;
+    }
+    .BoxesNewsTop {
+        grid-template-columns:1fr;
+        grid-template-areas:
+            "SliderNewsTop"
+            "itemnews1"
+            "itemnews2"
+            "itemnews3"
+            "itemnews4";
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    
+}
+@media only screen and (max-width: 560px) {
+   
+}
+@media only screen and (max-width: 540px) {
+    
+}
+@media only screen and (max-width: 480px) {
+    header.headerNews {
+        height: 40vw;
+    }
+    .itemNewsDetailSlide .pic {
+        height: 100vw;
+    }
+    .itemCM {
+        flex-wrap: wrap;
+    }
+    .itemCM .colAvatar {
+        width: 100%;
+        height: 100px;
+    }
+    .itemCM .colAvatar:before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: #e7bc15;
+        content: '';
+        height: 2px;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+    }
+    .tabDetailProduct button.btnTabDP:after {
+        top: auto;
+        bottom: 0;
+        border-color: transparent transparent #0348c0 transparent;
+    }
+    .itemCM .colText {
+        position: relative;
+        width: 100%;
+        text-align: center;
+    }
+}
+@media only screen and (max-width: 420px) {
+    .itemNotifyNews .pic {
+        width: 100%;
+        height: 45vw;
+    }
+    .itemNotifyNews .text {
+        position: relative;
+        width: 100%;
+        padding: 10px 0 5px;
+    }
+    .itemNotifyNews {
+        flex-direction: column;
+    }
+    a.moreSmallNews {
+        margin: 10px 0 0;
+        width: 100%;
+        height: 30px;
+    }
+    
+}
+@media only screen and (max-width: 380px) {
+    
+}
+@media only screen and (max-width: 280px) {
+
+}

@@ -1,0 +1,255 @@
+﻿@model Barayand.Models.Entity.NoticesModel
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.EnergyUsageModel> _footerlogo
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
+
+@{
+    Layout = null;
+    var AllCategory = (List<Barayand.Models.Entity.NoticesCategoryModel>)ViewBag.Category;
+    var AllNews = (List<Barayand.Models.Entity.NoticesModel>)ViewBag.AllNews;
+    var RoutCategory = (Barayand.Models.Entity.NoticesCategoryModel)ViewBag.catroute;
+    var AllPages = ((List<Barayand.Models.Entity.DynamicPagesContent>)(await _dynamicpagerepo.GetAll()).Data);
+    var ContactUs = AllPages.FirstOrDefault(x => x.PageName == "ContactUs");
+    var footlogo = ((List<Barayand.Models.Entity.EnergyUsageModel>)(await _footerlogo.GetAll()).Data).Where(x => x.E_Status && x.E_Type == 3).ToList();
+    Barayand.OutModels.Miscellaneous.ContactUsData Data = Newtonsoft.Json.JsonConvert.DeserializeObject<Barayand.OutModels.Miscellaneous.ContactUsData>(ContactUs.PageOtherSetting);
+
+}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Kito</title>
+    <link rel="stylesheet" href="/dist/css/styleNews.css">
+    <link rel="stylesheet" href="/dist/css/responsiveNews.css">
+    @section Styles{
+        @await Html.PartialAsync("_seo", Model.N_Seo)
+    }
+</head>
+<body class="news">
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logoRight"></a>
+            <div class="MenuTop">
+                <div class="Menu">
+                    @foreach (var item in AllCategory.Take(AllCategory.Count / 2))
+                    {
+                        <a href="/Blog/Cat/@item.NC_Id/@item.NC_SeoUrl" class="itemMenu">@item.NC_Title</a>
+                    }
+                </div>
+                <a href="/" class="logoCenter"></a>
+                <div class="Menu">
+                    @foreach (var item in AllCategory.Skip(AllCategory.Count / 2))
+                    {
+                        <a href="/Blog/Cat/@item.NC_Id/@item.NC_SeoUrl" class="itemMenu">@item.NC_Title</a>
+                    }
+                </div>
+            </div>
+            <a href="#" class="Announcements">اطلاعیه ها</a>
+            <span class="showSidebar fas fa-bars"></span>
+        </div>
+    </nav>
+    <div class="contentMain andHeader">
+        <header class="headerNews" style="background-image: url(/dist/img/headerNews.jpg);"></header>
+        <div class="container">
+            <div class="BoxBreads">
+                <div class="breadcrumbs">
+                    <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                    <a href="/Blog" class="breadc fas fa-chevron-left">مجله</a>
+                    <a href="/Blog/Cat/@RoutCategory.NC_Id/@RoutCategory.NC_SeoUrl" class="breadc fas fa-chevron-left">@RoutCategory.NC_Title</a>
+                    <a href="/Blog/Detail/@Model.N_Id/@Model.N_Title" class="breadc fas fa-chevron-left">@Model.N_Title</a>
+                </div>
+                <a href="#">News Details</a>
+            </div>
+            <section class="SliderNewsDetail">
+
+                <div class="SliderOneNews swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach (var item in AllNews)
+                        {
+                            <div class="swiper-slide">
+                                <div class="itemNewsDetailSlide">
+                                    <a href="#" class="hoverlink"></a>
+                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
+                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="@item.N_Title">
+                                    </div>
+                                    <div class="text">
+                                        <h3 class="title">
+                                            @item.N_Title
+                                        </h3>
+                                        <span>
+                                            @item.N_Summary
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="NextPrevSlider">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </section>
+            <div class="textContent">
+                @Model.N_Content
+            </div>
+            <section class="VideoCm">
+                <div class="card">
+                    <div class="contentCard flexDir">
+
+                        <h3 class="titleCard center">
+                            <label> ویدئوی خبر </label>
+                        </h3>
+                        <div class="videoProduct">
+                            <div class="h_iframe-aparat_embed_frame">
+                                <span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash//vt/frame"
+                                                                                             allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
+                                                                                             style="pointer-events: auto;"></iframe>
+                            </div>
+                        </div>
+                        <h3 class="titleCard center">
+                            <label> نظرات کاربران </label>
+                        </h3>
+                        @await Html.PartialAsync("_CommentList", Model.Comments)
+                        <h3 class="titleCard center">
+                            <label> ارسال نظر </label>
+                        </h3>
+                        <input type="hidden" id="E" value="@Model.N_Id" />
+                        <input type="hidden" id="T" value="5" />
+                        <div class="SendCM ContactUsForm">
+                            <div class="ContentFormCM">
+                                <div class="boxInput">
+                                    <input name="User" type="text" placeholder="نام و نام خانوادگی" required>
+                                </div>
+                                <div class="boxInput">
+                                    <input type="email" name="Email" placeholder="ایمیل">
+                                </div>
+                                <div class="boxInput full">
+                                    <textarea name="Msg" required placeholder="متن نظر"></textarea>
+                                </div>
+                                <div class="RowButton center">
+                                    <button class="inputFrm btnsend bg-primary" type="button" onclick="SubmitComment();">ارسال نظر</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="titleCard ">
+                        <label> اخبار مرتبط </label>
+                    </h3>
+                    <div class="contentCard flexDir">
+
+                        <div class="slider5 arrowCustom swiper-container">
+                            <div class="swiper-wrapper">
+                                @foreach (var item in AllNews.Where(x => x.N_CId == Model.N_CId))
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="itemrelatedNews">
+                                            <a href="#" class="hoverLink"></a>
+                                            <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
+                                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image"
+                                                     alt="@item.N_Title">
+                                            </div>
+                                            <div class="text">
+                                                @item.N_Summary
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- Add Arrows -->
+                            <div class="NextPrevSlider">
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <footer>
+        <div class="AboutFooter">
+            <div class="container">
+                <h3 class="title">فروشگاه هومکیتو</h3>
+                <div class="text">
+                    @{
+                        var footercontect = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo");
+                    }
+                    @footercontect.PageContent
+                </div>
+                <div class="LogosCertificate">
+                    <div class="LogoCer">
+                        <img src="/dist/img/logoSamandehi.png" alt="">
+                    </div>
+                    <div class="LogoCer">
+                        <img src="/dist/img/LogoEnamad.png" alt="">
+                    </div>
+                    <div class="LogoCer">
+                        <img src="/dist/img/LogoSenf.png" alt="">
+                    </div>
+                </div>
+                <div class="socialIcons">
+                    @foreach (var s in Data.social)
+                    {
+                        <a href="@s.Url@s.UserName" target="_blank" class="socicon fab @s.Icon"></a>
+                    }
+                </div>
+            </div>
+            <div class="helpDeskFooter">
+                <div class="container">
+                    <div class="col">
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "JobApplication").PageSeo).url" class="linkheldesk icon1">همکاری با ما</a>
+                        <a href="/ContactUs" class="linkheldesk icon2">تماس با ما </a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "TermConditions").PageSeo).url" class="linkheldesk icon3">شرایط استفاده</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "PrivacyPolicy").PageSeo).url" class="linkheldesk icon4">حریم خصوصی</a>
+                    </div>
+                    <div class="col">
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "RegistrationGuid").PageSeo).url" class="linkheldesk icon5">راهنمای عضویت</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "PhysicalPurchase").PageSeo).url" class="linkheldesk icon6">راهنمای خرید</a>
+                        <a href="/Pages/@Barayand.Common.Services.UtilesService.ParseSeoData(AllPages.FirstOrDefault(x=>x.PageName == "ReturnProduct").PageSeo).url" class="linkheldesk icon7">راهنمای مرجوعی</a>
+                        <a href="/Faq" class="linkheldesk icon8">سوالات متداول</a>
+                    </div>
+                </div>
+            </div>
+            <div class="BrandFooter swiper-container">
+                <div class="swiper-wrapper">
+
+                    @foreach (var item in footlogo)
+                    {
+                        <div class="swiper-slide">
+                            <a href="@item.E_Link" class="ItemBrandFooter" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image);">
+                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image" alt="@item.E_Title">
+                            </a>
+                        </div>
+                    }
+                </div>
+                <!-- Add Arrows -->
+                <div class="NextPrevSlider">
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+        <div class="subfooter">
+            <span>© 2020 “HomeKito” All Right Reserved</span>
+        </div>
+    </footer>
+    <div class="lightBoxADS" data-img="dist/img/lightbox-test.png" data-link="http://google.com"></div>
+    <script src="/dist/js/jquery-3.2.1.min.js"></script>
+    <script src="/dist/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/dist/js/hrb_notify.js"></script>
+    <script src="/dist/js/fivestar.js"></script>
+    <script src="/dist/js/swiper.js"></script>
+    <script src="/dist/js/script.js"></script>
+</body>
+</html>

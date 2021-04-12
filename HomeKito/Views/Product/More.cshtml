@@ -1,0 +1,180 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
+
+@{
+    var AllBrands = (List<Barayand.Models.Entity.BrandModel>)ViewBag.Brands;
+}
+
+<input type="hidden" id="typevalue" value="@ViewBag.type" />
+<input type="hidden" id="productid" value="@ViewBag.id" />
+<div class="loading">
+    <div class="boxLoading">
+        <i class="logo" style="background-image: url(/dist/img/logo.png);"></i>
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+</div>
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="#" class="breadc fas fa-chevron-left"> محصولات</a>
+            </div>
+            <a href="#">PRODUCTS</a>
+        </div>
+
+        <section class="secProductList">
+            <div class="ContentListProducts">
+                <div class="col1">
+                    <div class="FilterBox">
+                        <div class="accordion activeEvery">
+                            <div class="titleAccordion">
+                                <label>فیلتر های اعمال شده: </label> <small class="remove"
+                                                                            onclick="removeAllFilter()">حذف</small>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="BoxesFilterSelected">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>جستجو در نتایج: </label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="boxSearchAll">
+                                    <input id="ProductTitle" type="text" class="inputSearchProduct" onkeyup="FilterNameMore()" placeholder="نام محصول">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>برند</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="categoriesProduct">
+                                    <span class="parentCatProd">
+                                        <i class="openparent fal fa-chevron-left"></i>
+                                        <a href="#" class="linkcat">پزشکی</a>
+                                        <span class="childCatProd">
+                                            <i class="openchild fal fa-chevron-left"></i>
+                                            <a href="#" class="linkcat">جراحی</a>
+                                            <span class="childChildCatProd">
+                                                <i class="openchildchild fal fa-chevron-left"></i>
+                                                <a href="#" class="linkcat">ویدئو</a>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span class="parentCatProd">
+                                        <i class="openparent fal fa-chevron-left"></i>
+                                        <a href="#" class="linkcat">علمی مهندسی</a>
+                                    </span>
+                                    <span class="parentCatProd">
+                                        <i class="openparent fal fa-chevron-left"></i>
+                                        <a href="#" class="linkcat">مدیا پزشکی</a>
+                                    </span>
+                                    <span class="parentCatProd">
+                                        <i class="openparent fal fa-chevron-left"></i>
+                                        <a href="#" class="linkcat">هنری</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>برند</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <input type="text" class="searchFilterBrand" placeholder="جستجوی نام برند">
+                                <div class="BoxCheck resultSearchCheckbox">
+                                    @foreach (var item in AllBrands)
+                                    {
+                                        <div class="checkboxs">
+                                            <input type="checkbox" value="@item.B_Id" id="sq@(item.B_Id)" name="brand" tabindex="3" onchange="Moreproductsearch()">
+                                            <label for="sq@(item.B_Id)" class="lblinput">
+                                                <span>@item.B_Title</span>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardFilter">
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="immediatesending" class="immediatesending" id="immediatesending" onchange="Moreproductsearch()">
+                                <label for="is1">
+                                    <i></i>
+                                    <span>فقط ارسال فوری</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cardFilter">
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="isAvilable" class="isAvilable" id="isAvilable" onchange="Moreproductsearch()">
+                                <label for="isAvilable">
+                                    <i></i>
+                                    <span>فقط کالاهای موجود</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="accordion ">
+                            <div class="titleAccordion">
+                                <label>محدوده قیمت مورد نظر</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="ContentRangePrice">
+                                    <div class="showRagePrice" data-rtl="1" data-start="0" data-end="@(ViewBag.MaxPrice+1)"
+                                         data-min="@ViewBag.Minprice" data-max="@(ViewBag.MaxPrice+1)" data-step="1000">
+                                        <div class="box-sliderrange">
+                                            <label>تا</label>
+                                            <input type="text" id="input-with-keypress-1" data-type="rageSlider"
+                                                   disabled="">
+                                            <span>تومان</span>
+                                        </div>
+                                        <div class="box-sliderrange">
+                                            <label>از</label>
+                                            <input type="text" id="input-with-keypress-0" data-type="rageSlider"
+                                                   disabled="">
+                                            <span>تومان</span>
+                                        </div>
+                                    </div>
+                                    <div id="steps-slider"></div>
+                                    <div class="SubmitFilter">
+                                        <button type="button" onclick="Moreproductsearch(true);" class="btnsubmitFillter">اعمال محدودیت قیمت</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col2">
+                    <div class="cardProductList">
+                        <div class="sortProdList">
+                            <label class="sortLabel">
+                                مرتب سازی بر اساس :
+                            </label>
+                            <span class="itemSort" onclick="FilterOrderMore(1)">پربازدیدترین</span>
+                            <span class="itemSort" onclick="FilterOrderMore(2)">پرفروشترین </span>
+                            <span class="itemSort" onclick="FilterOrderMore(3)">محبوبترین</span>
+                            <span class="itemSort" onclick="FilterOrderMore(4)">جدیدترین</span>
+                            <span class="itemSort" onclick="FilterOrderMore(5)">ارزانترین</span>
+                            <span class="itemSort" onclick="FilterOrderMore(6)">گرانترین</span>
+                            <span class="itemSort" onclick="FilterOrderMore(7)">سریعترین ارسال</span>
+                            <span class="itemSort" onclick="FilterOrderMore(8)">بهترین فرصت خرید</span>
+                        </div>
+                        <div id="listmoredproduct">
+                            @await Html.PartialAsync("_ProductList.cshtml", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="lightBoxADS" data-img="/dist/img/lightbox-test.png" data-link="http://google.com"></div>

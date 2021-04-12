@@ -1,0 +1,17 @@
+﻿@model List<Barayand.Models.Entity.GalleryCategoryModel>
+
+
+        <div class="contentMain">
+            <div class="container">
+                <div class="BoxBreads">
+                    <div class="breadcrumbs">
+                        <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                        <a href="#" class="breadc fas fa-chevron-left">کاتالوگ</a>
+                    </div>
+                    <a href="#">Catalog</a>
+                </div>
+                <div id="catalogcatlist">
+                    @await Html.PartialAsync("_Catalogcatlist", Model)
+                </div>
+            </div>
+        </div>

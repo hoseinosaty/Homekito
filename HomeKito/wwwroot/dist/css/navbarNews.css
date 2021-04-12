@@ -1,0 +1,288 @@
+nav.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    background: url(../img/newNavBg.png) repeat-x top right / auto 100%;
+    z-index: 1000;
+    box-shadow: 0px 0px 10px -6px #000;
+    z-index: 1000000;
+    height: 110px;
+}
+nav.navbar .container {
+    position: relative;
+    height: 85px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav.navbar a.logoRight {
+    position: relative;
+    width: 140px;
+    height: 35px;
+    background: url(../img/logoNewNav.png) no-repeat center / 100%;
+}
+span.showSidebar {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: #fdf026;
+    color: #0046bf;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+a.Announcements {
+    position: relative;
+    width: 100px;
+    height: 35px;
+    background: #fdf026;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #0046bf;
+}
+a.Announcements:hover , span.showSidebar:hover{
+    background: #dacb00;
+    color: #002a74;
+}
+a.Announcements:active ,span.showSidebar:active {
+    background:#336ed3;
+    color: #fdf026;
+}
+nav.navbar .MenuTop {
+    position: relative;
+    width: calc(100% - 280px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 85px;
+}
+nav.navbar .MenuTop .Menu {
+    position: relative;
+    width: calc(50% - 55px );
+    display: flex;
+    flex-wrap: wrap;
+    height: 85px;
+    align-items: center;
+    justify-content: space-between;
+}
+nav.navbar .MenuTop .Menu a.itemMenu {
+    position: relative;
+    padding: 0 4px;
+    color: #fff;
+    font-weight: bold;
+}
+nav.navbar .MenuTop .Menu a.itemMenu:hover {
+    color: #fdf026;
+}
+nav.navbar .MenuTop a.logoCenter {
+    position: relative;
+    width: 95px;
+    height: 130px;
+    background: url(../img/logoNewsNavCenter.png) no-repeat bottom center / 100%;
+}
+/* --------- sidebar ------------ */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10000000;
+    background: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 0 15px -6px #737373;
+    transition: all 0.4s;
+    transform: translateX(300px);
+    width: 280px;
+    display: none;
+}
+
+    .sidebar.show {
+        transform: translateX(0px);
+    }
+
+    .sidebar a.logoSidebar {
+        position: relative;
+        width: calc(100% - 60px);
+        margin: 0px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70px;
+    }
+
+        .sidebar a.logoSidebar img {
+            width: 100%;
+        }
+
+    .sidebar .contentSidebar {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        max-height: calc(100vh - 130px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px 0 0;
+    }
+
+        .sidebar .contentSidebar a {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            /* background: #0046bf; */
+            border-radius: 5px;
+            margin: 1px 0;
+            /* color: #fff; */
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+            .sidebar .contentSidebar a:hover {
+                background: #0046bf;
+                color: #fff;
+                padding-right: 40px;
+            }
+
+            .sidebar .contentSidebar a:active {
+                background: #fdf026;
+                color: #333;
+            }
+
+i.bgsidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: #fdfdfd00;
+    z-index: 10000000;
+    transition: all 1s cubic-bezier(0, 1.24, 0, 1.01);
+    transform: scaleX(0);
+    transform-origin: right center;
+    cursor: pointer;
+}
+
+    i.bgsidebar.show {
+        transform: scaleX(1);
+    }
+
+.showSidebar {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .5s ease-in-out;
+    -moz-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    transition: .5s ease-in-out;
+    cursor: pointer;
+    display: none;
+}
+
+    .showSidebar span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: #5f5f5f;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .25s ease-in-out;
+        -moz-transition: .25s ease-in-out;
+        -o-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+    }
+
+        .showSidebar span:nth-child(1) {
+            top: 0px;
+        }
+
+        .showSidebar span:nth-child(2) {
+            top: 8px;
+        }
+
+        .showSidebar span:nth-child(3) {
+            top: 16px;
+        }
+
+    .showSidebar.open span:nth-child(1) {
+        top: 8px;
+        -webkit-transform: rotate(135deg);
+        -moz-transform: rotate(135deg);
+        -o-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+
+    .showSidebar.open span:nth-child(2) {
+        opacity: 0;
+        left: -60px;
+    }
+
+    .showSidebar.open span:nth-child(3) {
+        top: 8px;
+        -webkit-transform: rotate(-135deg);
+        -moz-transform: rotate(-135deg);
+        -o-transform: rotate(-135deg);
+        transform: rotate(-135deg);
+    }
+
+/* --------- sidebar ------------ */
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width:890px){
+
+    .sidebar, .showSidebar {
+        display: flex;
+    }
+}
+@media only screen and (max-width:890px){
+    span.showSidebar {
+        display: flex;
+    }
+    nav.navbar .MenuTop {
+        justify-content: center;
+    }
+    nav.navbar .MenuTop .Menu {
+        display: none;
+    }
+}
+@media only screen and (max-width:480px){
+    a.Announcements {
+        display: none;
+    }
+    nav.navbar a.logoRight {
+        /* width: 100px; */
+    }
+    nav.navbar a.logoCenter {
+        display: none;
+    }
+}

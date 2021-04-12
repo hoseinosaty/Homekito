@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\BasketServicegbook.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitForWindows" Version="2.31.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Stripe.net" Version="39.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Barayand.Common\Barayand.Common.csproj" />
+    <ProjectReference Include="..\Barayand.DAL\Barayand.DAL.csproj" />
+    <ProjectReference Include="..\Barayand.OutModels\Barayand.OutModels.csproj" />
+  </ItemGroup>
+
+</Project>

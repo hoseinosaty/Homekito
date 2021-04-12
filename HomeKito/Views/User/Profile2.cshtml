@@ -1,0 +1,672 @@
+﻿@model Barayand.Models.Entity.UserModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+@inject Barayand.Services.Interfaces.ILocalizationService _lang;
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Barayand.Models.Entity.InvoiceModel> LastInvoice = (List<Barayand.Models.Entity.InvoiceModel>)ViewBag.LastInvoices;
+    List<Barayand.Models.Entity.InvoiceModel> UserInvoices = (List<Barayand.Models.Entity.InvoiceModel>)ViewBag.UserInvoices;
+    List<Barayand.OutModels.Miscellaneous.FavoriteList> Favorites = (List<Barayand.OutModels.Miscellaneous.FavoriteList>)ViewBag.Favorites;
+    List<Barayand.Models.Entity.WalletHistoryModel> walletHistories = (List<Barayand.Models.Entity.WalletHistoryModel>)ViewBag.WalletHistory;
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/account.css" />
+    @if (_lang.GetLang() == "en")
+    {
+        <link rel="stylesheet" href="~/css/ltr-account.css" />
+    }
+}
+<div class="contentPanel">
+
+    <section class="user_account">
+        <div class="right_profile">
+            <span class="barRightProfile fal fa-bars"></span>
+            <div class="box_access_user box_profile">
+                <div class="user_info ">
+                    <div class="user_avatar" style='background-image:url(@Barayand.Common.Services.UtilesService.MediaUrls("UserProfile")@Model.U_Avatar)'>
+                        <i class="change_avatar fal fa-edit"></i>
+                    </div>
+                    <div class="user_name">
+                        <strong>@Model.U_Name @Model.U_Family</strong>
+                        <span>@Model.U_Email</span>
+                    </div>
+                </div>
+                <div class="buttons_account">
+                    <button class="change_password"><i class="fal fa-key"></i> <label>@localizer["BTNCHANGEPWD"]</label> </button>
+                    <button class="exit_account"><i class="fal fa-sign-out-alt"></i> <label>@localizer["BTNLOGOUT"]</label> </button>
+                </div>
+            </div>
+            <div class="other_links box_profile">
+                <h3 class="title_box_profile">@localizer["MENUTTL"]</h3>
+                <a href="#profile" class="active"><i class="fal fa-user"></i> <label>@localizer["MENUITEM#1"]</label> </a>
+                <a href="#edit_profile"><i class="fal fa-user-edit"></i> <label>@localizer["MENUITEM#2"]</label> </a>
+                <a href="#favorites_list"><i class="fal fa-heart"></i> <label>@localizer["MENUITEM#3"]</label> </a>
+                <a href="#RequestsBox"><i class="fal fa-exchange-alt"></i> <label>@localizer["MENUITEM#5"]</label> </a>
+                <a href="#shoping_history"><i class="fal fa-file-invoice-dollar"></i> <label>@localizer["MENUITEM#6"]</label> </a>
+                <a href="#tracking_orther"><i class="fal fa-shopping-basket"></i> <label>@localizer["MENUITEM#7"]</label> </a>
+                <a href="#wallet"><i class="fal fa-wallet"></i> <label>@localizer["MENUITEM#8"]</label> </a>
+                <input type="hidden" id="data247" value='@Barayand.Common.Services.UtilesService.MediaUrls("UPLOADUSERPROFILE")' />
+            </div>
+        </div>
+        <div class="left_profile">
+            <h4 class="Title_left_profile"> </h4>
+            <div class=" content_profile">
+                <div class="loading"></div>
+                <div id="profile">
+                    <div class="showInfo">
+                        <h3 class="titleBx">@localizer["PESRONALINFOBOXTTL"]</h3>
+                        <div class="content_detail">
+                            <div class="col">
+                                <label> @localizer["PINAMETTL"] :</label>
+                                <span>@Model.U_Name @Model.U_Family</span>
+                            </div>
+                            <div class="col">
+                                <label>  @localizer["PIEMAILTTL"] :</label>
+                                <span>@Model.U_Email</span>
+                            </div>
+                            <div class="col">
+                                <label> @localizer["PIPHONETTL"] :</label>
+                                <span>@Model.U_Phone</span>
+                            </div>
+                            <div class="col">
+                                <label> @localizer["PISUBSCRIBED"] :</label>
+                                <span>-</span>
+                            </div>
+                            <a href="#edit_profile" class="editProfilee"><i class="fal fa-user-edit"></i> @localizer["MENUITEM#2"]</a>
+                        </div>
+                    </div>
+                    <div class="FavoriteList">
+                        <!--Favorites-->
+                        <h3 class="titleBx">@localizer["FAVORITEBOXTTL"]</h3>
+                        <div class="content_FavoriteList">
+                            @foreach (var item in Favorites)
+                            {
+                                <div class="boxFavorite">
+                                    <img src="@item.Image" alt="@item.Title">
+                                    <div class="ctext">
+                                        <strong>@item.Title</strong>
+                                        <lable class="fav_price">@item.Price</lable>
+                                    </div>
+                                    <i class="fal fa-trash remove_fav" data-fid="@item.Id" onclick="RemoveFavorite(@item.Id)"></i>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="shoppingHistory">
+                        <h3 class="titleBx">@localizer["PURCHASEBOXTTL"]</h3>
+                        <div class="content_shoppingHistory">
+                            @if (LastInvoice != null)
+                            {
+                                <div class="content_myTable">
+                                    <div class="myTable">
+                                        <div class="myRow myRowTitle">
+                                            <div class="myCol xs">#</div>
+                                            <div class="myCol lg">@localizer["PURCHASETBLC1"]</div>
+                                            <div class="myCol lg">@localizer["PURCHASETBLC2"]</div>
+                                            <div class="myCol lg">@localizer["PURCHASETBLC4"]</div>
+                                            <div class="myCol lg">@localizer["PURCHASETBLC5"]</div>
+                                            <div class="myCol lg">@localizer["PURCHASETBLC3"]</div>
+
+                                            <div class="myCol lg">@localizer["PURCHASETBLC7"]</div>
+
+                                        </div>
+                                        @{ int cnt = 1;}
+                                        @foreach (var inv in LastInvoice)
+                                        {
+                                            string prdType = "";
+                                            string payType = "";
+                                            if (inv.I_PaymentType == 1)
+                                            {
+                                                payType = "Credit Card";
+                                            }
+                                            if (inv.I_PaymentType == 2)
+                                            {
+                                                payType = "Wallet";
+                                            }
+                                            if (inv.I_PaymentType == 3)
+                                            {
+                                                payType = "Wallet / Credit Card";
+                                            }
+
+                                            <div class="myRow" data-id="1">
+                                                <div class="myCol xs">@cnt</div>
+                                                <div class="myCol lg">@inv.I_Id</div>
+                                                <div class="myCol lg">@(((DateTime)inv.Created_At).ToString("yyyy-MM-dd"))</div>
+                                                <div class="myCol lg">@inv.I_TotalAmount.ToString("#,#")</div>
+                                                <div class="myCol lg">@payType</div>
+                                                <div class="myCol lg">@inv.I_PaymentDate</div>
+
+
+                                                <div class="myCol sm moreDetails">
+                                                    <a href="#" onclick="LoadInvoiceProducts('@inv.I_Id')" class="fal fa-angle-right"></a>
+                                                </div>
+                                            </div>
+                                            cnt++;
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <i class="fal fa-info-circle NotFoundData"></i>
+                                <label> @localizer["PURCHASETBLEMPTY"]</label>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div id="edit_profile">
+
+                    <div class="content_edit_profile">
+                        <div class="rowProfileAvatar">
+                            <div class="picAvatar" id="selectedUserAvatar" style='background-image:url(@Barayand.Common.Services.UtilesService.MediaUrls("UserProfile")@Model.U_Avatar)'></div>
+                            <div class="col_input">
+                                <label>@localizer["EDITPROFILEAVATARTTL"]</label>
+                                <input type="file" id="AvatarSelector" accept="image/*" />
+                            </div>
+                        </div>
+                    </div>
+                    <form id="updateProfileFrm">
+                        <div class="content_edit_profile">
+
+                            <div class="col_input">
+                                <label>@localizer["EPROFNAMETTL"]</label>
+                                <input type="text" placeholder="@localizer["EPROFNAMETTL"]" name="Name" value="@Model.U_Name" required />
+                                <div class="input-error">
+                                    Erro
+                                </div>
+                            </div>
+                            <div class="col_input">
+                                <label>@localizer["EPROFFAMILTTTL"]</label>
+                                <input type="text" placeholder="@localizer["EPROFFAMILTTTL"]" name="Family" value="@Model.U_Family" required />
+                                <div class="input-error">
+                                    Erro
+                                </div>
+                            </div>
+                            <div class="col_input">
+                                <label>@localizer["EPROFMAILTTL"]</label>
+                                <input type="text" placeholder="@localizer["EPROFMAILTTL"]" name="Email" value="@Model.U_Email" disabled />
+                            </div>
+                            <div class="col_input">
+                                <label>@localizer["EPROFPHONETTL"]</label>
+                                <input type="text" placeholder="@localizer["EPROFPHONETTL"]" name="Phone" value="@Model.U_Phone" required />
+                                <div class="input-error">
+                                    Erro
+                                </div>
+                            </div>
+                            <input type="hidden" name="Avatar" id="userAvatar" value="@Model.U_Avatar" />
+                            <div class="col_input" style="align-items: flex-start;display: flex;justify-content: flex-end;width:calc(100% - 20px)">
+                                <button class="submit_profile" type="button" id="updateProfileBtn" style="cursor:pointer" onclick="UpdateProfile();">@localizer["EPROFSAVEBTN"]</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div id="favorites_list">
+                    <div class="content_favorites_list">
+                        @foreach (var item in Favorites.Where(x => x.Type == 1).ToList())
+                        {
+                            <div class="Favorite_List_Box">
+                                <div class="PicFLB" style="background-image: url(@item.Image)">
+                                </div>
+                                <div class="ctext">
+                                    <strong>@item.Title</strong>
+                                    <lable class="fav_price">@item.Price</lable>
+                                    <a href="@item.Url">@localizer["SEEPRODUCTBTN"]</a>
+                                </div>
+                                <i class="fal fa-trash remove_fav" data-fid="@item.Id" onclick="RemoveFavorite(@item.Id)"></i>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div id="shoping_history">
+                    @if (UserInvoices != null && UserInvoices.Count() > 0)
+                    {
+                        <div class="content_myTable">
+                            <div class="myTable">
+                                <div class="myRow myRowTitle">
+                                    <div class="myCol xs">#</div>
+                                    <div class="myCol lg">@localizer["PURCHASETBLC1"]</div>
+                                    <div class="myCol lg">@localizer["PURCHASETBLC2"]</div>
+                                    <div class="myCol lg">@localizer["PURCHASETBLC4"]</div>
+                                    <div class="myCol lg">@localizer["PURCHASETBLC5"]</div>
+                                    <div class="myCol lg">@localizer["PURCHASETBLC3"]</div>
+                                    <div class="myCol lg">@localizer["OFFTICKETBTNTTL"]</div>
+
+                                    <div class="myCol lg">@localizer["PURCHASETBLC7"]</div>
+                                </div>
+                                @{ int cnt = 1;}
+                                @foreach (var inv in UserInvoices.ToList())
+                                {
+                                    string payType = "";
+                                    if (inv.I_PaymentType == 1)
+                                    {
+                                        payType = "Credit Card";
+                                    }
+                                    if (inv.I_PaymentType == 2)
+                                    {
+                                        payType = "Wallet";
+                                    }
+                                    if (inv.I_PaymentType == 3)
+                                    {
+                                        payType = "Wallet / Credit Card";
+                                    }
+                                    <div class="myRow" data-id="1">
+                                        <div class="myCol xs">@cnt</div>
+                                        <div class="myCol lg">@inv.I_Id</div>
+                                        <div class="myCol lg">@(((DateTime)inv.Created_At).ToString("yyyy-MM-dd"))</div>
+                                        <div class="myCol lg">@inv.I_TotalAmount.ToString("#,#")</div>
+                                        <div class="myCol lg">@payType</div>
+                                        <div class="myCol lg">@inv.I_PaymentDate</div>
+                                        <div class="myCol lg">
+                                            <a style="font-weight:bolder;color:blue" class="ticket" target="_blank" href="/User/Ticket/Inv/@inv.I_Id">@localizer["OFFTICKETBTNTTL"]</a>
+                                        </div>
+
+
+                                        <div class="myCol sm moreDetails">
+                                            <a href="#" onclick="LoadInvoiceProducts('@inv.I_Id')" class="fal fa-angle-right"></a>
+                                        </div>
+                                    </div>
+                                    cnt++;
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <i class="fal fa-info-circle NotFoundData"></i>
+                        <label> There is nothing to display!</label>
+                    }
+                </div>
+                <div id="tracking_orther">
+                    <div class="box_tracking">
+                        <h2>@localizer["TRACKINGBOXTTL"]</h2>
+                        <div class="boxInputBox">
+                            <input type="text" placeholder="@localizer["TRACKINPTTTL"]">
+                            <button class="btnBox">@localizer["TRACKBTNTTL"]</button>
+                        </div>
+                    </div>
+
+                    <div class="showResult_tracking">
+                        @localizer["TRACKNORESULTTTL"]
+                    </div>
+                </div>
+                <div id="wallet">
+                    <div class="content_Wallet">
+                        <div class="BoxWallet">
+                            @*<p> Text Text Text  Text Text Text  Text Text Text  Text Text Text  Text Text Text  Text Text Text  Text Text Text </p>*@
+                            <h3>@localizer["WALLETAVILABLETTL"] : @Model.U_Wallet $</h3>
+                            <h2> @localizer["WALLETBXTTL"] </h2>
+                            <div class="boxInputBox">
+                                <input type="text" name="WalletRecharge" id="WalletRechargeAmount" placeholder="@localizer["WALLETCHINPTTL"]">
+                                <button class="btnBox" id="chargeBtn">@localizer["WALLETCHBTNTTL"]</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content_myTable">
+                        <div class="myTable">
+                            <div class="myRow myRowTitle">
+                                <div class="myCol xs">#</div>
+                                <div class="myCol lg">@localizer["WALLETTBLC1"]</div>
+                                <div class="myCol lg">@localizer["WALLETTBLC2"]</div>
+                                <div class="myCol lg">@localizer["WALLETTBLC3"]</div>
+                            </div>
+                            @{int counter = 1; }
+                            @foreach (var w in walletHistories)
+                            {
+                                <div class="myRow">
+                                    <div class="myCol xs">@counter</div>
+                                    <div class="myCol lg">@(((DateTime)w.Created_At).ToString("dd MMM yyyy"))</div>
+                                    <div class="myCol lg">
+                                        @if (w.WH_TransactionType == 1)
+                                        {
+                                            <i class="fal fa-angle-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fal fa-angle-down"></i>
+                                        }
+                                    </div>
+                                    <div class="myCol lg">@Barayand.Common.Services.UtilesService.FormatCurrency(w.WH_Amount)</div>
+                                </div>
+                                counter++;
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id="RequestsBox">
+                    <div class="contextTable">
+                        <table id="requests" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>@localizer["OFFREQTBLC1"]</th>
+                                    <th>@localizer["OFFREQTBLC2"]</th>
+                                    <th>@localizer["OFFREQTBLC3"]</th>
+                                    <th>@localizer["OFFREQTBLC4"]</th>
+                                    <th>@localizer["OFFREQTBLC5"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in (List<Barayand.Models.Entity.OfflinRequestModel>)ViewBag.OfflineRequests)
+                                {
+                                    var state = @localizer["OFFREQSTATE" + item.O_Status];
+
+                                    <tr>
+                                        <td>
+                                            <div class="rowSharp">
+                                                <span>@(((DateTime)item.Created_At).ToString("yyyy-MM-dd HH:mm:ss"))</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <small class="text">@item.O_Details</small>
+                                            <small class="text">@item.O_Url</small>
+                                        </td>
+                                        <td>@item.O_Price</td>
+                                        <td>@item.O_DeliverDate</td>
+                                        <td>
+                                            @if (item.O_Status == 2)
+                                            {
+                                                <div class="BoxPayDl wait">
+                                                    <span>@state</span>
+                                                    <button class="payRequest">پرداخت</button>
+                                                </div>
+                                            }
+                                            @if (item.O_Status == 3)
+                                            {
+                                                <div class="BoxPayDl ok">
+                                                    <span>@state</span>
+                                                    <button class="payRequest">دانلود</button>
+                                                </div>
+                                            }
+                                            @if (item.O_Status == 4)
+                                            {
+                                                <div class="BoxPayDl">
+                                                    <span style="color:red">@state</span>
+                                                    <button style="border-color:red;background-color:red;color:#fff" class="payRequest" onclick="ErrorDialog('@item.O_Reason')">دلیل</button>
+                                                </div>
+                                            }
+                                            @if (item.O_Status == 1)
+                                            {
+                                                <div class="BoxPayDl">
+                                                    <span>@state</span>
+                                                </div>
+                                            }
+
+                                        </td>
+                                        <td>
+                                            <a href="/User/Ticket/Sup/@item.O_Id" class="tiket">@localizer["OFFTICKETBTNTTL"]</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>@localizer["OFFREQTBLC1"]</th>
+                                    <th>@localizer["OFFREQTBLC2"]</th>
+                                    <th>@localizer["OFFREQTBLC3"]</th>
+                                    <th>@localizer["OFFREQTBLC4"]</th>
+                                    <th>@localizer["OFFREQTBLC5"]</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div id="ShowTickets">
+                    <div class="rowBtnTopBox">
+                        <button class="btnTopBox openModal" data-lightbox="CreateTicket">@localizer["TICKETBOXTTL"] </button>
+                    </div>
+                    <div class="TableBoxTransection">
+                        <table id="ticketsTable" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>@localizer["TICKECTCL1"] </th>
+                                    <th>@localizer["TICKECTCL2"]</th>
+                                    <th>@localizer["TICKECTCL3"]</th>
+                                    <th>@localizer["TICKECTCL4"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="">
+                                    <td>18/12/1398</td>
+                                    <td>عنوان عنوان عنوان عنوان عنوان عنوان</td>
+                                    <td><label class="labelBdg success">پاسخ داده شده</label></td>
+                                    <td><a href="#PreviewTicket" class="opentab">مشاهده</a></td>
+                                </tr>
+                                <tr class="">
+                                    <td>18/12/1398</td>
+                                    <td>عنوان عنوان عنوان عنوان عنوان عنوان</td>
+                                    <td><label class="labelBdg warning">در انتظار پاسخ</label></td>
+                                    <td><a href="#PreviewTicket" class="opentab">مشاهده</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="PreviewTicket">
+                    <div class="boxTransaction">
+                        <h2 class="title4">مشاهده پیام های تیکت</h2>
+                        <div class="rowBtnTopBox">
+                            <button class="btnTopBox ">بازگشت</button>
+                        </div>
+                        <div class="showContentTicket">
+                            <div class="ItemsShowTciket">
+                                <div class="ItemTicketShow Me">
+                                    <div class="picUser" style="background-image: url(/img/avatar.png) ;"></div>
+                                    <div class="textItemTicket">
+                                        <div class="contentItemTicket">
+                                            <h2 class="NameuserTicket">حمیدرضا بیگلری</h2>
+                                            <span class="dateReg">18 اسفند 1398</span>
+                                            <div class="MessageTicket">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
+                                                لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                                باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد
+                                                تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در
+                                                زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و
+                                                شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات
+                                                پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                            </div>
+                                            <a href="#" class="attachmentFile icon-attach" download>دانلود فایل ضمیمه</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ItemTicketShow Me">
+                                    <div class="picUser" style="background-image: url(/img/avatar.png) ;"></div>
+                                    <div class="textItemTicket">
+                                        <div class="contentItemTicket">
+                                            <h2 class="NameuserTicket">حمیدرضا بیگلری</h2>
+                                            <span class="dateReg">18 اسفند 1398</span>
+                                            <div class="MessageTicket">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
+                                                لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                                باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد
+                                                تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در
+                                                زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و
+                                                شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات
+                                                پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                            </div>
+                                            <a href="#" class="attachmentFile icon-attach" download>دانلود فایل ضمیمه</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ItemTicketShow">
+                                    <div class="picUser" style="background-image: url(/img/avatar.png) ;"></div>
+                                    <div class="textItemTicket">
+                                        <div class="contentItemTicket">
+                                            <h2 class="NameuserTicket">حمیدرضا بیگلری</h2>
+                                            <span class="dateReg">18 اسفند 1398</span>
+                                            <div class="MessageTicket">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
+                                                لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                                باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد
+                                                تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در
+                                                زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و
+                                                شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات
+                                                پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                            </div>
+                                            <a href="#" class="attachmentFile icon-attach" download>دانلود فایل ضمیمه</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contentCreateTicket">
+                            <div class="rowTrBox">
+                                <div class="col1">متن</div>
+                                <div class="col2">
+                                    <textarea class="Inputfrm"></textarea>
+                                </div>
+                            </div>
+                            <div class="rowTrBox">
+                                <div class="col1">انتخاب فایل</div>
+                                <div class="col2">
+                                    <div class="fileUploadObject">
+                                        <input type="file" class="Inputfrm" id="FileUpload">
+                                        <label for="FileUpload">فایل خود را انتخاب کنید</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btnPaymentRow">
+                                <button class="RegTicket">ارســــال</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="detailThisRow">
+            <div class="close"><i class="fal fa-arrow-left"></i> بازگشت </div>
+            <div class="content_detailThisRow">
+                <h3 class="titleBx">اطلاعات فروش</h3>
+                <div class="content_detail">
+                    <div class="col">
+                        <label> تحویل گیرنده: </label>
+                        <span id="RUName">حمیدرضا بیگلری</span>
+                    </div>
+                    <div class="col">
+                        <label> شماره تماس تحویل گیرنده :</label>
+                        <span id="RUPhone">-</span>
+                    </div>
+                    <div class="col">
+                        <label> آدرس تحویل گیرنده :</label>
+                        <span id="RUAddress">09182009667</span>
+                    </div>
+                </div>
+                <h3 class="titleBx" style="margin: 10px auto">محصولات خریداری شده</h3>
+                <div class="content_myTable">
+                    <div class="myTable" id="OrderProducts">
+                        <div class="myRow myRowTitle">
+                            <div class="myCol xs">#</div>
+                            <div class="myCol lg">نام محصول</div>
+                            <div class="myCol lg">تعداد سفارش</div>
+                            <div class="myCol lg">قیمت</div>
+                            <div class="myCol lg">قیمت کل</div>
+                            <div class="myCol lg">نسخه</div>
+                            <div class="myCol lg">لینک دانلود</div>
+                        </div>
+                        <div class="myRow">
+                            <div class="myCol xs">1</div>
+                            <div class="myCol lg">کفش کالج مردانه</div>
+                            <div class="myCol lg">12 عدد</div>
+                            <div class="myCol lg">10.000 تومان</div>
+                            <div class="myCol lg">120.000 تومان</div>
+                            <div class="myCol lg">PDF</div>
+                            <div class="myCol lg">
+                                <a href="#" style="background:green;border:1px solid green;color:#fff;height:20px;width:40px;display:flex;align-items:center;justify-content:center;padding:5px">دانلود</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form id="changePasswordFrm">
+            <div class="modal_invite_website md2">
+
+                <div class="content_modal_invite_website">
+                    <i class="fal fa-times close"></i>
+                    <img src="/img/password.png" alt="" />
+                    <span> Fill out the form below to change your password </span>
+                    <input type="password" name="CurrentPassword" class="invite_input" placeholder="Current password" required />
+                    <div class="input-error">
+                        Erro
+                    </div>
+                    <input type="password" name="Password" class="invite_input" id="pwd" placeholder="New password" data-min="6" />
+                    <div class="input-error">
+                        Erro
+                    </div>
+                    <input type="password" name="ConfirmPassword" class="invite_input" placeholder="Confirm Password" required data-related="#pwd" />
+                    <div class="input-error">
+                        Erro
+                    </div>
+                    <button class="btn_invite" type="button" id="updatePasswordBtn" onclick="updatePassword();"><i class="fal fa-key"></i> Save </button>
+                </div>
+
+            </div>
+        </form>
+    </section>
+</div>
+<!--Content Page-->
+
+<div class="modal" data-lightbox="OrderDetail">
+    <i class="bgModal"></i>
+    <h2 class="title3">اطلاعات سفارش</h2>
+    <div class="contentModal">
+
+    </div>
+</div>
+<div class="modal" data-lightbox="CreateTicket">
+
+
+    <div class="contentModal">
+        <i class="closeModal icon-cancel-2"></i>
+        <h2 class="title3">ایجاد تیکت جدید</h2>
+        <span class="subTitle1">تیکت جدید ایجاد نمائید</span>
+
+        <div class="contentCreateTicket">
+            <div class="rowTrBox">
+                <div class="col1">موضوع</div>
+                <div class="col2"><input type="text" class="Inputfrm"></div>
+            </div>
+            <div class="rowTrBox">
+                <div class="col1">عنوان</div>
+                <div class="col2">
+                    <select name="sdfs" class="selectfrm">
+                        <option value="0">تست تست تست تست تست تست</option>
+                        <option value="0">تست تست تست تست تست تست</option>
+                        <option value="0">تست تست تست تست تست تست</option>
+                        <option value="0">تست تست تست تست تست تست</option>
+                        <option value="0">تست تست تست تست تست تست</option>
+                        <option value="0">تست تست تست تست تست تست</option>
+                        <option value="0">تست تست تست تست تست تست</option>
+                        <option value="0">تست تست تست تست تست تست</option>
+                    </select>
+                </div>
+            </div>
+            <div class="rowTrBox">
+                <div class="col1">متن</div>
+                <div class="col2">
+                    <textarea class="Inputfrm"></textarea>
+                </div>
+            </div>
+            <div class="btnPaymentRow">
+                <button class="RegTicket">ثبت تیکت</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="AvatarCropper">
+    <div class="CropperArea">
+
+    </div>
+    <button type="button" id="uploadAvatarbtn">Upload</button>
+</div>

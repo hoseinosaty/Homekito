@@ -1,0 +1,859 @@
+﻿@model Barayand.Models.Entity.ProductModel
+@inject Barayand.DAL.Interfaces.IPCRepository _categories
+@inject Barayand.DAL.Interfaces.IExpertReviewRepository _Eexpertreview
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.EnergyUsageModel> _EnergyUsageModel
+@inject Barayand.DAL.Interfaces.IUserRepository _userrepo
+@inject Barayand.DAL.Interfaces.IProductManualRepository _ProductManual
+@inject Barayand.DAL.Interfaces.IPCalcRepository _Calcrepo
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.OptionsModel> _optionrepo;
+
+@{
+    var Brand = (Barayand.Models.Entity.BrandModel)ViewBag.brand;
+
+    var seobrand = Barayand.Common.Services.UtilesService.ParseSeoData(Brand.B_Seo);
+    var GetCatAll = (List<Barayand.Models.Entity.ProductCategoryModel>)(await _categories.GetAll()).Data;
+    var cat1 = GetCatAll.FirstOrDefault(x => x.PC_Id == Model.P_MainCatId);
+    var seoProduct = Barayand.Common.Services.UtilesService.ParseSeoData(Model.P_Seo);
+    var seo = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+    var cat2 = GetCatAll.FirstOrDefault(x => x.PC_Id == Model.P_EndLevelCatId);
+    var seo2 = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+    var energy = (await _EnergyUsageModel.GetById(Model.P_EnergyId));
+    var exview = (await _Eexpertreview.GetByProduct(Model.P_Id)).Where(x => x.E_Status).ToList();
+    string FavState = "";
+    int flag = 1;
+    var productmanual = await _ProductManual.GetByProductId(Model.P_Id);
+}
+@section Styles{
+    @await Html.PartialAsync("_seo", Model.P_Seo)
+}
+<form id="frmData748">
+    @if (Model.DefaultProductCombine != null)
+    {
+        <input type="hidden" name="ProductCombineId" id="data748" value="@Model.DefaultProductCombine.X_Id" />
+    }
+    <input type="hidden" name="ProductType" id="data748" value="1" />
+    <input type="hidden" name="Quantity" class="countProdInput justnumber" value="1" />
+</form>
+@if (productmanual != null)
+{
+    <form id="frmDatamanual">
+        <input type="hidden" name="ProductManualId" id="data748" value="@productmanual.M_Id" />
+        <input type="hidden" name="ProductType" id="data748" value="2" />
+        <input type="hidden" name="Quantity" class="countProdInput justnumber" value="1" />
+    </form>
+}
+<input type="hidden" value="@Model.P_Id" id="ProdId" />
+<div class="contentMain DetailProductContainer">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="/Products/@cat1.PC_Id/@seo.url" class="breadc fas fa-chevron-left">@cat1.PC_Title</a>
+                <a href="/Products/@cat1.PC_Id/@seo.url/@cat2.PC_Id/@seo2.url" class="breadc fas fa-chevron-left">@cat2.PC_Title</a>
+                <a class="breadc fas fa-chevron-left">@Model.P_Title</a>
+            </div>
+            <a href="#" class="feedback fas fa-ellipsis-h itemModal" data-modalname="feedbackBox">بازخورد این کالا</a>
+        </div>
+        <section class="secDetailProduct">
+            <div class="card">
+                <div class="contentCard flexDir">
+
+                    <div class="rowCustom rowdetailprod">
+                        <div class="col1">
+                            <div class="FunctionalButtons">
+                                @if (ViewBag.loggedin)
+                                {
+                                    if (ViewBag.LikedIt)
+                                    {
+                                        FavState = " active";
+                                        flag = 2;
+
+                                    }
+                                    <span onclick="Favoriteprod(@Model.P_Id)" id="FavoriteView" class="btnfunc like fal fa-heart @FavState" data-flag="@flag">
+                                        <span class="tooltips">افزودن به علاقمندی ها</span>
+                                    </span>
+                                }
+                                <span class="btnfunc itemModal share fal fa-share-alt" data-modalName="share">
+                                    <span class="tooltips">اشتراک گذاری</span>
+                                </span>
+                                <span class="btnfunc itemModal event fal fa-bell" data-modalName="notification">
+                                    <span class="tooltips">اطلاع رسانی شگفت انگیز</span>
+                                </span>
+                            </div>
+                            <div class="productPics">
+                                <div class="largPicProd" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@Model.P_Image);">
+                                    <img id="zoom_01" class="zoomLargPic" src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@Model.P_Image"
+                                         data-zoom-image="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@Model.P_Image" />
+                                </div>
+                                <div class="smallPicProd">
+                                    @foreach (var item in Model.P_ImgGallery.Split(","))
+                                    {
+                                        <div class="itemSmallPic itemModal " data-modalName="picsSlideProduct"
+                                             style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item);"
+                                             data-pic="@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item">
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col2">
+                            <div class="rowTitleProd">
+                                <h2 class="titleProductDetail">@Model.P_Title</h2>
+                                <a href="/Brand/@(Brand.B_Id)/@(seobrand.url)" class="brandDetailProd">
+                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@Brand.B_Logo"
+                                         alt="@Brand.B_Title">
+                                </a>
+                            </div>
+                            <div class="rowInfoDetailprod">
+                                <div class="col1">
+                                    <div class="titleSmallProd">
+                                        <label>@Model.P_EnTitle</label>
+                                    </div>
+                                    <div class="rateAndQuality">
+                                        <div class="fivestars">
+                                            <label class="resultStar">(@Model.ManualRate)</label>
+                                            <div class="mystars">
+                                                <i class="progressStar" style="width:@((Model.ManualRate * 20) + "%")"></i>
+                                            </div>
+                                        </div>
+
+                                        @if (energy != null)
+                                        {
+                                            <label class="qualityTag">@energy.E_Title</label>
+                                        }
+                                    </div>
+                                    <div class="rowCustom brandCat">
+                                        <span class="itembc">
+                                            <label>برند : </label>
+                                            <a href="/Brand/@Brand.B_Id/@seobrand.url">@Brand.B_Title</a>
+                                        </span>
+                                        <span class="itembc">
+                                            <label>دسته بندی : </label>
+                                            <a href="/Products/@Model.P_EndLevelCatId/@seo.url/@seo2.url">@Model.P_CatTitle</a>
+                                        </span>
+                                    </div>
+                                    <div class="selectColor">
+                                        <div class="titleColor">انتخاب رنگ: </div>
+                                        @if (Model.Colors.Count > 0)
+                                        {
+                                            foreach (var color in Model.Colors)
+                                            {
+                                                if (Model.DefaultProductCombine.X_ColorId == color.Id)
+                                                {
+                                                    <div class="radioColor">
+                                                        <input type="radio" id="c@(color.Id)" name="colorProd" checked="checked" value="@color.Id" onchange="ChangePrice(@Model.P_Id)" />
+                                                        <label for="c@(color.Id)">
+                                                            <i class="color"
+                                                               style="background-color: @color.ColorCode;"></i>@color.Title
+                                                        </label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="radioColor">
+                                                        <input type="radio" id="c@(color.Id)" name="colorProd" value="@color.Id" onchange="ChangePrice(@Model.P_Id)" />
+                                                        <label for="c@(color.Id)">
+                                                            <i class="color"
+                                                               style="background-color: @color.ColorCode;"></i>@color.Title
+                                                        </label>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                    <div class="rowCustom flexDir">
+                                        <h4>ویژگی های برتر محصول :</h4>
+
+                                        @foreach (var item in (List<Barayand.OutModels.Miscellaneous.AttributeStructure>)Model.P_AttributeStructures)
+                                        {
+                                            if (item.ShowInDetail)
+                                            {
+                                                <span class="itemInfo"><label>@item.AttributeTitle: @item.AnswerTitle</label></span>
+
+                                            }
+                                        }
+
+                                        <span class="itemInfo betwen">
+                                            <label></label>
+                                            <label>
+                                                کشور سازنده :<a href="/Products/Country/@Model.Cuntry.M_Id/@Model.Cuntry.M_Title">@Model.Cuntry.M_Title</a>
+                                            </label>
+                                        </span>
+                                    </div>
+                                    <div class="buttonsDetailProd">
+                                        <button class="btnDetailProd Warranty">ضمانت نامه </button>
+                                        <button class="btnDetailProd CheckOriginality">بررسی اصل بودن کالا</button>
+                                        <button class="btnDetailProd Compare" onclick="addTocompare(@Model.P_Id)">
+                                            مقایسه
+                                            محصول
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col2">
+                                    <div class="otherInfoDetailProd">
+                                        @if (Model.Gift != null)
+                                        {
+                                            <a href="" class="giftBox">
+                                                <i class="icon"></i>
+                                                <label>هدیه خرید: </label>
+                                                <span>@Model.Gift.P_Title</span>
+                                            </a>
+                                        }
+                                        <div class="garanty">
+                                            <h4>نوع گارانتی</h4>
+                                            @if (Model.Warranties.Count > 0)
+                                            {
+                                                foreach (var warranty in Model.Warranties.Distinct())
+                                                {
+                                                    if (Model.DefaultProductCombine.X_WarrantyId == warranty.Id)
+                                                    {
+                                                        <div class="radioCheckbox">
+                                                            <input type="radio" id="g@(warranty.Id)" name="garanty" checked="checked" value="@warranty.Id" onchange="ChangePrice(@Model.P_Id)" />
+                                                            <label for="g@(warranty.Id)">@warranty.Title</label>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="radioCheckbox">
+                                                            <input type="radio" id="g@(warranty.Id)" name="garanty" value="@warranty.Id" onchange="ChangePrice(@Model.P_Id)" />
+                                                            <label for="g@(warranty.Id)">@warranty.Title</label>
+                                                        </div>
+                                                    }
+
+                                                }
+                                            }
+                                        </div>
+
+                                        @if (Model.DefaultProductCombine != null)
+                                        {
+                                            if (Model.DefaultProductCombine.PriceModel != null && Model.DefaultProductCombine.PriceModel.Price > 0)
+                                            {
+
+                                                <div id="PriceHolder">
+                                                    @if (Model.DefaultProductCombine.PriceModel.HasDiscount)
+                                                    {
+                                                        <div class="PriceBox real">
+                                                            <label>قیمت اصلی :</label>
+                                                            <span id="PriceAjax">@Model.DefaultProductCombine.X_Price.ToString("#,#")<small>تومان</small></span>
+                                                        </div>
+                                                        <div class="PriceBox">
+                                                            <label>قیمت نهایی :</label>
+                                                            <span id="discountAjax">@Model.DefaultProductCombine.PriceModel.DiscountedPrice.ToString("#,#")<small>تومان</small></span>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="PriceBox">
+                                                            <label>قیمت اصلی :</label>
+                                                            <span id="PriceAjax">@Model.DefaultProductCombine.X_Price.ToString("#,#")<small>تومان</small></span>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                            }
+
+
+                                            @if (Model.DefaultProductCombine.X_AvailableCount != 0 && Model.DefaultProductCombine.X_AvailableCount > 0)
+                                            {
+                                                //if (isActiveopt)
+                                                //{
+                                                <button id="btnAddToCart" onclick="AddToBasket()" class="addToCardDetail">
+                                                    <i class="icon"></i><label>
+                                                        افزودن به سبد خرید
+                                                    </label>
+                                                </button>
+                                                //}
+                                            }
+                                            else
+                                            {
+                                                <button onclick="CountAvalible()" class="btnAvilable">موجود شد به من اطلاع بده</button>
+                                            }
+
+
+
+
+                                        }
+                                    </div>
+                                    <div class="priceIsRight">
+                                        <label>آیا قیمت مناسب تری سراغ دارید ؟</label>
+                                        <span class="itemPriceRight yes itemModal"
+                                              data-modalname="PriceIsRight">بلی</span> | <span class="itemPriceRight no">خیر</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <div class="modal m400 round10" data-modalName="share">
+        <i class="bgModal" onclick="closeModal()"></i>
+        <div class="BoxModal">
+            <i class="close fas fa-times" onclick="closeModal()"></i>
+            <h3 class="titleModal"><label>اشتراک گذاری</label></h3>
+            <div class="contentModal">
+                <div class="text">
+                    با استفاده از روش‌های زیر می‌توانید این صفحه را با دوستان خود به اشتراک بگذارید.
+                </div>
+                <div class="ShareSocials">
+                    <a href="tg://msg_url?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="sociali fab fa-telegram-plane"></a>
+                    <a href="https://api.whatsapp.com/send?text=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-whatsapp"></a>
+                    <a href="http://www.facebook.com/share.php?u=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-facebook"></a>
+                    <a href="https://twitter.com/intent/tweet?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-twitter"></a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-linkedin"></a>
+                    <button class="copyPathUrl fal fa-copy">کپی لینک</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (productmanual != null)
+    {
+        <div class="modal m400 round10" data-modalName="ManualsModal">
+            <i class="bgModal" onclick="closeModal()"></i>
+            <div class="BoxModal">
+                <i class="close fas fa-times" onclick="closeModal()"></i>
+                <h3 class="titleModal"><label>دفترچه راهنمای محصول</label></h3>
+                <div class="contentModal">
+                    <div class="text rowPrice">
+                        قصد خرید به قیمت <span class="priceModal">@productmanual.M_Price</span> تومان دارید؟
+                    </div>
+                    <div class="rowCustom center">
+                        <button id="btnAddToCartmanual" type="button" onclick="AddToBasketManual()" class="submit bg-info">بلی</button>
+                        <button class="btnBack" onclick="closeModal()">بازگشت</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="modal m600" data-modalName="notification">
+        <i class="bgModal" onclick="closeModal()"></i>
+        <div class="BoxModal">
+            <i class="close fas fa-times" onclick="closeModal()"></i>
+            <h3 class="titleModal"><label>به من اطلاع بده</label></h3>
+            <div class="contentModal">
+                @if (Barayand.Common.Services.TokenService.AuthorizeUser(Context.Request) < 1)
+                {
+                    <div class="notiticationNotLogin">
+                        <span>لطفا ابتدا وارد حساب کاربریتان شوید</span>
+                        <div class="rowCustom center">
+                            <button class="submit bg-info">ورود</button>
+                            <button class="btnBack" onclick="closeModal()">بازگشت</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    var iduser = Barayand.Common.Services.TokenService.AuthorizeUser(Context.Request);
+
+                    var user = await _userrepo.GetById(iduser);
+
+                    <input type="hidden" id="userid" value="@iduser" />
+
+                    <div class="notificationContent">
+                        <div class="col fal fa-bell"></div>
+                        <div class="col">
+                            <h3 class="titleSugg">پیشنهاد شگفت‌انگیز</h3>
+
+                            <div class="NotifyBy">
+                                <h4>از طریق:</h4>
+                                @if (user.U_Email != null)
+                                {
+                                    <div class="checkboxRadio">
+                                        <input type="checkbox" id="EmailOnly" name="notify" />
+                                        <label for="EmailOnly">
+                                            <i class="color" style="background-color: #ddd;"></i>ایمیل به
+                                            @user.U_Email
+                                        </label>
+                                    </div>
+                                }
+                                <div class="checkboxRadio">
+                                    <input type="checkbox" id="SmsOnly" name="notify" />
+                                    <label for="SmsOnly">
+                                        <i class="color" style="background-color: #ddd;"></i>پیامک به
+                                        @user.U_Phone
+                                    </label>
+                                </div>
+                                <div class="rowCustom">
+                                    <button type="button" class="submit bg-info" onclick="submitNotify()">ثبت</button>
+                                    <button class="btnBack" onclick="closeModal()">بازگشت</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="modal m800 round10 " data-modalName="picsSlideProduct">
+        <i class="bgModal" onclick="closeModal()"></i>
+        <div class="BoxModal">
+            <i class="close fas fa-times" onclick="closeModal()"></i>
+            <h3 class="titleModal"><label>تصاویر محصول</label></h3>
+            <div class="contentModal">
+                <div class="rowPicProductDet">
+                    <div class="col">
+                        <div class="LargPicLightboxDetailProd"
+                             style="background-image: url(/dist/img/product-1.jpg);">
+                            <img src="/dist/img/product-1.jpg" id="myimage1" class="picCardDerProd">
+                            @*<div id="myresult1" class="img-zoom-result"></div>*@
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h4 class="titlePicCardProd">@Model.P_Title</h4>
+                        <div class="rowCustom rowProductPics">
+                            @foreach (var item in Model.P_ImgGallery.Split(","))
+                            {
+                                <div class="itemProductPic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item);"
+                                     onclick="changeLargPic('@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item')">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal m800" data-modalName="PriceIsRight">
+        <i class="bgModal" onclick="closeModal()"></i>
+        <div class="BoxModal">
+            <i class="close fas fa-times" onclick="closeModal()"></i>
+            <h3 class="titleModal"><label>گزارش قیمت مناسب‌تر این کالا</label></h3>
+            <div class="contentModal PriceIsRight">
+                <div class="rowCustom ">
+                    <div class="col1">
+                        <div class="pic" style="background-image: url(dist/img/product-1.jpg);"></div>
+                    </div>
+                    <div class="col2">
+                        <form id="betterprice" method="post">
+                            <div class="boxInput inputUnitPrice">
+                                <label>این کالا را با چه قیمتی دیده‌اید؟</label>
+                                <input id="B_Price" type="text" placeholder="مثلا 35000" />
+                                <span class="unitPrice">تومان</span>
+                            </div>
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="B_StoreType" class="getAddressShop" checked id="B_StoreType" />
+                                <label for="B_StoreType">
+                                    <i></i>
+                                    <span>در فروشگاه اینترنتی دیده‌ام</span>
+                                </label>
+                            </div>
+                            <div class="formCustom">
+                                <div class="formContent c1">
+                                    <div class="boxInput ltr">
+                                        <label>
+                                            آدرس اینترنتی فروشگاه
+                                        </label>
+                                        <input id="B_StoreWebAddress" type="text" placeholder="www.example.com" />
+                                    </div>
+                                </div>
+                                <div class="formContent c2">
+                                    <div class="boxInput">
+                                        <label>نام فروشگاه</label>
+                                        <input name="B_StoreName" type="text" />
+                                    </div>
+                                    <div class="boxInput">
+                                        <label>مکان فروشگاه</label>
+                                        <select id="B_StoreOwnCity" class="city">
+                                            <option value="-1">انتخاب نشده</option>
+                                            <option value="1">همدان</option>
+                                            <option value="2">تهران</option>
+                                            <option value="3">کرمانشاه</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rowCustom center">
+                                <button type="button" class="submit bg-info" onclick="submitPriceIsRight()">ثبت اطلاعات</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (Model.CompletelyProducts.Count() > 0)
+    {
+        <section class="secMostSale">
+            <div class="rowCustom Promotion2">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label>محصولات همراه</label>
+                            <a href="/Products/More/@Model.P_Id/3/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                        </h3>
+                        <div class="contentCard">
+                            <div class="SlidPromotion6 arrowCustom swiper-container">
+                                <div class="swiper-wrapper">
+                                    @foreach (var item in Model.CompletelyProducts)
+                                    {
+                                        var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                        var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                        var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                        var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                        <div class="swiper-slide">
+                                            <div class="todayRecomended">
+                                                <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                         alt="@item.P_Title">
+                                                </div>
+                                                <h2 class="title">@item.P_Title</h2>
+                                                @if (item.IsAvailable)
+                                                {
+                                                    <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="NextPrevSlider">
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    <div class="contentTabsDP">
+        <div class="tabDetailProduct">
+            <button class="btnTabDP active" data-tabdp="Review">نقد و بررسی تخصصی</button>
+            <button class="btnTabDP" data-tabdp="TechnicalSpecifications">مشخصات فنی</button>
+            <button class="btnTabDP" data-tabdp="Manuals">دفترچه راهنمای استفاده</button>
+            <button class="btnTabDP" data-tabdp="UserExperience">ویدئو ها</button>
+            <button class="btnTabDP" data-tabdp="Comments">نظرات کاربران</button>
+            <button class="btnTabDP" data-tabdp="SendComment">ارسال نظر</button>
+        </div>
+    </div>
+    <section class="secDiscriptionsDetail contentTabDP active" data-tabdp="Review">
+        <div class="rowCustom fullCenter">
+            <div class="col">
+                <div class="card">
+                    <h3 class="titleCard">
+                        <label> نقد و بررسی تخصصی </label>
+                    </h3>
+                    <div class="contentCard flexDir">
+                        <div class="contextBody">
+                            @Html.Raw(Model.P_TechnicalInfo)
+                            <div class="accordionsInnerBox">
+                                @foreach (var item in exview.OrderBy(x => x.E_Sort))
+                                {
+                                    <div class="accItem">
+                                        <h3 class="titleAccItem">@item.E_Title</h3>
+                                        <div class="contentAddItem">
+                                            @Html.Raw(item.E_Description)
+                                            <br>
+                                            @if (item.E_Image != null)
+                                            {
+                                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.E_Image" alt="@item.E_Title">
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="secPropertiesDetail contentTabDP" data-tabdp="TechnicalSpecifications">
+        <div class="rowCustom fullCenter">
+            <div class="col">
+                <div class="card">
+                    <h3 class="titleCard">
+                        <label> مشخصات فنی </label>
+                    </h3>
+                    <div class="contentCard flexDir">
+                        <div class="propertiesRows">
+                            <label class="titleCats">مشخصات فنی</label>
+
+                            @foreach (var item in (List<Barayand.OutModels.Miscellaneous.AttributeStructure>)Model.P_AttributeStructures)
+                            {<div class="rowProp">
+                                    <div class="col1">@item.AttributeTitle</div>
+                                    <div class="col2">@item.AnswerTitle</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="secDiscriptionsDetail contentTabDP" data-tabdp="Manuals">
+        <div class="rowCustom fullCenter">
+            <div class="col">
+                <div class="card">
+                    <h3 class="titleCard">
+                        <label> دفترچه راهنمای استفاده </label>
+                    </h3>
+                    <div class="contentCard flexDir">
+                        <div class="contextBody">
+                            @Html.Raw(@Model.P_Manuals)
+                        </div>
+                        <div class="rowCustom center">
+                            <button class="submit bf-primary itemModal " data-modalName="ManualsModal">
+                                خرید
+                                دفترچه راهنما
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="secVideoDetail contentTabDP" data-tabdp="UserExperience">
+        <div class="rowCustom fullCenter">
+            <div class="col">
+                <div class="card">
+                    <h3 class="titleCard">
+                        <label>ویدئوها</label>
+                    </h3>
+                    <div class="contentCard flexDir">
+                        <div class="contextBody">
+                            @Html.Raw(Model.P_Description)
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.P_Video))
+                        {
+                            <div class="videoProduct">
+                                <div class="h_iframe-aparat_embed_frame">
+                                    <span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash/@Model.P_Video/vt/frame"
+                                                                                                 allowfullscreen="true" webkitallowfullscreen="true"
+                                                                                                 mozallowfullscreen="true" style="pointer-events: auto;"></iframe>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="SecViewComment contentTabDP" data-tabdp="Comments">
+        <div class="rowCustom fullCenter">
+            <div class="col">
+                <div class="card">
+                    <h3 class="titleCard">
+                        <label>نظرات کاربران</label>
+                    </h3>
+                    <div class="contentCard jcenter">
+                        <div class="showCM" id="listcomment">
+                            @await Html.PartialAsync("_CommentList", Model.Comments)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="SecSendComment contentTabDP" data-tabdp="SendComment">
+        <div class="rowCustom fullCenter">
+            <div class="col">
+                <div class="card Contact">
+                    <h3 class="titleCard">
+                        <label>ارسال نظر</label>
+                    </h3>
+                    <input type="hidden" id="E" value="@Model.P_Id" />
+                    <input type="hidden" id="T" value="1" />
+                    <div class="contentCard jcenter">
+                        <div class="SendCM">
+                            <div class="ContentFormCM">
+                                <div class="boxInput">
+                                    <input name="User" type="text" placeholder="نام و نام خانوادگی" required>
+                                </div>
+                                <div class="boxInput">
+                                    <input type="email" name="Email" placeholder="ایمیل">
+                                </div>
+                                <div class="boxInput full">
+                                    <textarea name="Msg" required placeholder="متن نظر"></textarea>
+                                </div>
+                                <div class="RowButton center">
+                                    <button class="inputFrm btnsend bg-primary" type="button" onclick="SubmitComment();">ارسال نظر</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @if (Model.RelatedProducts.Count() > 0)
+    {
+        <section class="secMostSale">
+            <div class="rowCustom Promotion2">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label>محصولات مرتبط</label>
+                            <a href="/Products/More/@Model.P_Id/1/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                        </h3>
+                        <div class="contentCard">
+                            <div class="SlidPromotion6 arrowCustom swiper-container">
+                                <div class="swiper-wrapper">
+                                    @foreach (var item in Model.RelatedProducts)
+                                    {
+                                        var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                        var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                        var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                        var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                        <div class="swiper-slide">
+                                            <div class="todayRecomended">
+                                                <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                         alt="@item.P_Title">
+                                                </div>
+                                                <h2 class="title">@item.P_Title</h2>
+                                                @if (item.IsAvailable)
+                                                {
+                                                    <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="NextPrevSlider">
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </section>
+    }
+    @if (Model.SetProducts.Count() > 0)
+    {
+        <section class="secMostVisit">
+            <div class="rowCustom Promotion2">
+                <div class="col">
+
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label>محصولات ست</label>
+                            <a href="/Products/More/@Model.P_Id/2/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                        </h3>
+                        <div class="contentCard">
+                            <div class="SlidPromotion6 arrowCustom swiper-container">
+                                <div class="swiper-wrapper">
+                                    @foreach (var item in Model.SetProducts)
+                                    {
+                                        var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                        var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                        var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                        var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                        <div class="swiper-slide">
+                                            <div class="todayRecomended">
+                                                <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                         alt="@item.P_Title">
+                                                </div>
+                                                <h2 class="title">@item.P_Title</h2>
+                                                @if (item.IsAvailable)
+                                                {
+                                                    <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="NextPrevSlider">
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</div>
+<div class="modal m800 round10 " data-modalName="feedbackBox">
+    <i class="bgModal" onclick="closeModal()"></i>
+    <div class="BoxModal">
+        <i class="close fas fa-times" onclick="closeModal()"></i>
+        <h3 class="titleModal"><label>بازخورد در مورد این کالا</label></h3>
+        <div class="contentModal">
+            <div class="feedbackContent">
+                <div class="col">
+                    <div class="picFeedback" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@Model.P_Image);"></div>
+                </div>
+                <div class="col">
+                    <div class="OptionsFOrmFeedback">
+                        <div class="checkboxs">
+                            <input type="checkbox" value="None" id="feed1" name="feedback" tabindex="3">
+                            <label for="feed1" class="lblinput"><span>نام کالا صحیح نیست</span></label>
+                        </div>
+                        <div class="checkboxs">
+                            <input type="checkbox" value="None" id="feed2" name="feedback" tabindex="3">
+                            <label for="feed2" class="lblinput"><span>عکس‌های کالا مناسب نیست</span></label>
+                        </div>
+                        <div class="checkboxs">
+                            <input type="checkbox" value="None" id="feed3" name="feedback" tabindex="3">
+                            <label for="feed3" class="lblinput"><span>مشخصات فنی کالا صحیح نیست</span></label>
+                        </div>
+                        <div class="checkboxs">
+                            <input type="checkbox" value="None" id="feed4" name="feedback" tabindex="3">
+                            <label for="feed4" class="lblinput"><span>توضیحات کالا صحیح نیست</span></label>
+                        </div>
+                        <div class="checkboxs">
+                            <input type="checkbox" value="None" id="feed5" name="feedback" tabindex="3">
+                            <label for="feed5" class="lblinput"><span>این کالا غیراصل است</span></label>
+                        </div>
+                        <div class="checkboxs">
+                            <input type="checkbox" class="Repetitiouscheck" value="None" id="feed6" name="feedback" tabindex="3">
+                            <label for="feed6" class="lblinput"><span>کالا تکراری است</span></label>
+                        </div>
+                        <div class="boxInput RepetitiousProduct">
+                            <label>
+                                آدرس کالای مشابه در دیجی‌کالا
+                            </label>
+                            <input type="text" placeholder=" https://homekito.com     />
+                        </div>
+                        <div class="boxInput">
+                            <label>توضیحات</label>
+                            <textarea placeholder="توضیحات"></textarea>
+                        </div>
+                        <div class="RowButton center">
+                            <button class="inputFrm btnsend bg-primary">ثبت بازخورد</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="/dist/js/jquery.elevatezoom.min.js" type="text/javascript"></script>
+    <script>
+        if ($(".zoomLargPic").length) {
+            $("#zoom_01").elevateZoom({ scrollZoom: true });
+        }
+        function changeZoomLargPic(item, elLargPic) {
+            var elLarg = $(`${elLargPic}`), pic = $(item).data("zoom-image"), itemZoom = $(item).attr('class');
+            $(`.${itemZoom}`).removeClass('active')
+            $(item).addClass('active')
+            elLarg.addClass("hide");
+            setTimeout(function () {
+                elLarg.html(`<img id="zoom_01" class="zoomLargPic" src="${pic}" data-zoom-image="${pic}"/>`)
+                elLarg.removeClass("hide");
+                $("#zoom_01").elevateZoom({ scrollZoom: true });
+            }, 500)
+        }
+    </script>
+}

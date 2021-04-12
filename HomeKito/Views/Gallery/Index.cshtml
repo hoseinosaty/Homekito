@@ -1,0 +1,52 @@
+﻿@model List<Barayand.Models.Entity.GalleryCategoryModel>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="contentMain">
+    <header style="background-image: url(/img/HeaderInner.jpg);">
+        <div class="contentHeader">
+            <h1 class="titleHeader">@localizer["PGTITLE"]</h1>
+            <div class="breadcrumbs">
+                <a href="/" class="bread">@localizer["HOMETTL"]</a>
+                <span class="fal fa-chevron-left"></span>
+                <a href="@(Context.Request.Host+Context.Request.Path)" class="bread">@localizer["PGTITLE"]</a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="contentGallery">
+            @foreach (var cat in Model)
+            {
+                Barayand.OutModels.Miscellaneous.SeoStructure seo = Barayand.Common.Services.UtilesService.ParseSeoData(cat.GC_Seo);
+                <div class="boxGall" style='background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("GalleryCategory")@cat.GC_Icon);'
+                     dataLarg='@Barayand.Common.Services.UtilesService.MediaUrls("GalleryCategory")@cat.GC_Icon'>
+                    <div class="hoverGl" id="hoverGl">
+                        <a href="/ImageGallery/@cat.GC_Id/@seo.url/1"><i></i><i></i>@cat.GC_Titles</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="pagination">
+            <a href="/ImageGallery/1" class="pageLink prevPage fas fa-chevron-right"></a>
+            @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+            {
+                if (i == ViewBag.CurrentPage)
+                {
+                    <span class="pageLink">@i</span>
+                }
+                else
+                {
+                    <a href="/ImageGallery/@i" class="pageLink">@i</a>
+                }
+            }
+            <a href="/ImageGallery/@ViewBag.TotalPages" class="pageLink nextPage fas fa-chevron-left"></a>
+        </div>
+    </div>
+</div>

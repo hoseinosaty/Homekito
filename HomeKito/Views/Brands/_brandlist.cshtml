@@ -1,0 +1,41 @@
+﻿@model List<Barayand.Models.Entity.BrandModel>
+@{
+    Layout = null;
+    var pagination = (Paging)ViewBag.paging;
+}
+
+<div class="container">
+    <div class="contentLogolist">
+        @foreach (var item in Model)
+        {
+            var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.B_Seo);
+
+        <a href="/Brand/@item.B_Id/@seo.url" class="itemLogo" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.B_Logo);">
+            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.B_Logo" alt="@item.B_Title">
+            <label class="lblLogo">@item.B_Title</label>
+        </a>
+        }
+
+    </div>
+    <div class="pagination">
+        @if (pagination.CurrentPage > 1)
+        {
+            <a href="javascript:void(0)" onclick="Paginationbrand(@pagination.CurrentPage-1)" class=" prevPage fal fa-angle-double-right"></a>
+        }
+        @for (int i = 1; i <= pagination.TotalPages; i++)
+        {
+            if (pagination.CurrentPage == i)
+            {
+                <span onclick="Paginationbrand(@i)" class="pageLink">@i</span>
+            }
+            else
+            {
+                <a href="javascript:void(0)" onclick="Paginationbrand(@i)" class="pageLink">@i</a>
+            }
+        }
+        @if (pagination.CurrentPage < pagination.TotalPages)
+        {
+            <a href="javascript:void(0)" onclick="Paginationbrand(@pagination.CurrentPage+1)" class=" nextPage fal fa-angle-double-left"></a>
+        }
+    </div>
+</div>

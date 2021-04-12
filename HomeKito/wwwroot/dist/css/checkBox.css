@@ -1,0 +1,177 @@
+/*------------------------------- checkBox ------------------------*/
+.checkboxs, .inputBox {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: unset;
+    margin: 5px 5px 5px 0;
+    cursor: pointer;
+    min-width: 300px;
+    align-items: center;
+    height: 35px;
+    border-bottom: 1px solid #fff;
+}
+.row.cen .checkboxs {
+    margin: 0 !important;
+}
+h4.label {
+    position: relative;
+    margin: 0;
+    color: #565f65;
+    width: calc(100% - 40px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: normal;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+input[type=checkbox], input[type=radio] {
+    /* visibility: hidden; */
+    opacity: 1;
+    width: 100%;
+    margin: 0;
+    z-index: -1;
+}
+
+/* SQUARED ONE */
+
+.squaredOne {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 0px;
+    transition: all 0.2s cubic-bezier(1, 0.1, 0, 1.4);
+    color: #eb1e27;
+    background: #fff;
+    margin: 0 10px;
+    border: 2px solid #868686;
+    border-radius: 0;
+}
+
+.squaredOne:before {
+    position: absolute;
+    bottom: -13px;
+    height: 1px;
+    width: 30px;
+    background: #929292;
+    content: '';
+}
+
+.squaredOne label {
+    cursor: pointer;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 0px;
+    top: 0px;
+    background: transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d', GradientType=0);
+    transition: all 0.2s cubic-bezier(1, 0.1, 0, 1.4);
+    margin: 0;
+}
+
+.squaredOne label:after {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #eb1e27;
+    top: 1px;
+    left: 1px;
+    border-radius: 0;
+    transition: all 0.2s;
+}
+
+.squaredOne label:hover::after {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    filter: alpha(opacity=30);
+    opacity: 0.3;
+}
+
+.squaredOne input[type=checkbox]:checked+label:after, .squaredOne input[type=radio]:checked+label:after {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+/*------------------------------- checkBox ------------------------*/
+
+/*------------------------------- ON-OFF ------------------------*/
+
+.contentOnOff {
+    position: relative;
+    width: 100%;
+    margin: 0 auto 10px;
+}
+
+.contentOnOff h4.available {
+    width: calc(100% - 80px);
+    color: #656565;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-right: 80px;
+    margin: 0;
+}
+
+.contentOnOff .OnOf {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 60px;
+    height: 25px;
+    background: #ffffff;
+    border-radius: 2px;
+    transition: all .5s;
+    cursor: pointer;
+    border: 1px solid #b1b1b1;
+}
+
+.contentOnOff .OnOf.active {
+    background: #3be59c;
+    border-color: #1b7951;
+}
+
+.contentOnOff .OnOf.active:before {
+    background: #1b7951;
+}
+
+.contentOnOff .OnOf:before {
+    position: absolute;
+    content: '';
+    display: block;
+    left: 2px;
+    top: 0px;
+    bottom: 0;
+    margin: auto;
+    width: 21px;
+    height: 21px;
+    background: #eb1e27;
+    border-radius: 2px;
+    transition: all .5s;
+}
+
+.contentOnOff .OnOf.active:before {
+    left: 36px;
+    top: 0px;
+    bottom: 0;
+    width: 21px;
+    height: 21px;
+}
+
+/*------------------------------- ON-OFF ------------------------*/

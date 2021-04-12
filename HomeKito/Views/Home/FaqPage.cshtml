@@ -1,0 +1,79 @@
+﻿@model List<Barayand.Models.Entity.FaqModel>
+@{
+    Layout = null;
+    var pagination = (Paging)ViewBag.paging;
+    var catid = ViewBag.catid;
+}
+<input id="catid" value="@ViewBag.catid" type="hidden" />
+
+    <div class="allContentTab">
+
+        @foreach(var item in Model)
+        {
+            <div class="accotdionFAQ">
+                <div class="RowFAQ">
+                    <div class="col1">2</div>
+                    <div class="col2">
+                       @item.FA_Title
+                        <span class="AnswerQuestion fas fa-chevron-down"></span>
+                    </div>
+                </div>
+                <div class="ContentAccotdionFAQ">
+                    <div class="textAccordionFAQ">
+                        @item.FA_Answer
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="pagination">
+        @if (pagination.CurrentPage > 1)
+        {
+            <a href="javascript:void(0)" onclick="Paginationfaq(@catid,@pagination.CurrentPage-1)" class=" prevPage fal fa-angle-double-right"></a>
+        }
+        @for (int i = 1; i <= pagination.TotalPages; i++)
+        {
+            if (pagination.CurrentPage == i)
+            {
+                <span  class="pageLink">@i</span>
+            }
+            else
+            {
+                <a href="javascript:void(0)" onclick="Paginationfaq(@catid,@i)" class="pageLink">@i</a>
+            }
+        }
+        @if (pagination.CurrentPage < pagination.TotalPages)
+        {
+            <a href="javascript:void(0)" onclick="Paginationfaq(@catid,@pagination.CurrentPage+1)" class=" nextPage fal fa-angle-double-left"></a>
+        }
+    </div>
+<script>
+    if ($("button[data-tab]").length) {
+        $("button[data-tab]").click(function () {
+            var data = $(this).attr("data-tab");
+            $("button[data-tab]").removeClass("active");
+            $(this).addClass("active");
+            $(".tabContent[data-tab]").removeClass("active");
+            setTimeout(function () {
+                $(".tabContent[data-tab='" + data + "']").addClass("active");
+                var elTop = parseInt($(".tabContent").offset().top - 110);
+                $("html, body").animate({ scrollTop: elTop }, "500");
+
+                $("button.gotoTabsBtn").click(function () {
+                    var TabTop = parseInt($(".TabsBoxes .TabButtons").offset().top - 110);
+                    $("html, body").animate({ scrollTop: TabTop }, "500");
+                });
+            }, 300)
+        });
+    }
+    if ($(".accotdionFAQ").length) {
+        $(".accotdionFAQ span.AnswerQuestion").click(function () {
+            if ($(this).parent().parent().parent().hasClass('active')) {
+                $(this).parent().parent().parent().removeClass('active')
+            } else {
+                $(this).parent().parent().parent().addClass('active')
+            }
+        });
+    }
+</script>

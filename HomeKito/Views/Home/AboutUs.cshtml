@@ -1,0 +1,33 @@
+﻿@model Barayand.Models.Entity.DynamicPagesContent
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+@{
+    ViewData["Title"] = "AboutUs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="@(Context.Request.Host+Context.Request.Path)" class="breadc fas fa-chevron-left">@ViewBag.PGNAME</a>
+            </div>
+            <a href="#">Page Text</a>
+        </div>
+        <section class="SecPageText" data-tabdp="Manuals">
+            <div class="rowCustom fullCenter">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="titleCard">
+                            <label>@ViewBag.PGNAM </label>
+                        </h3>
+                        <div class="contentCard flexDir">
+                            <div class="contextBody">
+                                @Html.Raw(Model.PageContent)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+﻿@model List<Barayand.Models.Entity.BrandModel>
+    <div class="contentMain">
+        <div class="container">
+            <div class="BoxBreads">
+                <div class="breadcrumbs">
+                    <a href="/" class="breadc fas fa-chevron-left">صفحه اصلی</a>
+                    <a href="/Brands" class="breadc fas fa-chevron-left">برندها</a>
+                </div>
+                <a href="/Brans">Brand List</a>
+            </div>
+            <section class="LogoList" id="listbrand">
+             @await Html.PartialAsync("_brandlist", Model)
+            </section>
+        </div>
+    </div>

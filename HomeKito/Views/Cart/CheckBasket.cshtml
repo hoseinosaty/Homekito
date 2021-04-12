@@ -1,0 +1,113 @@
+﻿@model Barayand.OutModels.Miscellaneous.BasketViewModel
+@{
+    Layout = null;
+}
+
+    <div class="titleAccordion nobg">
+        <label class="titleLabel">بررسی سفاش</label>
+    </div>
+    @if (Model.Products.Count > 0)
+    {
+        <div class="table">
+            <div class="Row8 Rtitle">
+                <div class="col xs">ردیف</div>
+                <div class="col sm">عکس</div>
+                <div class="col ">نام محصول</div>
+                <div class="col ">قیمت</div>
+                <div class="col ">قیمت با تخفیف</div>
+                <div class="col lg">تعداد</div>
+                <div class="col ">جمع</div>
+                <div class="col xs">حذف</div>
+            </div>
+            @if (Model.Products.Count > 0)
+            {
+                int count = 1;
+                foreach (var item in Model.Products)
+                {
+                    <div class="Row8">
+                        <div class="col xs">@count</div>
+                        <div class="col sm">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.ProductImage" alt="@item.ProductTitle" class="sizeBasketImg">
+                        </div>
+                        <div class="col ">@item.ProductTitle</div>
+                        <div class="col ">@item.Price.ToString("#,#")</div>
+                        <div class="col ">@item.DiscountedPrice.ToString("#,#")</div>
+                        <div class="col lg">
+                            <div class="countProduct">
+                                <i class="up fas fa-chevron-up" onclick="IncreaseBasketItemQuantity(@item.ProductCombineId)"></i>
+                                <label class="countProdInput" id="countProdInput">@item.Quantity</label>
+                                <i class="down fas fa-chevron-down" onclick="DecreaseBasketItemQuantity(@item.ProductCombineId);"></i>
+                            </div>
+                        </div>
+                        <div class="col ">@item.Total.ToString("#,#")</div>
+                        <div id="removeItemBtn" onclick="RmoveCartItem(@item.ProductCombineId)" class="col xs"><i class="fa fa-times delItemBasket"></i></div>
+                    </div>
+                    @if (item.GiftProduct != null)
+                    {
+                        <div class="Row8">
+                            <div class="col xs">1</div>
+                            <div class="col sm">
+                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.GiftProduct.P_Image" alt="@item.GiftProduct.P_Title" class="sizeBasketImg">
+                            </div>
+                            <div class="col ">@item.GiftProduct.P_Title</div>
+                            <div class="col ">0</div>
+                            <div class="col ">0</div>
+                            <div class="col lg">1</div>
+                            <div class="col ">0</div>
+                            <div class="col xs"></div>
+                        </div>
+                    }
+                    count++;
+                }
+            }
+            <div class="tblmore">
+                <div class="Row8 br">
+                    <div class="col line"></div>
+                    <div class="col lg lf">جمع مبالغ</div>
+                    <div class="col ">@Model.Products.Sum(x => x.Total).ToString("#,#")</div>
+                    <div class="col xs"></div>
+                </div>
+                <div class="Row8 br">
+                    <div class="col line">
+                        <div class="discountCode">
+                            <label for="">کد&nbsp;تخفیف&nbsp;دارید&nbsp;؟&nbsp;</label>
+                            <div class="contentDiscount">
+                                <input id="CopponCode" type="text" class="dicountInput">
+                                <button id="btnApplyCoppon" onclick="ApplyCoppon()" class="discountBtn">اعمال</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col lg lf">مبلغ تخفیف</div>
+                    @if (Model.CouponInfo != null)
+                    {
+                        <div class="col ">@Model.CouponInfo.CouponAmount.ToString("#,#")</div>
+                    }
+                    else
+                    {
+                        <div class="col ">0</div>
+                    }
+                    <div class="col xs"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cen">
+            <div class="col"></div>
+            <div class="col">
+                @if (ViewBag.LoggedIn)
+                {
+                    <button class="btnStep btnNextStep " onclick="LoadStep(2);">مرحله بعد</button>
+                }
+                else
+                {
+                    <a href="/User" class="btnStep btnGologin">لطفا وارد شوید</a>
+                }
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <lable> سبد خرید خالی است</lable>
+    }
+

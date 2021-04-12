@@ -1,0 +1,36 @@
+﻿@model List<Barayand.Models.Entity.CatalogModel>
+@{
+    Layout = null;
+    var pagination = (Paging)ViewBag.paging;
+}
+<div class="contentGallery">
+    @foreach (var item in Model)
+    {
+    <div class="boxGall" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("GalleryCategory")@item.C_ImageUrl);" dataLarg="@Barayand.Common.Services.UtilesService.MediaUrls("GalleryCategory")@item.C_ImageUrl">
+        <div class="hoverGl" id="hoverGl">
+            <a href="#">دانلود</a>
+        </div>
+    </div>
+    }
+</div>
+<div class="pagination">
+    @if (pagination.CurrentPage > 1)
+    {
+        <a href="javascript:void(0)" onclick="PaginationCatalog(@pagination.CurrentPage-1)" class=" prevPage fal fa-angle-double-right"></a>
+    }
+    @for (int i = 1; i <= pagination.TotalPages; i++)
+    {
+        if (pagination.CurrentPage == i)
+        {
+            <span class="pageLink">@i</span>
+        }
+        else
+        {
+            <a href="javascript:void(0)" onclick="PaginationCatalog(@i)" class="pageLink">@i</a>
+        }
+    }
+    @if (pagination.CurrentPage < pagination.TotalPages)
+    {
+        <a href="javascript:void(0)" onclick="PaginationCatalog(@pagination.CurrentPage+1)" class=" nextPage fal fa-angle-double-left"></a>
+    }
+</div>

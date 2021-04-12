@@ -1,0 +1,935 @@
+﻿@model Barayand.Models.Entity.UserModel
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.AmazingRequestModel> _amazingrepo
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.ProductModel> _product
+@inject Barayand.DAL.Interfaces.IAddressRepository  _Adderes
+
+@{
+    List<Barayand.Models.Entity.InvoiceModel> LastInvoice = (List<Barayand.Models.Entity.InvoiceModel>)ViewBag.LastInvoices;
+    List<Barayand.Models.Entity.InvoiceModel> UserInvoices = (List<Barayand.Models.Entity.InvoiceModel>)ViewBag.UserInvoices;
+    List<Barayand.OutModels.Miscellaneous.FavoriteList> Favorites = (List<Barayand.OutModels.Miscellaneous.FavoriteList>)ViewBag.Favorites;
+    List<Barayand.Models.Entity.WalletHistoryModel> walletHistories = (List<Barayand.Models.Entity.WalletHistoryModel>)ViewBag.WalletHistory;
+    var amazing = ((List<Barayand.Models.Entity.AmazingRequestModel>)(await _amazingrepo.GetAll()).Data).Where(x => x.A_UserId == Model.U_Id && x.A_Type == 1);
+    var countaviable = ((List<Barayand.Models.Entity.AmazingRequestModel>)(await _amazingrepo.GetAll()).Data).Where(x => x.A_UserId == Model.U_Id && x.A_Type == 2);
+    var addres = await _Adderes.GetUserActiveAddress(Model.U_Id);
+
+}
+@section Styles{
+    <link rel="stylesheet" href="/dist/css/account.css">
+    <title>هومکیتو | پروفایل کاربر</title>
+}
+<div class="contentPanel">
+    <section class="user_account">
+        <div class="right_profile">
+            <span class="barRightProfile fal fa-bars"></span>
+            <div class="box_access_user box_profile">
+                <div class="user_info ">
+                    <div class="user_avatar">
+                        <i class="change_avatar fal fa-edit"></i>
+                    </div>
+                    <div class="user_name">
+                        <strong>@Model.U_Name @Model.U_Family</strong>
+                        <span>@Model.U_Phone</span>
+                    </div>
+                </div>
+                <div class="buttons_account">
+                    @*<button class="change_password"><i class="fal fa-key"></i> <label>تغییر رمز</label> </button>*@
+                    <button class="exit_account"><i class="fal fa-sign-out-alt"></i> <label>خروج</label> </button>
+                </div>
+            </div>
+            <div class="other_links box_profile">
+                <h3 class="title_box_profile">حساب کاربری شما</h3>
+                <a href="#profile" class="active"><i class="fal fa-user"></i> <label>پروفایل</label> </a>
+                <a href="#edit_profile"><i class="fal fa-user-edit"></i> <label>ویرایش پروفایل</label> </a>
+                <a href="#address_list"><i class="fal fa-map-marker-alt"></i> <label>مدیریت آدرس ها</label> </a>
+                <a href="#favorites_list"><i class="fal fa-heart"></i> <label>لیست علایق</label> </a>
+                <a href="#Transactions"><i class="fal fa-coins"></i> <label>تراکنش ها</label> </a>
+                <a href="#shoping_history"><i class="fal fa-file-invoice-dollar"></i> <label>سوابق خرید</label> </a>
+                <a href="#AmazingRequests"><i class="fal fa-grin-hearts"></i> <label>درخواست های شگفت انگیز</label> </a>
+                <a href="#AvailableRequests"><i class="fal fa-check-circle"></i> <label>درخواست های موجود کن</label> </a>
+                <a href="#BetterPriceRequest"><i class="fal fa-sack-dollar"></i> <label>درخواست های قیمت بهتر</label> </a>
+                <a href="#RequestFeedback"><i class="fal fa-comment-smile"></i> <label>درخواست های بازخورد</label> </a>
+                <a href="#tracking_orther"><i class="fal fa-shopping-basket"></i> <label>پیگیری سفارشات</label> </a>
+                <a href="#wallet"><i class="fal fa-wallet"></i> <label>کیف پول</label> </a>
+            </div>
+        </div>
+        <div class="left_profile">
+            <h4 class="Title_left_profile">عنوان </h4>
+            <div class=" content_profile">
+                <div class="loading"></div>
+                <div id="profile">
+                    <div class="showInfo">
+                        <h3 class="titleBx">اطلاعات شخصی</h3>
+                        <div class="content_detail">
+                            <div class="col">
+                                <label> نام و نام خانوادگی :</label>
+                                <span>@Model.U_Name @Model.U_Family</span>
+                            </div>
+                            <div class="col">
+                                <label> پست الکترونیک :</label>
+                                <span>@Model.U_Email</span>
+                            </div>
+                            <div class="col">
+                                <label> شماره تلفن :</label>
+                                <span>@Model.U_Phone</span>
+                            </div>
+                            <div class="col">
+                                <label> کد ملی :</label>
+                                <span>@Model.U_IdentityCode</span>
+                            </div>
+                            <div class="col">
+                                <label> دریافت خبرنامه :</label>
+                                <span>-</span>
+                            </div>
+                            <div class="col">
+                                <label> شماره کارت :</label>
+                                <span>@Model.U_CreditCardNum</span>
+                            </div>
+                            <a href="#edit_profile" class="editProfilee">
+                                <i class="fal fa-user-edit"></i> ویرایش
+                                پروفایل
+                            </a>
+                        </div>
+                    </div>
+                    <div class="FavoriteList">
+                        <h3 class="titleBx">آخرین علاقمندی ها</h3>
+                        <div class="content_FavoriteList">
+                            @foreach (var item in Favorites)
+                            {
+                                <div class="boxFavorite">
+                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item.Image" alt="@item.Title">
+                                    <div class="ctext">
+                                        <strong>@item.Title</strong>
+                                        <lable class="fav_price">@item.Price تومان</lable>
+                                    </div>
+                                    <i class="fal fa-trash remove_fav" data-fid="@item.Id" onclick="RemoveFavoriteUser(@item.Id)"></i>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="shoppingHistory">
+                        <h3 class="titleBx">سوابق خرید</h3>
+                        <div class="content_shoppingHistory">
+                            @if (UserInvoices != null)
+                            {
+                                <div class="content_myTable">
+                                    <div class="myTable">
+                                        <div class="myRow myRowTitle">
+                                            <div class="myCol xs">#</div>
+                                            <div class="myCol lg">شماره فاکتور</div>
+                                            <div class="myCol lg">تاریخ سفارش</div>
+                                            <div class="myCol lg">مبلغ فاکتور</div>
+                                            <div class="myCol lg">نوع پرداخت</div>
+                                            <div class="myCol lg">تاریخ پرداخت</div>
+                                            <div class="myCol lg">جزئیات سفارش</div>
+                                        </div>
+                                        @{ int cnt = 1;}
+                                        @foreach (var inv in LastInvoice)
+                                        {
+                                            string prdType = "";
+                                            string payType = "";
+                                            if (inv.I_PaymentType == 1)
+                                            {
+                                                payType = "اینترنتی";
+                                            }
+                                            if (inv.I_PaymentType == 2)
+                                            {
+                                                payType = "درب منزل";
+                                            }
+                                            if (inv.I_PaymentType == 3)
+                                            {
+                                                payType = "Wallet / Credit Card";
+                                            }
+                                            <div class="myRow" data-id="@cnt">
+                                                <div class="myCol xs">@cnt</div>
+                                                <div class="myCol lg">@inv.I_Id</div>
+                                                <div class="myCol lg">@(((DateTime)inv.Created_At).ToString("yyyy-MM-dd"))</div>
+                                                <div class="myCol lg">@inv.I_TotalAmount.ToString("#,#")</div>
+                                                <div class="myCol lg">@payType</div>
+                                                <div class="myCol lg">@inv.I_PaymentDate</div>
+                                                <div class="myCol sm moreDetails">
+                                                    <a href="#" onclick="LoadInvoiceProducts('@inv.I_Id')" class="fal fa-angle-right"></a>
+                                                </div>
+                                            </div>
+                                            cnt++;
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <i class="fal fa-info-circle NotFoundData"></i>
+                                <label>موردی برای نمایش وجود ندارد!</label>
+                            }
+                            @*<i class="fal fa-info-circle NotFoundData"></i>
+                                <label> موردی برای نمایش وجود ندارد!</label>*@
+                        </div>
+                    </div>
+                </div>
+                <div id="edit_profile">
+                    <form id="updateProfileFrm">
+                        <div class="content_edit_profile">
+
+                            <div class="col_input">
+                                <label>شماره موبایل</label>
+                                <input name="Phone" value="@Model.U_Phone" type="text" placeholder="شماره موبایل" disabled />
+                            </div>
+                            <div class="col_input">
+                                <label>نام و نام خانوادگی</label>
+                                <input type="text" placeholder="نام و نام خانوادگی" name="Name" value="@Model.U_Name" required />
+                            </div>
+                            <div class="col_input">
+                                <label>پست الکترونیک</label>
+                                <input type="text" placeholder="پست الکترونیک" name="Email" value="@Model.U_Email" />
+                            </div>
+                            <div class="col_input">
+                                <label>شماره تلفن</label>
+                                <input type="text" placeholder="شماره تلفن" name="HomeTel" value="@Model.U_HomeTel" />
+                            </div>
+
+                            <div class="col_input">
+                                <label>کد ملی</label>
+                                <input name="IdentityCode" value="@Model.U_IdentityCode" type="text" placeholder="کد ملی" />
+                            </div>
+                            <div class="col_input">
+                                <label>شماره کارت</label>
+                                <input name="CreditCardNum" value="@Model.U_CreditCardNum" type="text" placeholder="شماره کارت" />
+                            </div>
+                            <div class="col_input">
+                                <label>تاریخ تولد</label>
+                                <input name="BirthDate" value="@Model.U_BirthDate" type="text" placeholder="شماره کارت" />
+                            </div>
+                            <div class="col_input">
+                                <label>تصویر پروفایل</label>
+                                <input name="Avatar" value="@Model.U_Avatar" type="file" accept="image/*" />
+                            </div>
+                            <button id="updateProfileBtn" type="button" onclick="UpdateProfile()" class="submit_profile">ثبت اطلاعات</button>
+
+                        </div>
+                    </form>
+                </div>
+                <div id="address_list">
+                    <div class="contextTable">
+                        <button class="btnAddAddreaddss itemModal fal fa-map-marker-alt" data-modalName="addAddress">افزودن آدرس جدید</button>
+                        <table id="addresslist" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>آدرس</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{
+                                    int count = 1;
+
+                                }
+                                @foreach (var item in addres)
+                                {
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@item.A_Address</td>
+                                        <td><button class="btnremove fas fa-times" onclick="removeTr(this, 'address',@item.A_Id)"></button></td>
+                                    </tr>
+                                    count++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>آدرس</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div id="favorites_list">
+                    <div class="content_favorites_list">
+                        @foreach (var item in Favorites.Where(x => x.Type == 1).ToList())
+                        {
+                            <div class="Favorite_List_Box">
+                                <div class="PicFLB" style="background-image: url(@item.Image)">
+                                </div>
+                                <div class="ctext">
+                                    <strong>@item.Title</strong>
+                                    <lable class="fav_price">@item.Price تومان</lable>
+                                    <a href="@item.Url">مشاهده محصول</a>
+                                </div>
+                                <i class="fal fa-trash remove_fav" data-fid="@item.Id" onclick="RemoveFavoriteUser(@item.Id)"></i>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div id="shoping_history">
+                    @if (UserInvoices != null && UserInvoices.Count() > 0)
+                    {
+                        <div class="content_myTable">
+                            <div class="myTable">
+                                <div class="myRow myRowTitle">
+                                    <div class="myCol xs">#</div>
+                                    <div class="myCol lg">شماره فاکتور</div>
+                                    <div class="myCol lg">تاریخ سفارش</div>
+                                    <div class="myCol lg">مبلغ فاکتور</div>
+                                    <div class="myCol lg">نوع پرداخت</div>
+                                    <div class="myCol lg">تاریخ پرداخت</div>
+                                    <div class="myCol lg">جزئیات سفارش</div>
+                                </div>
+                                @{ int cnt = 1;}
+                                @foreach (var inv in UserInvoices.ToList())
+                                {
+                                    string payType = "";
+                                    if (inv.I_PaymentType == 1)
+                                    {
+                                        payType = "Credit Card";
+                                    }
+                                    if (inv.I_PaymentType == 2)
+                                    {
+                                        payType = "Wallet";
+                                    }
+                                    if (inv.I_PaymentType == 3)
+                                    {
+                                        payType = "Wallet / Credit Card";
+                                    }
+                                    <div class="myRow" data-id="@cnt">
+                                        <div class="myCol xs">@cnt</div>
+                                        <div class="myCol lg">@inv.I_Id</div>
+                                        <div class="myCol lg">@(((DateTime)inv.Created_At).ToString("yyyy-MM-dd"))</div>
+                                        <div class="myCol lg">@inv.I_TotalAmount.ToString("#,#")</div>
+                                        <div class="myCol lg">@payType</div>
+                                        <div class="myCol lg">@inv.I_PaymentDate</div>
+                                        <div class="myCol sm moreDetails">
+                                            <a href="#" onclick="LoadInvoiceProducts('@inv.I_Id')" class="fal fa-angle-right"></a>
+                                        </div>
+                                    </div>
+                                    cnt++;
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <i class="fal fa-info-circle NotFoundData"></i>
+                        <label> There is nothing to display!</label>
+                    }
+                </div>
+                <div id="tracking_orther">
+                    <div class="box_tracking">
+                        <h2>لطفا جهت پیگیری سفارشات کد پیگیری را در کادر زیر وارد</h2>
+                        <div class="boxInputBox">
+                            <input type="text" placeholder="کد رهگیری را وارد نمایید">
+                            <button class="btnBox">بگرد</button>
+                        </div>
+                    </div>
+
+                    <div class="showResult_tracking">
+                        نتیجه ای یافت نشد!
+                    </div>
+                </div>
+                <div id="wallet">
+                    <div class="content_Wallet">
+                        <div class="BoxWallet">
+                            <p>
+                                متن متن متن متن متن متن متن متن متن متن متن متن متن متن متن متن متن متن متن متن متن
+                            </p>
+                            <h3>میزان شارژ فعلی : 135.000.000 ریال</h3>
+                            <h2>افزایش شارژ به میزان دلخواه (به ریال)</h2>
+                            <div class="boxInputBox">
+                                <input type="text" placeholder="10000 ریال">
+                                <button class="btnBox">شارژ کن</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content_myTable">
+                        <div class="myTable">
+                            <div class="myRow myRowTitle">
+                                <div class="myCol xs">#</div>
+                                <div class="myCol lg">تاریخ</div>
+                                <div class="myCol lg">اضافه / برداشت</div>
+                                <div class="myCol lg">مبلغ</div>
+                            </div>
+                            <div class="myRow">
+                                <div class="myCol xs">1</div>
+                                <div class="myCol lg">18 اردیبهشت 1393</div>
+                                <div class="myCol lg"><i class="fal fa-angle-up"></i></div>
+                                <div class="myCol lg">3.800.000 تومان</div>
+                            </div>
+                            <div class="myRow">
+                                <div class="myCol xs">2</div>
+                                <div class="myCol lg">18 اردیبهشت 1393</div>
+                                <div class="myCol lg"><i class="fal fa-angle-down"></i></div>
+                                <div class="myCol lg">280.000 تومان</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Transactions">
+                    <div class="contextTable">
+                        <table id="transaction" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>تاریخ</th>
+                                    <th>کد پیگیری</th>
+                                    <th>مبلغ (تومان)</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int c = 1; }
+                                @foreach (var item in UserInvoices)
+                                {
+                                    //var peymentinfo =
+                                    <tr>
+                                        <td>
+                                            @c
+                                        </td>
+                                        <td>
+                                            @item.I_PaymentDate
+                                        </td>
+                                        <td>
+                                            <label class="code">@*@peymentinfo.*@</label>
+                                        </td>
+                                        <td>@item.I_TotalAmount.ToString("#,#")</td>
+                                        @if (item.I_Status == 3)
+                                        {
+
+                                            <td><span class="success">ناموفق</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="success">موفق</span></td>
+                                        }
+                                    </tr>
+                                    c++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>تاریخ</th>
+                                    <th>کد پیگیری</th>
+                                    <th>مبلغ (تومان)</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div id="AmazingRequests">
+                    <div class="contextTable">
+                        <table id="AmazingRequestsTable" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام محصول</th>
+                                    <th>قیمت (تومان)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+
+                                }
+                                @foreach (var item in amazing)
+                                {
+                                    var prod = await _product.GetById(item.A_ProductId);
+                                    if (prod != null)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @i
+                                            </td>
+                                            <td>
+                                                <small class="text">@prod.P_Title</small>
+                                            </td>
+                                            @if (prod.DefaultProductCombine != null)
+                                            {
+                                                if (prod.DefaultProductCombine.PriceModel != null && prod.DefaultProductCombine.PriceModel.Price > 0)
+                                                {
+                                                    @if (prod.DefaultProductCombine.PriceModel.HasDiscount)
+                                                    {
+                                                        <td>@prod.DefaultProductCombine.PriceModel.DiscountedPrice.ToString("#,#")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@prod.DefaultProductCombine.PriceModel.Price.ToString("#,#")</td>
+
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                        </tr>
+                                    }
+                                    i++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام محصول</th>
+                                    <th>قیمت (تومان)</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div id="AvailableRequests">
+                    <div class="contextTable">
+                        <table id="AvailableRequestsTable" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام محصول</th>
+                                    <th>قیمت</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int cc = 1;
+
+                                }
+                                @foreach (var item in countaviable)
+                                {
+                                    var prod = await _product.GetById(item.A_ProductId);
+                                    if (prod != null)
+                                    {
+                                        <tr>
+                                            <td>
+                                                2
+                                            </td>
+                                            <td>
+                                                <small class="text">@prod.P_Title</small>
+                                            </td>
+                                            @if (prod.DefaultProductCombine != null)
+                                            {
+                                                if (prod.DefaultProductCombine.PriceModel != null && prod.DefaultProductCombine.PriceModel.Price > 0)
+                                                {
+                                                    @if (prod.DefaultProductCombine.PriceModel.HasDiscount)
+                                                    {
+                                                        <td>@prod.DefaultProductCombine.PriceModel.DiscountedPrice.ToString("#,#")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@prod.DefaultProductCombine.PriceModel.Price.ToString("#,#")</td>
+
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                            <td>
+                                                @if (prod.P_AvailableCount > 0)
+                                                {
+                                                    <span class="success">موجود شده</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="danger">موجود نشده</span>
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    }
+                                    cc++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام محصول</th>
+                                    <th>قیمت</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div id="RequestFeedback">
+                    <div class="contextTable">
+                        <table id="RequestFeedbackTable" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>ستون 1</th>
+                                    <th>ستون 2</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>
+                                        <small class="text">متن ستون 1</small>
+                                    </td>
+                                    <td>
+                                        <small class="text">متن ستون 12</small>
+                                    </td>
+                                    <td><span class="success">وضعیت خوب</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        2
+                                    </td>
+                                    <td>
+                                        <small class="text">متن ستون 1</small>
+                                    </td>
+                                    <td>
+                                        <small class="text">متن ستون 12</small>
+                                    </td>
+                                    <td><span class="warning">وضعیت در دست انحام</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        3
+                                    </td>
+                                    <td>
+                                        <small class="text">متن ستون 1</small>
+                                    </td>
+                                    <td>
+                                        <small class="text">متن ستون 12</small>
+                                    </td>
+                                    <td><span class="danger">وضعیت بد</span></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>ستون 1</th>
+                                    <th>ستون 2</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div id="ShowTickets">
+                    <div class="rowBtnTopBox">
+                        <button class="btnTopBox itemModal" data-modalName="CreateTicket">ایجاد تیکت</button>
+                    </div>
+
+                    <div class="TableBoxTransection">
+                        <table id="transaction" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>تاریخ ارسال</th>
+                                    <th>عنوان تیکت</th>
+                                    <th>وضعیت</th>
+                                    <th>مشاهده</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="">
+                                    <td>18/12/1398</td>
+                                    <td>عنوان عنوان عنوان عنوان عنوان عنوان</td>
+                                    <td><label class="labelBdg success">پاسخ داده شده</label></td>
+                                    <td><a href="#PreviewTicket" class="opentab">مشاهده</a></td>
+                                </tr>
+                                <tr class="">
+                                    <td>18/12/1398</td>
+                                    <td>عنوان عنوان عنوان عنوان عنوان عنوان</td>
+                                    <td><label class="labelBdg warning">در انتظار پاسخ</label></td>
+                                    <td><a href="#PreviewTicket" class="opentab">مشاهده</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div id="PreviewTicket">
+                    <div class="boxTransaction">
+                        <h2 class="title4">مشاهده پیام های تیکت</h2>
+                        <div class="rowBtnTopBox">
+                            <button class="btnTopBox ">بازگشت</button>
+                        </div>
+                        <div class="showContentTicket">
+                            <div class="ItemsShowTciket">
+                                <div class="ItemTicketShow Me">
+                                    <div class="picUser" style="background-image: url(dist/img/avatar.png) ;"></div>
+                                    <div class="textItemTicket">
+                                        <div class="contentItemTicket">
+                                            <h2 class="NameuserTicket">حمیدرضا بیگلری</h2>
+                                            <span class="dateReg">18 اسفند 1398</span>
+                                            <div class="MessageTicket">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                                                مجله در ستون و سطرآنچنان که
+                                                لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با
+                                                هدف بهبود ابزارهای کاربردی می
+                                                باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان
+                                                جامعه و متخصصان را می طلبد
+                                                تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص
+                                                طراحان خلاقی و فرهنگ پیشرو در
+                                                زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری
+                                                موجود در ارائه راهکارها و
+                                                شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای
+                                                اصلی و جوابگوی سوالات
+                                                پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                            </div>
+                                            <a href="#" class="attachmentFile icon-attach" download>
+                                                دانلود فایل
+                                                ضمیمه
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ItemTicketShow Me">
+                                    <div class="picUser" style="background-image: url(dist/img/avatar.png) ;"></div>
+                                    <div class="textItemTicket">
+                                        <div class="contentItemTicket">
+                                            <h2 class="NameuserTicket">حمیدرضا بیگلری</h2>
+                                            <span class="dateReg">18 اسفند 1398</span>
+                                            <div class="MessageTicket">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                                                مجله در ستون و سطرآنچنان که
+                                                لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با
+                                                هدف بهبود ابزارهای کاربردی می
+                                                باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان
+                                                جامعه و متخصصان را می طلبد
+                                                تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص
+                                                طراحان خلاقی و فرهنگ پیشرو در
+                                                زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری
+                                                موجود در ارائه راهکارها و
+                                                شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای
+                                                اصلی و جوابگوی سوالات
+                                                پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                            </div>
+                                            <a href="#" class="attachmentFile icon-attach" download>
+                                                دانلود فایل
+                                                ضمیمه
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ItemTicketShow">
+                                    <div class="picUser" style="background-image: url(dist/img/avatar.png) ;"></div>
+                                    <div class="textItemTicket">
+                                        <div class="contentItemTicket">
+                                            <h2 class="NameuserTicket">حمیدرضا بیگلری</h2>
+                                            <span class="dateReg">18 اسفند 1398</span>
+                                            <div class="MessageTicket">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                                                مجله در ستون و سطرآنچنان که
+                                                لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با
+                                                هدف بهبود ابزارهای کاربردی می
+                                                باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان
+                                                جامعه و متخصصان را می طلبد
+                                                تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص
+                                                طراحان خلاقی و فرهنگ پیشرو در
+                                                زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری
+                                                موجود در ارائه راهکارها و
+                                                شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای
+                                                اصلی و جوابگوی سوالات
+                                                پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                            </div>
+                                            <a href="#" class="attachmentFile icon-attach" download>
+                                                دانلود فایل
+                                                ضمیمه
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contentCreateTicket">
+                            <div class="rowTrBox">
+                                <div class="col1">متن</div>
+                                <div class="col2">
+                                    <textarea class="Inputfrm"></textarea>
+                                </div>
+                            </div>
+                            <div class="rowTrBox">
+                                <div class="col1">انتخاب فایل</div>
+                                <div class="col2">
+                                    <div class="fileUploadObject">
+                                        <input type="file" class="Inputfrm" id="FileUpload">
+                                        <label for="FileUpload">فایل خود را انتخاب کنید</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btnPaymentRow">
+                                <button class="RegTicket">ارســــال</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="detailThisRow">
+            <div class="close"><i class="fal fa-arrow-left"></i> بازگشت </div>
+            <div class="content_detailThisRow">
+                <h3 class="titleBx">اطلاعات فروش</h3>
+                <div class="content_detail">
+                    <div class="col">
+                        <label> تحویل گیرنده: </label>
+                        <span>حمیدرضا بیگلری</span>
+                    </div>
+                    <div class="col">
+                        <label> شماره تماس تحویل گیرنده :</label>
+                        <span>-</span>
+                    </div>
+                    <div class="col">
+                        <label> آدرس تحویل گیرنده :</label>
+                        <span>09182009667</span>
+                    </div>
+                    <div class="col">
+                        <label> تعداد مرسوله :</label>
+                        <span>-</span>
+                    </div>
+                    <div class="col">
+                        <label> مبلغ قابل پرداخت :</label>
+                        <span>-</span>
+                    </div>
+                    <div class="col">
+                        <label> مبلغ کل :</label>
+                        <span>-</span>
+                    </div>
+                </div>
+                <h3 class="titleBx" style="margin: 10px auto">محصولات خریداری شده</h3>
+                <div class="content_myTable">
+                    <div class="myTable">
+                        <div class="myRow myRowTitle">
+                            <div class="myCol xs">#</div>
+                            <div class="myCol lg">نام محصول</div>
+                            <div class="myCol lg">تعداد سفارش</div>
+                            <div class="myCol lg">قیمت</div>
+                            <div class="myCol lg">قیمت کل</div>
+                        </div>
+                        <div class="myRow">
+                            <div class="myCol xs">1</div>
+                            <div class="myCol lg">کفش کالج مردانه</div>
+                            <div class="myCol lg">12 عدد</div>
+                            <div class="myCol lg">10.000 تومان</div>
+                            <div class="myCol lg">120.000 تومان</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+<!--Content Page-->
+<!-- <div class="modal" data-lightbox="CreateTicket">
+    <i class="bgModal"></i>
+
+    <div class="contentModal">
+        <i class="closeModal icon-cancel-2"></i>
+        <h2 class="title3">ایجاد تیکت جدید</h2>
+
+    </div>
+</div> -->
+<div class="modal_invite_website md1">
+    <div class="content_modal_invite_website">
+        <i class="fal fa-times close"></i>
+        <img src="dist/img/invite_friend.png" alt="" />
+        <span>
+            لینک زیر را برای دوستانتان ارسال کنید. بعد از اولین خریدشان <strong>۵۰ امتیاز</strong> هدیه
+            بگیرید و یک کد تخفیف نیز به دوستتان هدیه دهید.
+        </span>
+        <p>
+            کپی کردن لینک زیر به معنی فعال‌سازی و <a href="#">قبول قوانین</a> و مقررات حساب دیجی‌کلاب است.
+        </p>
+        <input type="email" class="invite_input" placeholder="ایمیل دوستتو وارد کن" />
+        <button class="btn_invite"><i class="fal fa-user-friends"></i>ارسال به دوست</button>
+    </div>
+</div>
+<div class="modal_invite_website md2">
+    <div class="content_modal_invite_website">
+        <i class="fal fa-times close"></i>
+        <img src="dist/img/password.png" alt="" />
+        <span> جهت تغییر کلمه عبور فرم زیر را تکمیل نمایید </span>
+        <input type="password" name="curent_password" class="invite_input" placeholder="کلمه عبور فعلی" />
+        <input type="password" name="new_password" class="invite_input" placeholder="کلمه عبور جدید" />
+        <input type="password" name="password_recomendation" class="invite_input"
+               placeholder="تکرار کلمه عبور جدید" />
+        <button class="btn_invite"><i class="fal fa-key"></i> ذخیره </button>
+    </div>
+</div>
+<div class="modal m600 round10" data-modalName="CreateTicket">
+    <i class="bgModal" onclick="closeModal()"></i>
+    <div class="BoxModal">
+        <i class="close fas fa-times" onclick="closeModal()"></i>
+        <h3 class="titleModal"><label>ثبت تیکت جدید</label></h3>
+        <div class="contentModal">
+            <span class="subTitle1">تیکت جدید ایجاد نمائید</span>
+
+            <div class="contentCreateTicket">
+                <div class="rowTrBox">
+                    <div class="col1">موضوع</div>
+                    <div class="col2"><input type="text" class="Inputfrm"></div>
+                </div>
+                <div class="rowTrBox">
+                    <div class="col1">عنوان</div>
+                    <div class="col2">
+                        <select name="sdfs" class=" selectfrm">
+                            <option value="0">تست تست تست تست تست تست</option>
+                            <option value="0">تست تست تست تست تست تست</option>
+                            <option value="0">تست تست تست تست تست تست</option>
+                            <option value="0">تست تست تست تست تست تست</option>
+                            <option value="0">تست تست تست تست تست تست</option>
+                            <option value="0">تست تست تست تست تست تست</option>
+                            <option value="0">تست تست تست تست تست تست</option>
+                            <option value="0">تست تست تست تست تست تست</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="rowTrBox">
+                    <div class="col1">متن</div>
+                    <div class="col2">
+                        <textarea class="Inputfrm"></textarea>
+                    </div>
+                </div>
+                <div class="btnPaymentRow">
+                    <button class="RegTicket">ثبت تیکت</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal m400 round10" data-modalName="addAddress">
+    <i class="bgModal" onclick="closeModal()"></i>
+    <div class="BoxModal">
+        <i class="close fas fa-times" onclick="closeModal()"></i>
+        <h3 class="titleModal"><label>ثبت آدرس جدید</label></h3>
+        <div class="contentModal">
+            <div class="text">
+                آدرس خود را وارد نمایید و بر روی دکمه ثبت کلیک کنید
+            </div>
+            <div class="formAddress">
+                <input id="inputaddres" type="text" class="getAddress" placeholder="آدرس را وارد نمایید">
+                <button class="btnAddAddress" onclick="getAddress(@Model.U_Id)">ثبت آدرس</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="/distAcc/js/datatable/jquery.dataTables.min.js"></script>
+
+
+
+    <script src="/distAcc/js/datatable/pdfmake.min.js"></script>
+    <script src="/distAcc/js/datatable/jszip.min.js"></script>
+    <script src="/distAcc/js/datatable/vfs_fonts.js"></script>
+    <script src="/distAcc/js/datatable/buttons.html5.min.js"></script>
+    <script src="/distAcc/js/account.js"></script>
+    <script src="/script/User.js"></script>
+}

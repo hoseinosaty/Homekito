@@ -1,0 +1,106 @@
+﻿@inject Barayand.DAL.Interfaces.IAddressRepository  _Adderes
+@{
+    Layout = null;
+    var userinfo = (Barayand.Models.Entity.UserModel)ViewBag.User;
+}
+
+<div class="StepBasket active" dataStep="2">
+    <div class="titleAccordion nobg">
+        <label class="titleLabel">مشخصات تحویل گیرنده</label>
+    </div>
+    <form style="width:100%;display:block" id="recptientInformation">
+        <div class="addressBox">
+            @{
+                var addres = (ViewBag.User != null) ? await _Adderes.GetUserActiveAddress(ViewBag.User.U_Id) : null;
+            }
+            @if (addres != null)
+            {
+                int i = 1;
+                @foreach (var item in addres)
+                {
+                    <div class="itemAddress">
+                        <div class="checkboxs">
+                            <input type="radio" value="@item.A_Id" id="address@(item.A_Id)" name="AddressId" tabindex="1">
+                            <label for="address@(item.A_Id)" class="lblinput">
+                                <span>@i</span>
+                                <small>@item.A_Address</small>
+                            </label>
+                        </div>
+                    </div>
+                    i++;
+                }
+            }
+        </div>
+
+        <div class="modal m400 round10" data-modalName="addAddress">
+            <i class="bgModal" onclick="closeModal()"></i>
+            <div class="BoxModal">
+                <i class="close fas fa-times" onclick="closeModal()"></i>
+                <h3 class="titleModal"><label>ثبت آدرس جدید</label></h3>
+                <div class="contentModal">
+                    <div class="text">
+                        آدرس خود را وارد نمایید و بر روی دکمه ثبت کلیک کنید
+                    </div>
+                    <div class="formAddress">
+                        <input type="text" class="getAddress" placeholder="آدرس را وارد نمایید">
+                        <button class="btnAddAddress" onclick="getAddressbasket(@userinfo.U_Id)">ثبت آدرس</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rowCustom fend">
+            <button class="btnAddAddress itemModal" data-modalName="addAddress">
+                افزودن آدرس
+                جدید
+            </button>
+        </div>
+        <div class="contentCustomer frmss">
+            <div class="row">
+                <label>نام و نام خانوادگی تحویل گیرنده : </label>
+                <input name="Name" value="@userinfo.U_Name" type="text">
+            </div>
+            <div class="row">
+                <label>موبایل : </label>
+                <input name="Phone" value="@userinfo.U_Phone" type="tel">
+                <label>تلفن ثابت : </label>
+                <input name="Tel" value="@userinfo.U_HomeTel" type="tel">
+            </div>
+            <div class="row">
+                <label>توضیحات : </label>
+                <textarea name="Description"></textarea>
+            </div>
+            <div class="row">
+                <label>استان : </label>
+                <select name="Province" id="province" onchange="GetStates()"></select>
+                <label>شهرستان : </label>
+                <select name="State" id="states"></select>
+            </div>
+            <div class="row">
+                <label>انتخاب تاریخ : </label>
+                <input name="DeliveryDate" type="text" class="datepic" />
+                <label>زمان تحویل : </label>
+                <input name="DeliveryTime" type="text" class="timepic" />
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col">
+            <button class="btnStep  btnbackStep" onclick="LoadStep(1);">مرحله قبل</button>
+        </div>
+        <div class="col">
+            <button class="btnStep  btnNextStep" onclick="SaveReciptientInfo();">مرحله بعد</button>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+        $(document).ready( function () {
+             GetProvinces();
+            $(".datepic").persianDatepicker({
+                format: 'YYYY/MM/DD'
+            });
+            $(".timepic").persianDatepicker({
+                format: 'HH:mm:ss',
+                onlyTimePicker: true
+            });
+        });
+    </script>

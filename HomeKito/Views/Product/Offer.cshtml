@@ -1,0 +1,172 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
+
+@{
+    var Country = (Barayand.Models.Entity.ManufacturContryModel)ViewBag.country;
+    var Catlvl2 = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.Catlvl2;
+    var Catlvl1 = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.Catlvl1;
+    string openattr = "";
+    var AllPages = ((List<Barayand.Models.Entity.DynamicPagesContent>)(await _dynamicpagerepo.GetAll()).Data);
+    var seo = AllPages.FirstOrDefault(x => x.PageName == "DiscountedProduct");
+}
+@section Styles{
+    @await Html.PartialAsync("_seo", seo.PageSeo)
+}
+@if (Country != null)
+{
+    <input type="hidden" id="Countryid" value="@Country.M_Id" />
+}
+else
+{
+    <input type="hidden" id="Countryid" value="0"/>
+}
+<input type="hidden" id="catid" value="@ViewBag.catid" />
+<div class="loading">
+    <div class="boxLoading">
+        <i class="logo" style="background-image: url(/dist/img/logo.png);"></i>
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+</div>
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="/Brands" class="breadc fas fa-chevron-left">برند ها</a>
+                @*<a href="/Brand/@Brand.B_Id/@seo.url" class="breadc fas fa-chevron-left">@Brand.B_Title</a>*@
+            </div>
+            <a href="#">Country</a>
+        </div>
+        <section class="secProductList">
+            <div class="ContentListProducts">
+                <div class="col1">
+                    <div class="FilterBox">
+                        <div class="accordion activeEvery">
+                            <div class="titleAccordion">
+                                <label>فیلتر های اعمال شده: </label> <small class="remove"
+                                                                            onclick="removeAllFilter()">حذف</small>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="BoxesFilterSelected">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>جستجو در نتایج: </label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="boxSearchAll">
+                                    <input id="ProductTitle" type="text" class="inputSearchProduct" onkeyup="FilterNameCountry()" placeholder="نام محصول">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>دسته بندی</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="categoriesProduct">
+                                    @foreach (var item in Catlvl1)
+                                    {
+                                        var cat2 = Catlvl2.Where(x => x.PC_ParentId == item.PC_Id);
+                                        var seocatlvl1 = Barayand.Common.Services.UtilesService.ParseSeoData(item.PC_Seo);
+                                        if (item.PC_Id == ViewBag.openattr)
+                                        {
+                                            openattr = "open";
+                                        }
+                                        <span class="parentCatProd @openattr">
+                                            <i class="openparent fal fa-chevron-left"></i>
+                                            <a href="/Products/Country/@Country.M_Id/@Country.M_Title/@item.PC_Id/@seocatlvl1.url" class="linkcat">@item.PC_Title</a>
+
+                                            @foreach (var item2 in cat2)
+                                            {
+                                                var seocatlvl2 = Barayand.Common.Services.UtilesService.ParseSeoData(item2.PC_Seo);
+                                                <span class="childCatProd">
+                                                    <i class="openchild"></i>
+                                                    <a href="/Products/Country/@Country.M_Id/@Country.M_Title/@item2.PC_Id/@seocatlvl2.url" class="linkcat">@item2.PC_Title</a>
+                                                </span>
+                                            }
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardFilter">
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="immediatesending" class="immediatesending" id="immediatesending" onchange="Countryproductsearch()">
+                                <label for="immediatesending">
+                                    <i></i>
+                                    <span>فقط ارسال فوری</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cardFilter">
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="isAvilable" class="isAvilable" id="isAvilable" onchange="Countryproductsearch()">
+                                <label for="isAvilable">
+                                    <i></i>
+                                    <span>فقط کالاهای موجود</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="accordion ">
+                            <div class="titleAccordion">
+                                <label>محدوده قیمت مورد نظر</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="ContentRangePrice">
+                                    <div class="showRagePrice" data-rtl="1" data-start="0" data-end="@(ViewBag.MaxPrice+1)"
+                                         data-min="@ViewBag.Minprice" data-max="@(ViewBag.MaxPrice+1)" data-step="1000">
+                                        <div class="box-sliderrange">
+                                            <label>تا</label>
+                                            <input type="text" id="input-with-keypress-1" data-type="rageSlider"
+                                                   disabled="">
+                                            <span>تومان</span>
+                                        </div>
+                                        <div class="box-sliderrange">
+                                            <label>از</label>
+                                            <input type="text" id="input-with-keypress-0" data-type="rageSlider"
+                                                   disabled="">
+                                            <span>تومان</span>
+                                        </div>
+                                    </div>
+                                    <div id="steps-slider"></div>
+                                    <div class="SubmitFilter">
+                                        <button type="button" onclick="Countryproductsearch(true);" class="btnsubmitFillter">اعمال محدودیت قیمت</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col2">
+                    <div class="cardProductList">
+                        <div class="sortProdList">
+                            <label class="sortLabel">
+                                مرتب سازی بر اساس :
+                            </label>
+                            <span class="itemSort" onclick="FilterOrderCountry(1)">پربازدیدترین</span>
+                            <span class="itemSort" onclick="FilterOrderCountry(2)">پرفروشترین </span>
+                            <span class="itemSort" onclick="FilterOrderCountry(3)">محبوبترین</span>
+                            <span class="itemSort" onclick="FilterOrderCountry(4)">جدیدترین</span>
+                            <span class="itemSort" onclick="FilterOrderCountry(5)">ارزانترین</span>
+                            <span class="itemSort" onclick="FilterOrderCountry(6)">گرانترین</span>
+                            <span class="itemSort" onclick="FilterOrderCountry(7)">سریعترین ارسال</span>
+                            <span class="itemSort" onclick="FilterOrderCountry(8)">بهترین فرصت خرید</span>
+                        </div>
+                        <div id="listbrandproduct">
+                            @await Html.PartialAsync("_ProductList.cshtml", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

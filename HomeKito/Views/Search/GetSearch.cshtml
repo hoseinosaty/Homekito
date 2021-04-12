@@ -1,0 +1,30 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+@{
+    Layout = null;
+}
+
+<div class="contentResult scroll">
+    @foreach (var item in Model)
+    {
+        var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.P_Seo);
+
+        <a href="/Product/@item.P_Id/@item.P_Code/@seo.url" class="itemResultSearch fal fa-search">@item.P_Title</a>
+    }
+
+</div>
+<a href="/Search/@ViewBag.search" class="moreResultSearch fas fa-chart-network">
+    نمایش همه نتایج برای  @ViewBag.search
+    <span></span>
+</a>
+@section Scripts{
+
+    <script>
+        $(".scroll").mCustomScrollbar({
+            axis: "y",
+            theme: "dark-3",
+            scrollButtons: {
+                enable: true
+            },
+        });
+    </script>
+ }

@@ -1,0 +1,142 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+@inject Barayand.DAL.Interfaces.IExpertReviewRepository _Eexpertreview
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.CatAttrRelationModel> _catattrrepo
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.AttributeModel> _attributes
+@{
+    var attrcat = ((List<Barayand.Models.Entity.CatAttrRelationModel>)(await _catattrrepo.GetAll()).Data).Where(x => x.X_Status && x.X_IsDeleted != true);
+    var AllProdCategory = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.ProductCategory;
+    var brands = (List<Barayand.Models.Entity.BrandModel>)ViewBag.Brands;
+    var getAllProductByCatId = (List<Barayand.Models.Entity.ProductModel>)ViewBag.getAllProductByCatId;
+    string AdditionalCss = "";
+}
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="/Compare" class="breadc fas fa-chevron-left">مقایسه محصول</a>
+            </div>
+            <a href="/Compare">Compare</a>
+        </div>
+
+        <section class="CompareContent">
+            @foreach (var item in Model)
+            {
+                var productAttr = (List<Barayand.OutModels.Miscellaneous.AttributeStructure>)item.P_AttributeStructures;
+
+                <div id="parentcompare" class="ItemCompare animated">
+                    <i class="ItemCompare__remove fas fa-times" onclick="removeCompare(@item.P_Id)"></i>
+                    <div class="ItemCompare__top">
+                        <div class="ItemCompate__top__Pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);"></div>
+                        <h4 class="ItemCompare__top__title">@item.P_Title</h4>
+                        @if (item.IsAvailable)
+                        {
+                            <span class="ItemCompare__top__price">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") تومان</span>
+                        }
+                        <a href="#" class="ItemCompare__btnDetailprod">مشاهده و خرید محصول</a>
+                    </div>
+                    <div class="ItemCompare__ProductCat">
+                        @item.P_Title
+                        <br />
+                       
+                    </div>
+                    <div class="ItemCompare__Properties">
+                        <div class="ItemCompare__Properties__name">رنگ</div>
+                        <div class="ItemCompare__Properties__value">
+                            @if (item.Colors.Count > 0)
+                            {
+                                foreach (var color in item.Colors)
+                                {
+                                    <i class="itemColor" style="background-color: @color.ColorCode;"></i>
+                                }
+                            }
+                        </div>
+                        <div class="ItemCompare__Properties__name">کشور سازنده</div>
+                        <div class="ItemCompare__Properties__value">@item.Cuntry.M_Title</div>
+                        @foreach (var atr in attrcat)
+                        {
+                            var existsAttr = await _attributes.GetById(atr.X_AttrId);
+                            if (existsAttr != null)
+                            {
+                                var existstAns = productAttr.FirstOrDefault(x => x.AttributeId == atr.X_AttrId);
+                                <div class="ItemCompare__Properties__name">@existsAttr.A_Title</div>
+                                <div class="ItemCompare__Properties__value">
+                                    @if (existstAns != null)
+                                    {
+                                        <span>@existstAns.AnswerTitle</span>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+            <div class="ItemCompare empty">
+                <div class="ItemCompare__top">
+                    <div class="ItemCompate__top__Pic empty" style="background-image: url(dist/img/p1.jpg);"></div>
+                    <h4 class="ItemCompare__top__title--empty">برای افزودن کالا به لیست مقایسه کلیک کنید</h4>
+                    <span class="ItemCompare__top__price"></span>
+                    <label class="ItemCompare__btnAddToCompare">افزودن کالا به مقایسه</label>
+                    <span class="ItemCompare__hoverlink itemModal" data-modalName="addToCompare"></span>
+                </div>
+                <div class="ItemCompare__ProductCat"></div>
+                <div class="ItemCompare__Properties">
+
+                </div>
+            </div>
+        </section>
+
+        <div class="modal m800 round10 " data-modalName="addToCompare">
+            <i class="bgModal" onclick="closeModal()"></i>
+            <div class="BoxModal">
+                <i class="close fas fa-times" onclick="closeModal()"></i>
+                <h3 class="titleModal"><label>افزودن به مقایسه</label></h3>
+                <div class="SearchProductsCompare">
+                    <div class="rowCustom">
+                        <input type="text" onkeyup="CompareSearch()" id="comparesearchtitle" class="searchCompare" placeholder="کالای مورد نظر خود را جستجو کنید...">
+                        <select onchange="CompareSearch()" id="brandcompare" class="selectCatCompare">
+                            <option value="0">تمامی برند ها</option>
+                            @foreach (var item in brands)
+                            {
+                                <option value="@item.B_Id">@item.B_Title</option>
+                            }
+                        </select>
+                    </div>
+                    @if (Model.Any())
+                    {
+                        AdditionalCss = "display:none;";
+                    }
+                    <div class="rowCustom" style="@AdditionalCss">
+                        <select id="comparecatlvl1" class="subGroup One" onchange="GetCategorylvl2()">
+                            <option value="0">دسته بندی</option>
+                            @foreach (var item in AllProdCategory)
+                            {
+                                <option value="@item.PC_Id">@item.PC_Title</option>
+                            }
+                        </select>
+                        <select onchange="CompareSearch()" class="subGroup Tow" id="SelectCatLevel2">
+                        </select>
+                    </div>
+                </div>
+                <div class="contentModal">
+                    <div class="resultSearchCompare" id="productcontent">
+                        @if (Model.Any())
+                        {
+                            foreach (var item in getAllProductByCatId)
+                            {
+                                <div class="itemSearchCompare" style="cursor: pointer;" onclick="addTocompare(@item.P_Id,true)">
+                                    <div class="picSC" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);"></div>
+                                    <h5 class="title">@item.P_Title</h5>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <lable>لطفا دسته بندی مورد نظر را انتخاب کنید</lable>
+                        }
+                       </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

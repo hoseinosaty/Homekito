@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Homekito</title>
+
+    <meta name="description" content="ArtRow Countdowns Pack - Epic">
+    <meta name="author" content="ArtRow">
+
+    <link rel="stylesheet" href="/coming/css/main.css" media="screen">
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700'
+          rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+    <div class="content-wrapper">
+        <!-- Video Background -->
+        <div id="bg-video">
+            <div class="videoBG_wrapper"
+                 style="position: absolute; top: 0px; left: 0px; height: 600px; width: 1080px; z-index: 1;">
+                <div id="bg-video"></div>
+            </div>
+            <div class="videoBG"
+                 style="position: absolute; z-index: 0; top: 0px; left: 0px; height: 600px; width: 1080px; opacity: 1; overflow: hidden;">
+
+                <video poster="/coming/video/poster.jpg" loop src="/coming/video/video.webm" autoplay="autoplay" muted="muted" style="position: absolute; z-index: 0; top: 0px; left: 0px; min-width: 100%; min-height: 100%;">
+                    <source src="/coming/video/video.mp4" type="/coming/video/mp4">
+                    <source src="/coming/video/video.webm" type="/coming/video/webm">
+                    Your browser does not support the video tag.
+                </video>
+
+            </div>
+        </div>
+        <div id="bg-video-hover"></div>
+        <div class="bg-clouds"></div>
+        <!-- /Video Background -->
+        <!-- Content. Logo. Subscribe. Social -->
+        <div id="content">
+
+            <div id="logo">
+                <!-- Recommended size for logo = maximum width 160px -->
+                <img src="/coming/images/logo.png" alt="">
+            </div>
+
+            <div class="main-title">Coming Soon</div>
+            <p>
+                <h2>Contact Us</h2> <br> <a href="tel:02186036308">021-86036308</a>
+            </p>
+
+        </div>
+        <!-- /Content. Logo. Subscribe. Social -->
+        <!-- Parallax. Countdown. Footer -->
+        <div id="parallax-section">
+            <div class="floor"></div>
+            <div class="parallax-layer" id="back-layer"></div>
+            <div class="parallax-layer" id="countdown-wrapper">
+                <div id="countdown"></div>
+            </div>
+            <div class="parallax-layer" id="front-layer"></div>
+            <div class="footer">ArtRow © Copyrights<br><span>All Rights Reserved</span></div><!-- Footer -->
+        </div>
+        <!-- /Parallax. Countdown. Footer -->
+    </div>
+
+    <script src="/coming/js/jquery-1.10.2.min.js"></script>
+    <script src="/coming/js/retina.js"></script>
+    <script src="/coming/js/jquery.parallax.js"></script>
+    <script src="/coming/js/countdown.min.js"></script>
+    <script src="/coming/js/jquery.infieldlabel.min.js"></script>
+    <script src="/coming/js/date.js"></script>
+    <!-- <script src="js/jquery.videoBG.js"></script> -->
+    <script src="/coming/js/settings.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,242 @@
+/* Star Style */
+.stars {
+    position: relative;
+    float: left;
+    width: 100px;
+    height: 20px;
+    transition: all 500ms;
+}
+
+.ratestar {
+    position: relative;
+    border-radius: 5px;
+    margin-top: -3px;
+    /* margin-right: -25px; */
+    transition: all 500ms;
+    width: 100px !important;
+    height: 20px !important;
+}
+
+.showrate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../img/hor-star.png);
+    background-position: 0 0;
+    transition: all 500ms;
+    background-size: auto 60px;
+}
+
+
+.showresultrate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: url(../img/hor-star.png);
+    background-position: 0px -20px;
+    transition: all 500ms;
+    background-size: auto 60px;
+}
+
+.showactiverate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: url(../img/hor-star.png);
+    background-position: 0px -40px;
+    transition: all 500ms;
+    background-size: auto 60px;
+}
+
+.ratelink {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 500ms;
+
+}
+
+.ratelink ul {
+    margin: 0;
+    width: 100%;
+    float: left;
+    padding: 0;
+    transition: all 500ms;
+
+}
+.ratelink ul li {
+    float: left;
+    width: 20%;
+    height: 20px;
+    list-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 500ms;
+}
+
+.ratehover1 {
+    width: 20%;
+    transition: all 500ms;
+
+}
+
+.ratehover2 {
+    width: 40%;
+    transition: all 500ms;
+
+}
+
+.ratehover3 {
+    width: 60%;
+    transition: all 500ms;
+
+}
+
+.ratehover4 {
+    width: 80%;
+    transition: all 500ms;
+
+}
+
+.ratehover5 {
+    width: 100%;
+    transition: all 500ms;
+
+}
+
+.rateavtive1 {
+    width: 20%;
+    transition: all 500ms;
+
+}
+
+.rateavtive2 {
+    width: 40%;
+    transition: all 500ms;
+
+}
+
+.rateavtive3 {
+    width: 60%;
+    transition: all 500ms;
+
+}
+
+.rateavtive4 {
+    width: 80%;
+    transition: all 500ms;
+
+}
+
+.rateavtive5 {
+    width: 100%;
+    transition: all 500ms;
+
+}
+
+.shownatije {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: url("../img/notifi-rate.png");
+    padding: 10px 2px;
+    text-align: center;
+    display: none;
+    font-size: 9pt;
+    line-height: 22px;
+    z-index: 50;
+    color: #20a9d7;
+    transition: all 500ms;
+
+}
+
+.btntitleproduct.starrateprod .infooprodStars {
+    position: absolute;
+    background: url('../img/tooltipsearchpage.png');
+    width: 106px;
+    height: 36px;
+    margin: -20px auto;
+    color: #FFF;
+    text-align: center;
+    line-height: 27px;
+    opacity: 0;
+    overflow: hidden;
+    right: 0px;
+    left: 0px;
+    transition: all 1500ms;
+    font-size: 9pt;
+    transform: rotateY(540deg);
+
+}
+
+.btntitleproduct.starrateprod:hover .infooprodStars {
+    position: absolute;
+    background: url('../img/tooltipsearchpage.png');
+    width: 106px;
+    height: 36px;
+    margin: -46px auto;
+    color: #FFF;
+    text-align: center;
+    line-height: 27px;
+    opacity: 1;
+    right: 0px;
+    transition: all 1500ms;
+    transform: rotateY(0deg);
+}
+
+.btntitleproduct.starrateprod {
+    position: absolute;
+    /*left: 18px;*/
+    /*top: 31px;*/
+    transition: all 500ms;
+}
+.starRate {
+    position: relative;
+    width: 100px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    background: url(../img/hor-star.png);
+    background-position: 0 0;
+    transition: all 500ms;
+    background-size: auto 60px;
+}
+.starRate:before {
+    background-size: auto 60px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 20px;
+    width: 0px;
+    content: '';
+    background: url(../img/hor-star.png);
+    background-position: 0 20px;
+    transition: all 500ms;
+    background-size: auto 60px;
+}
+.starRate.s1:before {
+    width: 20px;
+}
+.starRate.s2:before {
+    width: 40px;
+}
+.starRate.s3:before {
+    width: 60px;
+}
+.starRate.s4:before {
+    width: 80px;
+}
+.starRate.s5:before {
+    width: 100px;
+}
+/* Star Style */

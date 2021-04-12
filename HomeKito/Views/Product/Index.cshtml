@@ -1,0 +1,411 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.ProductLabelModel> _Lablerepo
+@inject Barayand.DAL.Interfaces.IPromotionRepository _promotionrepo
+@*@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.ProductLabelRelationModel> _LableRelrepo*@
+@{
+    var AllProdCategory = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.ProductCategory;
+    var AllBrands = (List<Barayand.Models.Entity.BrandModel>)ViewBag.Brands;
+    var AllLabels = ((List<Barayand.Models.Entity.ProductLabelModel>)(await _Lablerepo.GetAll()).Data);
+    var catid = ViewBag.CatId;
+    var StaticBoxes = await _promotionrepo.GetByType(4);
+    var discuntedBoxes = await _promotionrepo.GetByType(3);
+    var SlideBoxes = await _promotionrepo.GetByType(5);
+    string seopage = ViewBag.CatSeo;
+    var pageseo = Barayand.Common.Services.UtilesService.ParseSeoData(seopage);
+    var CatL1 = (Barayand.Models.Entity.ProductCategoryModel)ViewBag.CatL1;
+    var CatL2 = ViewBag.CatL2 != null ? (Barayand.Models.Entity.ProductCategoryModel)ViewBag.CatL2 : null;
+    var CatL1Seo = Barayand.Common.Services.UtilesService.ParseSeoData(CatL1.PC_Seo);
+    var CatL2Seo = CatL2 != null ? Barayand.Common.Services.UtilesService.ParseSeoData(CatL2.PC_Seo) : null;
+    //var AllLabelRels = ((List<Barayand.Models.Entity.ProductLabelRelationModel>)(await _LableRelrepo.GetAll()).Data);
+}
+@section Styles{
+    <title>@pageseo.title</title>
+    <meta name="keywords" content="@pageseo.keywords">
+    <meta name="description" content="@pageseo.description">
+    <meta property='og:image' content="@pageseo.image"/>
+    <meta property='og:image:width' content="711" />
+    <meta property='og:image:height' content="309" />
+}
+<input id="cat1" type="hidden" value="@ViewBag.CatId" />
+<input id="cat2" type="hidden" value="@ViewBag.CatId2" />
+
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="/Products/@(CatL1.PC_Id)/@(CatL1Seo.url)" class="breadc fas fa-chevron-left">@CatL1.PC_Title</a>
+                @if (CatL2 != null)
+                {
+            <a href="/Products/@(CatL1.PC_Id)/@(CatL1Seo.url)/@(CatL2.PC_Id)/@(CatL2Seo.url)" class="breadc fas fa-chevron-left">@CatL2.PC_Title</a>
+                }
+            </div>
+            <a href="#">PRODUCTS</a>
+        </div>
+        <section class="seSubcatThisCategory">
+            <div class="card">
+                <h3 class="titleCard center noBorder">
+                    <label>دسته بندی محصولات @ViewBag.CatTitle</label>
+                </h3>
+                <div class="contentCard">
+                    <div class="BoxSubCategories">
+                        @foreach (var item in AllProdCategory)
+                        {
+                            var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.PC_Seo);
+                            <a href="/Products/@ViewBag.CatId/@ViewBag.CatUrl1/@item.PC_Id/@seo.url" class="itemSubCat">
+                                <i class="icon" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductCatMainImage")@item.PC_Logo);"></i>
+                                <label>@item.PC_Title</label>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="secProductList">
+            <div class="ContentListProducts">
+                <div class="col1">
+                    <div class="FilterBox">
+                        @{
+                            var staticsec6 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 30 && x.B_EntityId == catid);
+
+                        }
+                        @if (staticsec6 != null)
+                        {
+                            var seosec1 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec6.B_Seo);
+
+                            if (staticsec6.B_LoadType == 1)
+                            {
+                                <a href="/Productbox/@staticsec6.B_SectionId/@seosec1.url" class="boxADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec6.B_Image);">
+                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec6.B_Image" alt="@staticsec6.B_Title">
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@staticsec6.B_Link" class="boxADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec6.B_Image);">
+                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec6.B_Image" alt="@staticsec6.B_Title">
+                                </a>
+                            }
+                        }
+                        <div class="accordion activeEvery">
+                            <div class="titleAccordion">
+                                <label>فیلتر های اعمال شده: </label> <small class="remove"
+                                                                            onclick="removeAllFilter()">حذف</small>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="BoxesFilterSelected">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>جستجو در نتایج: </label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="boxSearchAll">
+                                    <input id="ProductTitle" type="text" class="inputSearchProduct" onkeyup="FilterName()" placeholder="نام محصول">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>برند</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <input type="text" class="searchFilterBrand" placeholder="جستجوی نام برند">
+                                <div class="BoxCheck resultSearchCheckbox">
+                                    @foreach (var item in AllBrands)
+                                    {
+                                        <div class="checkboxs">
+                                            <input type="checkbox" value="@item.B_Id" id="sq@(item.B_Id)" name="brand" tabindex="3" onchange="FilterSearch()">
+                                            <label for="sq@(item.B_Id)" class="lblinput">
+                                                <span>@item.B_Title</span>
+                                                <small>@item.B_EnTitle</small>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardFilter">
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="immediatesending" class="immediatesending" id="immediatesending" onchange="FilterSearch()">
+                                <label for="immediatesending">
+                                    <i></i>
+                                    <span>فقط ارسال فوری</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cardFilter">
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="isAvilable" class="isAvilable" id="isAvilable" onchange="FilterSearch()">
+                                <label for="isAvilable">
+                                    <i></i>
+                                    <span>فقط کالاهای موجود</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="accordion ">
+                            <div class="titleAccordion">
+                                <label>محدوده قیمت مورد نظر</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="ContentRangePrice">
+                                    <div class="showRagePrice" data-rtl="1" data-start="0" data-end="@(ViewBag.MaxPrice + 1)"
+                                         data-min="@ViewBag.Minprice" data-max="@(ViewBag.MaxPrice + 1)" data-step="1000">
+                                        <div class="box-sliderrange">
+                                            <label>تا</label>
+                                            <input type="text" id="input-with-keypress-1" data-type="rageSlider"
+                                                   disabled="">
+                                            <span>تومان</span>
+                                        </div>
+                                        <div class="box-sliderrange">
+                                            <label>از</label>
+                                            <input type="text" id="input-with-keypress-0" data-type="rageSlider"
+                                                   disabled="">
+                                            <span>تومان</span>
+                                        </div>
+                                    </div>
+                                    <div id="steps-slider"></div>
+                                    <div class="SubmitFilter">
+                                        <button type="button" onclick="FilterSearch(true);" class="btnsubmitFillter">اعمال محدودیت قیمت</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (ViewBag.Attributes != null && ((List<Barayand.OutModels.Miscellaneous.AttributeAnswerList>)ViewBag.Attributes).Count() > 0)
+                        {
+                            foreach (var attr in (List<Barayand.OutModels.Miscellaneous.AttributeAnswerList>)ViewBag.Attributes)
+                            {
+                                <div class="accordion">
+                                    <div class="titleAccordion">
+                                        <label>@attr.Attribute.A_Title</label> <span class="fas fa-chevron-down"></span>
+                                    </div>
+                                    <div class="contentAccordion">
+                                        <input type="text" class="searchFilterBrand" placeholder="جستجو">
+                                        <div class="BoxCheck resultSearchCheckbox">
+                                            @foreach (var ans in attr.Answers)
+                                            {
+                                                <div class="checkboxs">
+                                                    <input type="checkbox" value="@ans.X_Id" id="ans@(ans.X_Id)" data-attr="@attr.Attribute.A_Id" name="attr" tabindex="3">
+                                                    <label for="ans@(ans.X_Id)" class="lblinput">
+                                                        <span>@ans.X_Answer</span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @{
+                            var staticsec7 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 31 && x.B_EntityId == catid);
+
+                        }
+                        @if (staticsec7 != null)
+                        {
+                            var seosec2 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec7.B_Seo);
+
+                            if (staticsec7.B_LoadType == 1)
+                            {
+                                <a href="/Productbox/@staticsec7.B_SectionId/@seosec2.url" class="boxADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec7.B_Image);">
+                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec7.B_Image" alt="@staticsec7.B_Title">
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@staticsec6.B_Link" class="boxADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec7.B_Image);">
+                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec7.B_Image" alt="@staticsec7.B_Title">
+                                </a>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="col2">
+                    <div class="cardProductList">
+                        <div class="sortProdList">
+                            <label class="sortLabel">
+                                مرتب سازی بر اساس :
+                            </label>
+                            <span onclick="FilterOrder(1)" class="itemSort">پربازدیدترین</span>
+                            <span onclick="FilterOrder(2)" class="itemSort">پرفروشترین </span>
+                            <span onclick="FilterOrder(3)" class="itemSort">محبوبترین</span>
+                            <span onclick="FilterOrder(4)" class="itemSort">جدیدترین</span>
+                            <span onclick="FilterOrder(5)" class="itemSort">ارزانترین</span>
+                            <span onclick="FilterOrder(6)" class="itemSort">گرانترین</span>
+                            <span onclick="FilterOrder(7)" class="itemSort">سریعترین ارسال</span>
+                            <span onclick="FilterOrder(8)" class="itemSort">بهترین فرصت خرید</span>
+                        </div>
+                        <div id="listproduct">
+                            @await Html.PartialAsync("_ProductList", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="HelpSale">
+            <div class="card">
+                <h3 class="titleCard">
+                    <label>راهنمای خرید مطمئن</label>
+                </h3>
+                <div class="contentCard">
+                    <div class="textMore">
+                        @Html.Raw(ViewBag.description)
+                        <span class="more fal fa-chevron-down">مشاهده بیشتر</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="secCheapStore">
+            @{
+                var staticsec1 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 25 && x.B_EntityId == catid);
+
+
+            }
+            @if (staticsec1 != null)
+            {
+                var seosec3 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec1.B_Seo);
+                if (staticsec1.B_LoadType == 1)
+                {
+                    <a href="/Productbox/@staticsec1.B_SectionId/@seosec3.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image);">
+                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image" alt="@staticsec1.B_Title">
+                    </a>
+                }
+                else
+                {
+                    <a href="@staticsec1.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image);">
+                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image" alt="@staticsec1.B_Title">
+                    </a>
+                }
+            }
+        </section>
+        <section class="windowProd">
+            <div class="col1">
+                @{
+                    var staticsec2 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 26 && x.B_EntityId == catid);
+
+                }
+                @if (staticsec2 != null)
+                {
+                    var seosec4 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec2.B_Seo);
+
+                    if (staticsec2.B_LoadType == 1)
+                    {
+                        <a href="/Productbox/@staticsec2.B_SectionId/@seosec4.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image" alt="@staticsec2.B_Title">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@staticsec2.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image" alt="@staticsec2.B_Title">
+                        </a>
+                    }
+                }
+                @{
+                    var staticsec3 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 27 && x.B_EntityId == catid);
+
+                }
+                @if (staticsec3 != null)
+                {
+                    var seosec5 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec3.B_Seo);
+
+                    if (staticsec3.B_LoadType == 1)
+                    {
+                        <a href="/Productbox/@staticsec3.B_SectionId/@seosec5.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image" alt="@staticsec3.B_Title">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@staticsec3.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image" alt="@staticsec3.B_Title">
+                        </a>
+                    }
+                }
+            </div>
+            <div class="col2">
+
+                @{
+                    var staticsec4 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 28 && x.B_EntityId == catid);
+
+                }
+                @if (staticsec4 != null)
+                {
+                    var seosec6 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec4.B_Seo);
+
+                    if (staticsec4.B_LoadType == 1)
+                    {
+                        <a href="/Productbox/@staticsec4.B_SectionId/@seosec6.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image" alt="@staticsec4.B_Title">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@staticsec4.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image" alt="@staticsec4.B_Title">
+                        </a>
+                    }
+                }
+
+                @{
+                    var staticsec5 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 29 && x.B_EntityId == catid);
+
+
+                }
+                @if (staticsec5 != null)
+                {
+                    var seosec7 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec5.B_Seo);
+
+                    if (staticsec5.B_LoadType == 1)
+                    {
+                        <a href="/Productbox/@staticsec5.B_SectionId/@seosec7.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image" alt="@staticsec1.B_Title">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@staticsec5.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image" alt="@staticsec5.B_Title">
+                        </a>
+                    }
+                }
+            </div>
+        </section>
+        @if (SlideBoxes.Count(x => x.B_EntityId == catid) > 0)
+        {
+            <section class="sliderListProd">
+                <div class="SliderSingle swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach (var item in SlideBoxes.Where(x => x.B_EntityId == catid))
+                        {
+                            var seosec8 = Barayand.Common.Services.UtilesService.ParseSeoData(item.B_Seo);
+
+                            if (item.B_LoadType == 1)
+                            {
+                                <div class="swiper-slide">
+                                    <a href="/Productbox/@item.B_SectionId/@seosec8.url" class="sliderListProd"
+                                       style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@item.B_Image);"></a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="swiper-slide">
+                                    <a href="@item.B_Link" class="sliderListProd"
+                                       style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@item.B_Image);"></a>
+                                </div>
+                            }
+
+                        }
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="NextPrevSlider">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </section>
+        }
+    </div>
+</div>

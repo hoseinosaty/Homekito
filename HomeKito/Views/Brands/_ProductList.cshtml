@@ -1,0 +1,92 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+@inject Barayand.DAL.Interfaces.IPCRepository _categories;
+@{
+    Layout = null;
+    var pagination = (Paging)ViewBag.paging;
+    var GetCatAll = (List<Barayand.Models.Entity.ProductCategoryModel>)(await _categories.GetAll()).Data;
+}
+
+<div class="contenShowProduct">
+    @foreach (var item in Model)
+    {
+        var cat1 = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+        var seo = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+        var cat2 = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+        var seo2 = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+
+        //var prodLabels = AllLabelRels.Where(x => x.X_Pid == item.P_Id).ToList();
+    <div class="itemProductBox">
+        <a href="/Product/@item.P_Id/@seo.url/@seo2.url" class="hoverLink"></a>
+        <div class="labelsProd">
+            @*@foreach (var lbl in prodLabels)
+            {
+                var label = AllLabels.FirstOrDefault(x => x.L_Id == lbl.X_LabelId);
+                if (label != null)
+                {
+                    <label class="bdg" style="background-color:@label.L_HexCode">@label.L_Title</label>
+                }
+            }*@
+        </div>
+        <div class="lineTopProd">
+            <div class="mystars">
+                <i class="progressStar" style="width: @((item.ManualRate * 20)+"%")"></i>
+            </div>
+            @if (item.IsAvailable && item.DefaultProductCombine.X_Discount > 0 && item.DefaultProductCombine.X_DiscountType == 1)
+            {
+                <div class="discountProd">
+                    <label>تخفیف</label>
+                    <span>@item.DefaultProductCombine.X_Discount.ToString("#,#") %</span>
+                </div>
+            }
+        </div>
+        <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image" alt="عنوان محصول در اینجا">
+            <div class="colorProd">
+                @if (item.Colors.Count > 0)
+                {
+                    foreach (var color in item.Colors)
+                    {
+                        <i class="itemColor" style="background-color: @color.ColorCode;"></i>
+                    }
+                }
+            </div>
+        </div>
+        <h3 class="titleProd">
+            @item.P_Title
+        </h3>
+        <div class="prices">
+            @if (item.IsAvailable)
+            {
+                <span class="real">@item.DefaultProductCombine.X_Price.ToString("#,#")</span>
+                <span class="discount">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#")</span>
+            }
+        </div>
+        @*<div class="setTimer">
+            <label>زمان باقیمانده خرید</label>
+            <div class="Timer far fa-clock" class="" data="12 12, 2020 12:30:25"></div>
+        </div>*@
+    </div>
+    }
+</div>
+
+<div class="pagination">
+    @if (pagination.CurrentPage > 1)
+    {
+        <a href="javascrip:void(0)" onclick="PaginationProductbrand(@pagination.CurrentPage-1)" class=" prevPage fal fa-angle-double-right"></a>
+    }
+    @for (int i = 1; i <= pagination.TotalPages; i++)
+    {
+        if (pagination.CurrentPage == i)
+        {
+            <span onclick="PaginationProductbrand(@i)" class="pageLink">@i</span>
+        }
+        else
+        {
+            <a href="javascrip:void(0)" onclick="PaginationProductbrand(@i)" class="pageLink">@i</a>
+        }
+    }
+    @if (pagination.CurrentPage < pagination.TotalPages)
+    {
+        <a href="javascrip:void(0)" onclick="PaginationProductbrand(@pagination.CurrentPage+1)" class=" nextPage fal fa-angle-double-left"></a>
+    }
+</div>

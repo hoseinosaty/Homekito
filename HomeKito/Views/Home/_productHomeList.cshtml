@@ -1,0 +1,22 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+@{
+    Layout = null;
+}
+@foreach (var item in Model.Take(10))
+{
+    var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.P_Seo);
+    <div class="swiper-slide">
+        <div class="todayRecomended">
+            <a href="/Product/@item.P_Id/@item.P_Code/@seo.url" class="hoverLink"></a>
+            <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                     alt="@item.P_Title">
+            </div>
+            <h2 class="title">@item.P_Title</h2>
+            @if (item.IsAvailable)
+            {
+                <div class="pricePromo">@item.DefaultProductCombine.PriceModel.DiscountedPrice.ToString("#,#")<span>تومان</span></div>
+            }
+        </div>
+    </div>
+}

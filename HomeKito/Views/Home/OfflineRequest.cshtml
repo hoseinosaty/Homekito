@@ -1,0 +1,61 @@
+﻿@model Barayand.Models.Entity.DynamicPagesContent
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+@{
+    ViewData["Title"] = "OfflineRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="contentMain">
+    <header style="background-image: url(/img/HeaderInner.jpg);">
+        <div class="contentHeader">
+            <h1 class="titleHeader">@ViewBag.PGNAME</h1>
+            <div class="breadcrumbs">
+                <a href="/" class="bread">@localizer["HOMETTL"]</a>
+                <span class="fal fa-chevron-left"></span>
+                <a href="@(Context.Request.Host+Context.Request.Path)" class="bread">@ViewBag.PGNAME</a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+
+
+        <div class="titleCarousel ones">
+            <div class="col">
+                <span class="fas fa-arrow-left"></span>
+                <label>@localizer["BOXTTL"]</label>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        <div class="RequestOfflineForm ">
+            @if ((bool)ViewBag.userLoggedIn)
+            {
+                <div class="alert-box alert-box-info">@Html.Raw(Model.PageContent)</div>
+                <form id="frmOfflineRequest" style="width:100%">
+                    <div class="group-input full">
+                        <input type="text" id="url" name="O_Url" placeholder="@localizer["URLINPTTTL"]" required>
+                        <div class="input-error"></div>
+                    </div>
+                    <div class="group-input full">
+                        <textarea id="detail" name="O_Details" placeholder="@localizer["DESCINPT"]" required></textarea>
+                        <div class="input-error"></div>
+                    </div>
+                </form>
+                <div class="rowBtn">
+                    <button class="btnSubmitCm" type="button" onclick="RegisterOfflineRequest();">@localizer["BTNSUBMIT"]</button>
+                </div>
+            }
+            else
+            {
+                <div class="alert-box alert-box-error">
+                    @localizer["NOTLOGGEDIN"]
+                    <a class="btnRedirect" href="/User?redirect=@Context.Request.Path">@localizer["LOGINBTN"]</a>
+                </div>
+            }
+        </div>
+
+
+    </div>
+</div>
+

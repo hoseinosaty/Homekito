@@ -1,0 +1,196 @@
+﻿@model List<Barayand.Models.Entity.ProductModel>
+@{
+    var Brand = (Barayand.Models.Entity.BrandModel)ViewBag.brand;
+    var seo = Barayand.Common.Services.UtilesService.ParseSeoData(Brand.B_Seo);
+    var Catlvl2 = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.Catlvl2;
+    var Catlvl1 = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.Catlvl1;
+    string openattr = "";
+}
+@section Styles{
+    @await Html.PartialAsync("_seo", Brand.B_Seo)
+}
+<input type="hidden" id="brandid" value="@Brand.B_Id" />
+<input type="hidden" id="catid" value="@ViewBag.catid" />
+
+<div class="loading">
+    <div class="boxLoading">
+        <i class="logo" style="background-image: url(/dist/img/logo.png);"></i>
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+</div>
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="/Brands" class="breadc fas fa-chevron-left">برند ها</a>
+                <a href="/Brand/@Brand.B_Id/@seo.url" class="breadc fas fa-chevron-left">@Brand.B_Title</a>
+            </div>
+            <a href="#">Brands</a>
+        </div>
+        <div class="ContentListProducts">
+            <div class="col1">
+                <div class="boxbrandPic">
+                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@Brand.B_Logo);">
+                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@Brand.B_Logo" alt="@Brand.B_Title">
+                    </div>
+                    <div class="bottom">
+                        <h3 class="title">@Brand.B_Title</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col2">
+                <div class="BoxTextListProd">
+                    <div class="text">
+                        @Html.Raw(Brand.B_Description)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="secProductList">
+            <div class="ContentListProducts">
+                <div class="col1">
+                    <div class="FilterBox">
+                        <div class="accordion activeEvery">
+                            <div class="titleAccordion">
+                                <label>فیلتر های اعمال شده: </label> <small class="remove"
+                                                                            onclick="removeAllFilter()">حذف</small>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="BoxesFilterSelected">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>جستجو در نتایج: </label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="boxSearchAll">
+                                    <input id="ProductTitle" type="text" class="inputSearchProduct" onkeyup="FilterNamebrand()" placeholder="نام محصول">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion active">
+                            <div class="titleAccordion">
+                                <label>دسته بندی</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="categoriesProduct">
+                                    @foreach (var item in Catlvl1)
+                                    {
+                                        var cat2 = Catlvl2.Where(x => x.PC_ParentId == item.PC_Id);
+                                        var seocatlvl1 = Barayand.Common.Services.UtilesService.ParseSeoData(item.PC_Seo);
+                                        if (item.PC_Id == ViewBag.openattr)
+                                        {
+                                            openattr = "open";
+                                        }
+                                        @foreach (var item2 in cat2)
+                                        {
+                                            var seocatlvl2 = Barayand.Common.Services.UtilesService.ParseSeoData(item2.PC_Seo);
+                                            <span class="parentCatProd">
+                                                <i class="openchild"></i>
+                                                <a href="/Brand/@Brand.B_Id/@seo.url/@item2.PC_Id/@seocatlvl2.url" class="linkcat">@item2.PC_Title</a>
+                                            </span>
+                                        }
+                                       
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardFilter">
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="immediatesending" class="immediatesending" id="immediatesending" onchange="brandproductsearch()">
+                                <label for="immediatesending">
+                                    <i></i>
+                                    <span>فقط ارسال فوری</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cardFilter">
+                            <div class="buttonOnOff">
+                                <input type="checkbox" name="isAvilable" class="isAvilable" id="isAvilable" onchange="brandproductsearch()">
+                                <label for="isAvilable">
+                                    <i></i>
+                                    <span>فقط کالاهای موجود</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="accordion ">
+                            <div class="titleAccordion">
+                                <label>محدوده قیمت مورد نظر</label> <span class="fas fa-chevron-down"></span>
+                            </div>
+                            <div class="contentAccordion">
+                                <div class="ContentRangePrice">
+                                    <div class="showRagePrice" data-rtl="1" data-start="0" data-end="@(ViewBag.MaxPrice+1)"
+                                         data-min="@ViewBag.Minprice" data-max="@(ViewBag.MaxPrice+1)" data-step="1000">
+                                        <div class="box-sliderrange">
+                                            <label>تا</label>
+                                            <input type="text" id="input-with-keypress-1" data-type="rageSlider"
+                                                   disabled="">
+                                            <span>تومان</span>
+                                        </div>
+                                        <div class="box-sliderrange">
+                                            <label>از</label>
+                                            <input type="text" id="input-with-keypress-0" data-type="rageSlider"
+                                                   disabled="">
+                                            <span>تومان</span>
+                                        </div>
+                                    </div>
+                                    <div id="steps-slider"></div>
+                                    <div class="SubmitFilter">
+                                        <button type="button" onclick="brandproductsearch(true);" class="btnsubmitFillter">اعمال محدودیت قیمت</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col2">
+                    <div class="cardProductList">
+                        <div class="sortProdList">
+                            <label class="sortLabel">
+                                مرتب سازی بر اساس :
+                            </label>
+                            <span class="itemSort" onclick="FilterOrderbrand(1)">پربازدیدترین</span>
+                            <span class="itemSort" onclick="FilterOrderbrand(2)">پرفروشترین </span>
+                            <span class="itemSort" onclick="FilterOrderbrand(3)">محبوبترین</span>
+                            <span class="itemSort" onclick="FilterOrderbrand(4)">جدیدترین</span>
+                            <span class="itemSort" onclick="FilterOrderbrand(5)">ارزانترین</span>
+                            <span class="itemSort" onclick="FilterOrderbrand(6)">گرانترین</span>
+                            <span class="itemSort" onclick="FilterOrderbrand(7)">سریعترین ارسال</span>
+                            <span class="itemSort" onclick="FilterOrderbrand(8)">بهترین فرصت خرید</span>
+                        </div>
+                        <div id="listbrandproduct">
+                            @await Html.PartialAsync("_ProductList.cshtml", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="sliderListProd">
+            <div class="SliderSingle swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="#" class="sliderListProd" style="background-image: url(/dist/img/slide-1.jpg);"></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#" class="sliderListProd" style="background-image: url(/dist/img/slide-2.jpg);"></a>
+                    </div>
+                </div>
+                <!-- Add Arrows -->
+                <div class="NextPrevSlider">
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

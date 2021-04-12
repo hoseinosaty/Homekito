@@ -1,0 +1,38 @@
+[
+  {
+    "outputFileName": "wwwroot/css/style.min.css",
+    "inputFiles": [
+      "wwwroot/dist/css/style.css",
+      "wwwroot/dist/css/responsive.css",
+      "wwwroot/lib/persian-datepicker/css/persian-datepicker.min.css",
+      "wwwroot/dist/css/all.css",
+      "wwwroot/dist/css/hrb_notify.css",
+      "wwwroot/dist/css/animate.css",
+      "wwwroot/dist/css/jquery.mCustomScrollbar.css",
+      "wwwroot/dist/css/nouislider.css",
+      "wwwroot/dist/css/GalleryPopUp.css",
+      "wwwroot/dist/css/mapbox.css",
+      "wwwroot/dist/css/swiper.css",
+      "wwwroot/dist/css/fiveStar.css",
+      "wwwroot/dist/css/lightBoxHome.css",
+      "wwwroot/dist/css/loadingSvg.css",
+      "wwwroot/dist/css/navbar.css",
+      "wwwroot/dist/css/basket.css",
+      "wwwroot/dist/css/footer.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/dist/js/script.min.js",
+    "inputFiles": [
+      "wwwroot/dist/js/script.js"
+    ]
+  }
+]

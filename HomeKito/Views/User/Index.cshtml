@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ورود/ثبت‌نام | هومکیتو </title>
+    <link rel="stylesheet" href="/dist/css/StyleLoginRegister.css">
+</head>
+
+<body>
+    <div class="contentMain" id="RegLogin">
+        <div class="loginRegister">
+            <div class="logo">
+                <img src="dist/img/logo.png" alt="HomeKito">
+            </div>
+            <h1 class="title">ورود / ثبت‌ نام</h1>
+            <div class="boxInput">
+                <label>شماره موبایل خود را وارد کنید</label>
+                <input id="Mobile" type="text" placeholder="شماره موبایل یا ایمیل" />
+            </div>
+
+
+            <div class="RowButton center">
+                <div onclick="Submit()" class="buttonAuth">ورود به هومکیتو</div>
+            </div>
+        </div>
+    </div>
+    <script src="/dist/js/jquery-3.2.1.min.js"></script>
+    <script src="/dist/js/countDownTimer.js"></script>
+    <script>
+        function Submit() {
+            $.ajax({
+                url: '/ConfirmUSer',
+                data: {
+                    mobile: $("#Mobile").val()
+                },
+                method: 'POST',
+                dataType: "html",
+                success: function (res) {
+                    $("#RegLogin").html(res);
+
+                },
+                error: function (a, b, c) {
+                    console.error(a, b, c);
+                }
+            })
+        }
+
+        function SubmitStep2() {
+            $.ajax({
+                url: '/RegisterLogin',
+                data: {
+                    code: $("#code").val()
+                },
+                method: 'POST',
+                dataType: "json",
+                success: function (res) {
+                    if (res.status == false) {
+                        alert("کد شما اشتباه است");
+                    } else {
+                        if (res.msg != null && res.msg != "") {
+                            window.location.href = "/";
+                        }
+                        else {
+                            $("#RegLogin").html(res.data);
+                        }
+                    }
+                },
+                error: function (a, b, c) {
+                    console.error(a, b, c);
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
+
+

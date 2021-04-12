@@ -1,0 +1,727 @@
+
+/* Main CSS
+-------------------------------------------------------------------------------
+
+    0. CSS Reset & Clearfix
+    1. Document Setup
+    2. Content - Logo, Title, Subscribe, Social icons
+    3. Parallax
+    4. Countdown
+    5. Background
+    6. Footer
+    7. Media Queries
+
+---------------------------------------------------------------------------------- */
+
+
+/*	0.  Reset & Clearfix (http://meyerweb.com/eric/tools/css/reset/)
+/* ------------------------------------------------------------------------------- */
+
+	html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,and,address,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video,input,textarea,select{margin:0;padding:0;outline:0;border:0;background:transparent;vertical-align:baseline;font-size:100%;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}body{line-height:1;}abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:none;}del{text-decoration:line-through;}hr{clear:both;margin:0;padding:0;height:1px;border:0;background:transparent;color:transparent;}mark{background-color:#ffffb3;font-style:italic;}input,select{vertical-align:middle;}ins{background-color:red;color:#fff;text-decoration:none;}ol,ul{list-style:none;}table{border-collapse:collapse;border-spacing:0;}
+
+	.clear{clear:both;display:block;visibility:hidden;overflow:hidden;width:0;height:0;}.clearfix:after{clear:both;display:block;visibility:hidden;width:0;height:0;content:' ';font-size:0;line-height:0;}* html .clearfix,:first-child+html .clearfix{zoom:1;}
+
+
+/*	1.  Document Setup
+/* ------------------------------------------------------------------------------- */
+
+html {
+	width: 100%;
+	min-height: 100%;
+	background: #000;
+}
+
+body {
+	overflow-x: hidden;
+	width: 100%;
+	min-height: 100%;
+	color: #fff;
+	font: normal 16px 'Open Sans',Helvetica,Arial;
+}
+
+p {
+	font: normal normal 400 16px/normal 'Open Sans',Helvetica,Arial;
+}
+
+/*	2.  Content - Logo, Title, Subscribe, Social icons
+/* ------------------------------------------------------------------------------- */
+
+.content-wrapper {
+	width: 100%;
+	height: 1000px;
+	top: 0;
+	position: relative;
+	overflow-x: hidden;
+}
+
+#content {
+	position: absolute;
+	left: 50%;
+	z-index: 1;
+	margin-left: -300px;
+	padding-top: 20px;
+	top: 0;
+	padding-bottom: 10px;
+	width: 600px;
+	background: none;
+	text-align: center;
+}
+
+#logo {
+	margin: 0 auto;
+	padding: 0 10px;
+	max-width: 600px;
+	max-height: 160px;
+}
+
+#logo img {
+    max-width: 100%;
+    max-height: 100%;
+    filter: grayscale(0.5);
+}
+#content h2 {
+    font-size: 30px;
+    margin: 0 !important;
+}
+.main-title{
+	margin: 30px 0 10px;
+	color: #fff;
+	text-transform: uppercase;
+	text-shadow: 0 1px 15px rgba(0,0,0,0.5);
+	font: normal 48px 'Oswald', Impact, sans-serif;
+}
+
+/* --- subscribe --- */
+
+.subscribe_field {
+	position: relative;
+    display: inline-block;
+    margin-top: 40px;
+    width: 400px;
+    height: 40px;
+    border: 5px solid rgba(161,206,255,0.25);
+    border-radius: 5px;
+    background: #fff;  
+    background-clip: border-box; 
+    background-clip: padding-box;  
+    background-clip: content-box;
+
+    -moz-background-clip: border;     
+    -webkit-background-clip: border;
+
+    -moz-background-clip: padding;     
+    -webkit-background-clip: padding;
+
+    -moz-background-clip: content;     
+    -webkit-background-clip: content; 
+}
+
+.subscribe_field input {
+	float: left;
+	margin-left: 10px;
+    width: 280px;
+	height: 40px;
+	color: #808080;
+    font-size: 14px;
+    font-family: 'Open Sans';
+}
+
+.subscribe_field button {
+	position: relative;
+	right: 0;
+    float: right;
+    margin: 4px;
+    width: 100px;
+    height: 32px;
+    border: none;
+    background: #c8c8c6;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Open Sans';
+    cursor: pointer;
+    -webkit-transition: background .5s ease;
+	-moz-transition: background .5s ease;
+	-o-transition: background .5s ease;
+	transition: background .5s ease;
+	-ms-transition: background .5s ease;
+}
+#content a {
+    text-decoration: none;
+    color: #fff;
+}
+#content a:hover {
+    color: #0d1a5f;
+}
+.subscribe_field button:hover {
+    background: #adaca8;
+}
+
+.subscribe_field button:active {
+    right: -1px;
+}
+
+.subscribe_field .flabel {
+    position: absolute;
+    left: 10px;
+    height: 40px;
+    color: #808080;
+    font-size: 14px;
+    line-height: 42px;
+}
+
+/* --- error --- */
+
+.error {
+    border: 5px solid rgba(255,0,45,0.5);
+}
+
+/* --- good --- */
+
+.good {
+    background: #ab9a65;
+    border: 0 solid rgba(0,0,0,0);
+    line-height: 40px;
+    color: #fff;
+}
+
+.good:after {
+	content: 'Thanks for subscribing';
+}
+
+.good input {
+	display: none;
+}
+
+.good button {
+	display: none;
+}
+
+.good .flabel {
+    display: none;
+}
+
+/* --- social --- */
+
+.social {
+	margin: 10px auto;
+	text-align: center;
+}
+
+.social li {
+	display: inline-block;
+	margin: 5px 5px 5px 0;
+	width: 26px;
+	height: 26px;
+	border-radius: 3px;
+	background-color: rgba(161,206,255,0.25);
+	-webkit-transition: background-color .5s ease;
+	-moz-transition: background-color .5s ease;
+	-o-transition: background-color .5s ease;
+	transition: background-color .5s ease;
+	-ms-transition: background-color .5s ease;
+}
+
+.icon-facebook,.icon-twitter,.icon-google,.icon-flickr,.icon-pinterest,.icon-vimeo,.icon-youtube,.icon-linkedin,.icon-instagram,.icon-skype,.icon-vkontakte,.icon-tumblr,.icon-rss,.icon-picasa,.icon-deviant,.icon-wordpress,.icon-dribble {
+	width: 26px;
+	height: 26px;
+}
+
+.icon-facebook {
+	background: url(../images/social.png);
+}
+.facebook:hover {
+	background-color: #3c5a98;
+}
+
+.icon-twitter {
+	background: url(../images/social.png) -26px 0;
+}
+.twitter:hover {
+	background-color: #00aced;
+}
+
+.icon-google {
+	background: url(../images/social.png) -52px 0;
+}
+.google:hover {
+	background-color: #cf3616;
+}
+
+.icon-flickr {
+	background: url(../images/social.png) -78px 0;
+}
+.flickr:hover {
+	background-color: #ff0084;
+}
+
+.icon-pinterest {
+	background: url(../images/social.png) -104px 0;
+}
+.pinterest:hover {
+	background-color: #cc2127;
+}
+
+.icon-vimeo {
+	background: url(../images/social.png) -130px 0;
+}
+.vimeo:hover {
+	background-color: #1ab7ea;
+}
+
+.icon-youtube {
+	background: url(../images/social.png) -156px 0;
+}
+.youtube:hover {
+	background-color: #ff3333;
+}
+
+.icon-linkedin {
+	background: url(../images/social.png) -182px 0;
+}
+.linkedin:hover {
+	background-color: #0092be;
+}
+
+.icon-instagram {
+	background: url(../images/social.png) -208px 0;
+}
+.instagram:hover {
+	background-color: #205c81;
+}
+
+.icon-skype {
+	background: url(../images/social.png) -234px 0;
+}
+.skype:hover {
+	background-color: #009fe3;
+}
+
+.icon-vkontakte {
+	background: url(../images/social.png) -260px 0;
+}
+.vkontakte:hover {
+	background-color: #4e729b;
+}
+
+.icon-tumblr {
+	background: url(../images/social.png) -286px 0;
+}
+.tumblr:hover {
+	background-color: #44546b;
+}
+
+.icon-rss {
+	background: url(../images/social.png) -312px 0;
+}
+.rss:hover {
+	background-color: #ff7e00;
+}
+
+.icon-picasa {
+	background: url(../images/social.png) -338px 0;
+}
+.picasa:hover {
+	background-color: #a5b0ba;
+}
+
+.icon-deviant {
+	background: url(../images/social.png) -364px 0;
+}
+.deviant:hover {
+	background-color: #4f5e55;
+}
+
+.icon-wordpress {
+	background: url(../images/social.png) -390px 0;
+}
+.wordpress:hover {
+	background-color: #21759b;
+}
+
+.icon-dribble {
+	background: url(../images/social.png) -416px 0;
+}
+.dribble:hover {
+	background-color: #ea4c89;
+}
+
+/*	3.  Parallax
+/* ------------------------------------------------------------------------------- */
+
+.parallax-viewport {
+    position: relative;     /* relative, absolute, fixed */
+    overflow: hidden;
+}
+
+.parallax-layer {
+    position: absolute;
+}
+
+#parallax-section {
+	position: absolute;
+	left: 50%;
+	margin-left: -800px;
+	top: 300px;
+	width: 1600px;
+	height: 500px;
+}
+
+#back-layer {
+	width: 1550px;
+	height: 550px;
+	position: absolute;
+    left: 0; 
+    top: 0;
+	background: url(../images/parallax-back-layer.png);
+	background-position: 0 0;
+}
+
+#front-layer {
+	width: 1700px;
+	height: 600px;
+	position: absolute; 
+    left: 0; 
+    top: 0;
+	background: url(../images/parallax-front-layer.png);
+	background-position: 0 0;
+}
+
+#countdown-wrapper {
+	padding-top: 200px;
+	width: 1620px;
+	height: 320px;
+}
+
+#countdown {
+	margin: 0 auto;
+	width: 720px;
+}
+
+/*	4.  Countdown
+/* ------------------------------------------------------------------------------- */
+
+.artrow-countdown {
+    width: 100%;
+    margin: 0 auto;
+    display: inline-block;
+    height: 100%;
+    text-align: center;
+}
+
+.artrow-countdown label {
+    display: block;
+    margin: 0 auto;
+}
+
+.artrow-countdown .time {
+    margin-bottom: 40px;
+}
+
+.artrow-countdown .separator,
+.artrow-countdown .time {
+    display: inline-block;
+    height: 110px;
+}
+
+.artrow-countdown .separator {
+    width: 30px;
+    background: none;
+    height: 10px;
+}
+
+.artrow-countdown .number {
+    display: block;
+    background: url(../images/digits.png) no-repeat; /* Comment this for disable 3D digits. Read documentation for more info */
+    width: 70px;
+    height: 110px;
+    float: left;
+}
+
+.artrow-countdown .number .value {
+    visibility: hidden; /* Change to "visible" for display digits */
+    font: normal 120px/120px Impact, sans-serif;
+    color: #707f93;
+}
+
+.artrow-countdown .clearfix {
+    clear: both;
+}
+
+/* /* Titles under digits. */
+
+.artrow-countdown .days:after,
+.artrow-countdown .hours:after,
+.artrow-countdown .minutes:after,
+.artrow-countdown .seconds:after {
+    display: block;
+    color: #707f93;
+    width: 140px;
+    height: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.artrow-countdown .days:after {
+	max-width: 210px;
+    width: 100%;
+    content: 'DAYS';
+}
+
+.artrow-countdown .hours:after {
+    content: 'HOURS';
+}
+
+.artrow-countdown .minutes:after {
+    content: 'MINUTES';
+}
+
+.artrow-countdown .seconds:after {
+    content: 'SECONDS';
+}
+
+/* Titles over digits 
+
+.artrow-countdown .days:before,
+.artrow-countdown .hours:before,
+.artrow-countdown .minutes:before,
+.artrow-countdown .seconds:before {
+    display: block;
+    color: #707f93;
+    width: 140px;
+    height: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.artrow-countdown .days:before {
+    width: 100%;
+    content: 'DAYS';
+}
+
+.artrow-countdown .hours:before {
+    content: 'HOURS';
+}
+
+.artrow-countdown .minutes:before {
+    content: 'MINUTES';
+}
+
+.artrow-countdown .seconds:before {
+    content: 'SECONDS';
+}
+--------------------------------------------------------------------- */
+
+/*	5.  Background
+/* ------------------------------------------------------------------------------- */
+
+#bg-video {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    z-index: -5;
+    margin-left: -540px;
+    width: 1080px;
+    height: 600px;
+}
+
+#bg-video-hover {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -540px;
+	width: 1080px; /* Use WIDTH from bg-video */
+	height: 600px; /* Use HEIGHT from bg-video */
+	background: transparent url(../images/bg-video-hover.png) no-repeat;
+}
+
+.bg-clouds {
+	position: absolute;
+	top: 350px;
+	left: 50%;
+	margin-left: -650px;
+	width: 1300px;
+	height: 380px;
+	background: url(../images/bg-clouds.png);
+}
+
+.floor {
+	position: absolute;
+	top: 350px;
+	left: 50%;
+	margin-left: -540px;
+	width: 1080px;
+	height: 80px;
+	background: transparent url(../images/floor.png) no-repeat;
+}
+
+/*	6.  Footer
+/* ------------------------------------------------------------------------------- */
+
+.footer {
+	margin: 0 auto;
+	margin-top: 530px; 
+	padding-bottom: 30px;
+	width: 200px;
+	color: #707f93;
+	text-align: center;
+	font-size: 14px;
+}
+
+.footer span {
+	font-size: 12px;
+}
+
+/*	7.  Media Queries
+/* ------------------------------------------------------------------------------- */
+
+/* Smaller than 720px (devices and browsers) */
+@media screen and (max-width: 720px) {
+
+	#logo {
+		max-width: 420px;
+	}
+
+	#bg-video {
+		display: none;
+	}
+
+	#bg-video-hover {
+		background: url(../video/poster.jpg);
+	}
+
+	#countdown {
+		width: 420px;
+	}
+
+	.bg-clouds {
+		top: 450px;
+	}
+
+	.floor {
+		top: 470px;
+	}
+}
+
+/* Smaller than 480px (devices and browsers) */
+@media screen and (max-width: 480px) {
+
+	.content-wrapper {
+		height: 1300px;
+	}
+
+	#content {
+		margin-left: -160px;
+		width: 320px;
+	}
+
+	#logo {
+		max-width: 320px;
+	}
+
+	.subscribe_field {
+	    width: 300px;
+	}
+
+	.subscribe_field input {
+	    width: 180px;
+	}
+
+	#countdown {
+		width: 250px;
+	}
+
+	.bg-clouds {
+		top: 650px;
+	}
+
+	.floor {
+		top: 770px;
+	}
+
+	.footer {
+		margin-top: 850px; 
+	}
+}
+
+/* Smaller than 320px (devices and browsers) */
+@media screen and (max-width: 320px) {
+
+	.content-wrapper {
+		height: 1400px;
+	}
+
+	#content {
+		margin-left: -160px;
+		width: 240px;
+		padding: 0 40px;
+	}
+
+	#logo {
+		max-width: 240px;
+		overflow: hidden;
+	}
+
+	.subscribe_field {
+	    width: 240px;
+	}
+
+	.subscribe_field input {
+	    width: 140px;
+	}
+
+	.subscribe_field button {
+	    width: 80px;
+	}
+
+	#parallax-section { /* Disable parallax for mobiles. */
+		top: 400px;
+	}
+
+	#countdown {
+		width: 240px;
+	}
+
+	.artrow-countdown .separator {
+	    width: 10px;
+	}
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+	.icon-facebook,.icon-twitter,.icon-google,.icon-flickr,.icon-pinterest,.icon-vimeo,.icon-youtube,.icon-linkedin,.icon-instagram,.icon-skype,.icon-vkontakte,.icon-tumblr,.icon-rss,.icon-picasa,.icon-deviant,.icon-wordpress,.icon-dribble {
+		background-image: url(../images/social@2x.png);
+		background-size: 442px 26px;
+	}
+	#back-layer {
+		background-image: url(../images/parallax-back-layer@2x.png);
+		background-size: 1550px 550px;
+	}
+	#front-layer {
+		background-image: url(../images/parallax-front-layer@2x.png);
+		background-size: 1700px 600px;
+	}
+	.artrow-countdown .number {
+	    background-image: url(../images/digits@2x.png);
+		background-size: 700px 1210px;
+	}
+	#bg-video-hover {
+		background-image: url(../images/bg-video-hover@2x.png);
+		background-size: 1080px 600px;
+	}
+	.bg-clouds {
+		background-image: url(../images/bg-clouds@2x.png);
+		background-size: 1300px 380px;
+	}
+	.floor {
+		background-image: url(../images/floor@2x.png);
+		background-size: 1080px 80px;
+	}
+	@media screen and (max-width: 720px) {
+		#bg-video-hover {
+			background: url(../video/poster@2x.jpg);
+			background-size: 1080px 600px;
+		}	
+	}
+}

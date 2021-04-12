@@ -1,0 +1,103 @@
+﻿@model Barayand.OutModels.Miscellaneous.BasketViewModel
+@{
+    Layout = null;
+}
+<div class="StepBasket active" dataStep="3">
+    <div class="titleAccordion nobg">
+        <label class="titleLabel">بررسی و پرداخت</label>
+    </div>
+    <div class="table">
+        <div class="Row8 Rtitle">
+            <div class="col xs">ردیف</div>
+            <div class="col sm">عکس</div>
+            <div class="col ">نام محصول</div>
+            <div class="col ">قیمت</div>
+            <div class="col ">قیمت با تخفیف</div>
+            <div class="col lg">تعداد</div>
+            <div class="col ">جمع</div>
+        </div>
+
+        @if (Model.Products.Count > 0)
+        {
+            foreach (var item in Model.Products)
+            {
+                <div class="Row8">
+                    <div class="col xs">1</div>
+                    <div class="col sm">
+                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.ProductImage" alt="@item.ProductTitle" class="sizeBasketImg">
+                    </div>
+                    <div class="col ">@item.ProductTitle</div>
+                    <div class="col ">@item.Price.ToString("#,#")</div>
+                    <div class="col ">@item.DiscountedPrice.ToString("#,#")</div>
+                    <div class="col lg">@item.Quantity</div>
+                    <div class="col ">@item.Total.ToString("#,#")</div>
+
+                </div>
+                @if (item.GiftProduct != null)
+                {
+                    <div class="Row8">
+                        <div class="col xs">1</div>
+                        <div class="col sm">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.GiftProduct.P_Image" alt="@item.GiftProduct.P_Title" class="sizeBasketImg">
+                        </div>
+                        <div class="col ">@item.GiftProduct.P_Title</div>
+                        <div class="col ">0</div>
+                        <div class="col ">0</div>
+                        <div class="col lg">1</div>
+                        <div class="col ">0</div>
+                        <div class="col xs"></div>
+                    </div>
+                }
+            }
+        }
+        <div class="tblmore">
+
+            <div class="Row8 br">
+                <div class="col line"></div>
+                <div class="col lg lf">جمع مبالغ</div>
+                <div class="col ">@Model.Products.Sum(x => x.Total).ToString("#,#")</div>
+            </div>
+            <div class="Row8 br">
+                <div class="col line"></div>
+                <div class="col lg lf">هزینه ارسال</div>
+                <div class="col ">0</div>
+            </div>
+            <div class="Row8 br">
+                <div class="col line"></div>
+                <div class="col lg lf">مبلغ تخفیف</div>
+                <div class="col ">@Model.Products.Sum(x => (x.Price - x.DiscountedPrice) * x.Quantity).ToString("#,#")</div>
+            </div>
+            <div class="Row8 br">
+                <div class="col line"></div>
+                <div class="col lg lf">تخفیف کارت هدیه</div>
+                <div class="col ">@(Model.CouponInfo != null ? Model.CouponInfo.CouponDiscount : 0)</div>
+            </div>
+            <div class="Row8 br">
+                <div class="col line">
+                    <div class="checkboxs">
+                        <input type="checkbox" value="None" id="requestPos" name="requestPos" tabindex="3">
+                        <label for="requestPos" class="lblinput">
+                            <span>
+                                تمایل پرداخت در محل بااستفاده از
+                                کارت خوان سیار
+                                دارم
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col lg lf">جمع</div>
+               
+                <div class="col ">@Model.Total.ToString("#,#")</div>
+            </div>
+        </div>
+    </div>
+    <div class="row cen">
+        <div class="col">
+            <button class="btnStep  btnbackStep" onclick="LoadStep(2);">مرحله قبل</button>
+        </div>
+        <div class="col btnsENDbasket">
+            <button onclick="TestCheckout(1)" class="btnPay">پرداخت بانکی</button>
+            <button onclick="TestCheckout(2)" class="btnPayHome">پرداخت در محل</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@model List<Barayand.Models.Entity.FaqCategoryModel>
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
+@{
+    var AllPages = ((List<Barayand.Models.Entity.DynamicPagesContent>)(await _dynamicpagerepo.GetAll()).Data);
+    var Faq = AllPages.FirstOrDefault(x => x.PageName == "FAQ");
+}
+@section Styles{
+    @await Html.PartialAsync("_seo", Faq.PageSeo)
+}
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="#" class="breadc fas fa-chevron-left">سوالات متداول</a>
+            </div>
+            <a href="#">FAQ</a>
+        </div>
+        <section class="secFAQ">
+            <div class="card">
+                <h3 class="titleCard">
+                    <label> پرسش و پاسخ </label>
+                </h3>
+                <div class="contentCard flexDir">
+                    <div class="contextBody">
+                        @Html.Raw(Faq.PageContent)
+                    </div>
+                    <button class="btnAnsQues itemModal" data-modalname="QuestionAns">ارسال سوال</button>
+                </div>
+            </div>
+            <div class="modal m600 round10" data-modalName="QuestionAns">
+                <i class="bgModal" onclick="closeModal()"></i>
+                <div class="BoxModal">
+                    <i class="close fas fa-times" onclick="closeModal()"></i>
+                    <h3 class="titleModal"><label>سوال خود را وارد نمائید </label></h3>
+                    <div class="contentModal">
+                        <div class="text">
+                            متن توضیحات این قسمت.
+                        </div>
+                        <div class="group-input full">
+                            <textarea id="faqques" placeholder="نظر شما"></textarea>
+                        </div>
+                        <div class="rowbtnCenter">
+                            <button type="button" onclick="sendFaq()" class="SubmitQA">ارسال</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="contentCard flexDir">
+                    <div class="tabBtns">
+                        <div class="FAQTitle">دسته بندی سوالات</div>
+                        <button class="btntab active" onclick="Paginationfaq(0,1)" data-tab="0">
+                            <i style="background-image: url(/dist/img/icons/faq/faq1.png);"></i>
+                            <label>نمایش همه</label>
+                        </button>
+                        @foreach (var item in Model)
+                        {
+                            <button class="btntab" onclick="Paginationfaq(@item.F_Id,1)" data-tab="@item.F_Id">
+                                <i style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Label")@item.F_Logo);"></i>
+                                <label>
+                                    @item.F_Title
+                                </label>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="contentCard flexDir">
+                    <div class="tabContent" id="tab0" data-tab="0">
+
+                    </div>
+                    @foreach (var item in Model)
+                    {
+                        <div class="tabContent" id="tab@(item.F_Id)" data-tab="@item.F_Id">
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        Paginationfaq(0, 1);
+    </script>
+}

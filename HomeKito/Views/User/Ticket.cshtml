@@ -1,0 +1,59 @@
+﻿@model List<Barayand.Models.Entity.TicketModel>
+@inject Barayand.DAL.Interfaces.IUserRepository _userrepo;
+@{
+    ViewData["Title"] = "Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/css/account.css" />
+}
+<div id="PreviewTicket" style="padding-top:100px !important;padding-bottom:100px !important;padding-right:20px;padding-left:20px">
+    <div class="boxTransaction" style="width:90%;margin:auto">
+        <h2 class="title4">مشاهده پیام های تیکت</h2>
+        <input type="hidden" id="entity" value="@ViewBag.entity"/>
+        
+            <div class="ItemsShowTciket" >
+                @foreach (var item in Model)
+                {
+                    var user = "Me";
+                    var username = "Admin";
+                    if(item.T_Userid != 0)
+                    {
+                        var um = await _userrepo.GetById(item.T_Userid);
+                        username = um.surename;
+                        user = "";
+                    }
+                    <div class="ItemTicketShow @user">
+                        <div class="picUser" style="background-image: url(/img/avatar.png) ;"></div>
+                        <div class="textItemTicket">
+                            <div class="contentItemTicket">
+                                <h2 class="NameuserTicket">@username</h2>
+                                <span class="dateReg">@(((DateTime)item.Created_At).ToString("yyyy-MM-dd"))</span>
+                                <div class="MessageTicket">
+                                   @item.T_Body
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+     
+
+        <div class="contentCreateTicket">
+            <div class="rowTrBox">
+                <div class="col1">متن</div>
+                <div class="col2">
+                    <input type="hidden" id="user" value="@ViewBag.User"/>
+                    <textarea id="ticketBody" class="Inputfrm"></textarea>
+                </div>
+            </div>
+            
+            <div class="btnPaymentRow">
+                <button class="RegTicket" onclick="registerTicket()" type="button">ارســــال</button>
+            </div>
+        </div>
+    </div>
+</div>
+
