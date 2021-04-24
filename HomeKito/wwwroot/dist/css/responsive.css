@@ -754,3 +754,29 @@ button.closeFilterMobile {
 
 @media only screen and (max-width: 280px) {
 }
+@media only screen and (max-width: 2000px) {
+    .contentMain.DetailProductContainer .container {
+        max-width: 1480px !important;
+    }
+}
+@media only screen and (max-width: 1500px) {
+    .contentMain.DetailProductContainer .container {
+        max-width: 1280px !important;
+    }
+
+    .buttonsDetailProd {
+        justify-content: space-between;
+    }
+
+    .rowCustom.rowdetailprod .col1 {
+        width: 430px;
+    }
+
+    .rowCustom.rowdetailprod .col2 {
+        width: calc(100% - 450px);
+    }
+
+    .rowCustom.rowdetailprod .col1 .productPics .largPicProd {
+        width: 330px;
+    }
+}

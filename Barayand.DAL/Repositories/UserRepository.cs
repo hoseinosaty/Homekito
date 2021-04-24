@@ -50,6 +50,14 @@ namespace Barayand.DAL.Repositories
                 {
                     return ResponseModel.Error("Your account has been suspened.");
                 }
+                if (um.U_Role == 1)
+                {
+                    var perms = _context.Permissions.Where(x => x.Perm_Uid == exists.U_Id).ToList();
+                    foreach (var perm in perms)
+                    {
+                        um.Permissions.Add(perm.Perm_Urlid);
+                    }
+                }
                 var token = TokenService.GenerateToken(exists.U_Id, exists.U_Name + " " + exists.U_Family, exists.U_Email);
                 um.Token = token;
                 return ResponseModel.Success(data: um);

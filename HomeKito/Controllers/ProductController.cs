@@ -215,7 +215,7 @@ namespace HomeKito.Controllers
                 #region Paging
                 Paging paging = new Paging();
                 paging.TotalCount = AllProduct.Count();
-                paging.PageSize = 20;
+                paging.PageSize = 30;
                 paging.CurrentPage = page;
                 paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                 ViewBag.paging = paging;
@@ -252,7 +252,7 @@ namespace HomeKito.Controllers
                 #region Paging
                 Paging paging = new Paging();
                 paging.TotalCount = product.Comments.Count();
-                paging.PageSize = 20;
+                paging.PageSize = 30;
                 paging.CurrentPage = page;
                 paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                 ViewBag.paging = paging;
@@ -393,7 +393,7 @@ namespace HomeKito.Controllers
                 #region Paging
                 Paging paging = new Paging();
                 paging.TotalCount = AllProduct.Count();
-                paging.PageSize = 20;
+                paging.PageSize = 30;
                 paging.CurrentPage = page;
                 paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                 ViewBag.paging = paging;
@@ -548,7 +548,7 @@ namespace HomeKito.Controllers
             #region Paging
             Paging paging = new Paging();
             paging.TotalCount = items.Count();
-            paging.PageSize = 20;
+            paging.PageSize = 30;
             paging.CurrentPage = page;
             paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
             ViewBag.paging = paging;
@@ -667,7 +667,7 @@ namespace HomeKito.Controllers
                     #region Paging
                     Paging paging = new Paging();
                     paging.TotalCount = Products.Count();
-                    paging.PageSize = 20;
+                    paging.PageSize = 30;
                     paging.CurrentPage = page;
                     paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                     ViewBag.paging = paging;
@@ -778,7 +778,7 @@ namespace HomeKito.Controllers
                 #region Paging
                 Paging paging = new Paging();
                 paging.TotalCount = AllProduct.Count();
-                paging.PageSize = 20;
+                paging.PageSize = 30;
                 paging.CurrentPage = page;
                 paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                 ViewBag.paging = paging;

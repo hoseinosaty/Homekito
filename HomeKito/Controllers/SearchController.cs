@@ -23,7 +23,7 @@ namespace HomeKito.Controllers
         [Route("GetSearch/{id}")]
         public async Task<IActionResult> GetSearch(string id)
         {
-            var AllProduct = ((List<ProductModel>)(await _productrepo.GetAll()).Data).Where(x => x.P_Status && x.P_Title.Contains(id) || x.P_Description.Contains(id)).Take(8).ToList();
+            var AllProduct = ((List<ProductModel>)(await _productrepo.GetAll()).Data).Where(x => x.P_Status && x.P_Title.Contains(id,StringComparison.InvariantCultureIgnoreCase) || (x.P_Description!= null && x.P_Description.Contains(id))).Take(8).ToList();
             ViewBag.search = id;
             if (AllProduct.Count() < 1)
             {
@@ -137,7 +137,7 @@ namespace HomeKito.Controllers
             #region Paging
             Paging paging = new Paging();
             paging.TotalCount = AllProduct.Count();
-            paging.PageSize = 20;
+            paging.PageSize = 30;
             paging.CurrentPage = page;
             paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
             ViewBag.paging = paging;

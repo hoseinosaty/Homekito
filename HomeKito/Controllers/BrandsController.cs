@@ -189,7 +189,7 @@ namespace HomeKito.Controllers
                     #region Paging
                     Paging paging = new Paging();
                     paging.TotalCount = AllProduct.Count();
-                    paging.PageSize = 20;
+                    paging.PageSize = 30;
                     paging.CurrentPage = page;
                     paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                     ViewBag.paging = paging;

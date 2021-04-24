@@ -168,7 +168,7 @@
                                         {
                                             if (item.ShowInDetail)
                                             {
-                                                <span class="itemInfo"><label>@item.AttributeTitle: @item.AnswerTitle</label></span>
+                                                <span class="itemInfo"><label><span style="color:#353535">@item.AttributeTitle:</span> @item.AnswerTitle</label></span>
 
                                             }
                                         }
@@ -386,13 +386,28 @@
                         <div class="contentCard flexDir">
                             <div class="propertiesRows">
                                 <label class="titleCats">مشخصات فنی</label>
-
+                                @{ string lastChld = null;}
                                 @foreach (var item in (List<Barayand.OutModels.Miscellaneous.AttributeStructure>)Model.P_AttributeStructures)
-                                {<div class="rowProp">
-                                        <div class="col1">@item.AttributeTitle</div>
-                                        <div class="col2">@item.AnswerTitle</div>
-                                    </div>
+                                {
+                                    if (item.AttributeTitle != "سایر مشخصات")
+                                    {
+                                        <div class="rowProp">
+                                            <div class="col1">@item.AttributeTitle</div>
+                                            <div class="col2">@item.AnswerTitle</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        lastChld = @"<div style='width:100% !important' class='rowProp'>
+                            <div class='col1' style='    width: 17.5%;'>" + item.AttributeTitle+ @"</div>
+                            <div class='col2' style='    width: 79%;
+    text-align: justify;'>" + item.AnswerTitle+@"</div>
+                            </div>";
+                                    }
+
+
                                 }
+                                @Html.Raw(lastChld)
                             </div>
                         </div>
                     </div>
@@ -780,7 +795,7 @@
             </div>
         </div>
     </div>
-   
+
 </div>
 <div class="modal m800 round10 " data-modalName="feedbackBox">
     <i class="bgModal" onclick="closeModal()"></i>
@@ -820,9 +835,9 @@
                         </div>
                         <div class="boxInput RepetitiousProduct">
                             <label>
-                                آدرس کالای مشابه در دیجی‌کالا
+                                آدرس کالای مشابه در هومکیتو
                             </label>
-                            <input type="text" placeholder=" https://homekito.com     />
+                            <input type="text" placeholder=" https://homekito.com"/>
                         </div>
                         <div class="boxInput">
                             <label>توضیحات</label>
@@ -843,7 +858,7 @@
     <script src="/dist/js/jquery.elevatezoom.min.js" type="text/javascript"></script>
     <script>
         if ($(".zoomLargPic").length) {
-            $("#zoom_01").elevateZoom({ scrollZoom: true });
+            $("#zoom_01").elevateZoom({ scrollZoom: true, zoomLevel: 0.4});
         }
         function changeZoomLargPic(item, elLargPic) {
             var elLarg = $(`${elLargPic}`), pic = $(item).data("zoom-image"), itemZoom = $(item).attr('class');

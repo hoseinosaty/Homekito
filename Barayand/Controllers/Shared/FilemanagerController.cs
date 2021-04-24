@@ -129,17 +129,20 @@ namespace Barayand.Controllers.Shared
                 return null;
             }
         }
-        [Route("uploadImageFile/{loc}")]
+        [Route("uploadImageFile/{FOLDER}/{ROOT?}")]
         [AcceptVerbs]
-        public async Task<ActionResult> uploadImageFile([FromForm] IFormFile file, string loc)
+        public async Task<ActionResult> uploadImageFile([FromForm] IFormFile file, string FOLDER, string ROOT = null)
         {
             try
             {
-                if(file == null)
+                if (file == null)
                 {
                     return null;
                 }
-                return new JsonResult(await uploaderService.UploadImageFile(file, "INDEX", loc));
+                if (ROOT == null)
+                    ROOT = "INDEX";
+                return new JsonResult(await uploaderService.UploadImageFile(file, ROOT, FOLDER));
+
             }
             catch (Exception ex)
             {

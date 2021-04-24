@@ -31,7 +31,7 @@ $(document).ready(function () {
     /* --------------------------------------------------------------------------- */
 
     $('#countdown').artRowCountdown({
-        'date': '2021-04-21 10:00:00',
+        'date': '2021-05-21 10:00:00',
         'separator': ' ',
         'stop': function () {
             alert('stop');

@@ -2195,7 +2195,9 @@ h4.titlePicCardProd {
     .titleSmallProd label {
         position: relative;
         padding: 0 0 0 10px;
+        color: #000354;
         background: #fff;
+        font-size: 15px;
         font-family: Arial;
     }
 
@@ -3336,6 +3338,7 @@ h3.titleCard.noBorder, h3.titleCard.noBorder label {
 }
 
     .accordion .titleAccordion {
+        color: #434343;
         position: relative;
         width: 100%;
         display: flex;
@@ -3695,7 +3698,7 @@ button.btnsubmitFillter {
     }
 
     .checkboxs input:checked + label.lblinput {
-        color: #0248c0;
+        color: #0247bf !important;
     }
 
         .checkboxs input:checked + label.lblinput:after {
@@ -5776,3 +5779,18 @@ a.btnStep.btnGologin {
         }
 
 /* -------------- zoom -------------- */
+.buttonsDetailProd {
+    justify-content: flex-start;
+}
+
+.rowCustom.rowdetailprod .col1 {
+    width: 500px;
+}
+
+.rowCustom.rowdetailprod .col2 {
+    width: calc(100% - 520px);
+}
+
+.rowCustom.rowdetailprod .col1 .productPics .largPicProd {
+    width: 400px;
+}

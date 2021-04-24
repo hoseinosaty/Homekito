@@ -338,7 +338,15 @@ async function GetCompareCount() {
         .then(function (res) {
             var d = res.data;
             if (d.status) {
-                $("#compareQuantity").html(d.data);
+                var c = parseInt(d.data);
+                if (c > 0) {
+                    $("#compareQuantity").html(d.data);
+                    $("#compareQuantity").css('display', 'flex');
+                }
+                else {
+                    $("#compareQuantity").css('display', 'none');
+                }
+                
             }
         })
         .catch(function (ex) { console.error(ex) });

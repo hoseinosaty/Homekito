@@ -60,7 +60,9 @@ namespace Barayand.DAL.Repositories
                 {
                     Seed = allproduct.Max(x => x.P_Id) + 1;
                 }
-                    entity.P_Code ="HKO-"+ entity.P_MainCatId +""+ entity.P_EndLevelCatId + ""+entity.P_BrandId+"0" +Seed;
+                var c1 = _context.ProductCategory.FirstOrDefault(x=>x.PC_Id == entity.P_MainCatId);
+                var c2 = _context.ProductCategory.FirstOrDefault(x=>x.PC_Id == entity.P_EndLevelCatId);
+                    entity.P_Code ="HKO-"+ c1.PC_PrefixCode +""+ c2.PC_PrefixCode + ""+entity.P_BrandId+"0" +Seed;
                     this._context.Product.Add(entity);
                     await this.CommitAllChanges();
                     //Product Atrribute And Answer Registration
@@ -196,17 +198,20 @@ namespace Barayand.DAL.Repositories
                 {
                     if(_context.Attribute.FirstOrDefault(x=>x.A_Id == d.X_AId && !x.A_IsDeleted && x.A_Status) != null)
                     {
-                        IncomeProdFieldSetModel ipfs = new IncomeProdFieldSetModel();
-                        ipfs.id = d.X_AId;
-                        if (d.X_AnswerId == 0)
+                        if(_context.CategoryAttribute.FirstOrDefault(x=>(x.X_CatId == AllProducts.P_MainCatId || x.X_CatId == AllProducts.P_EndLevelCatId) && x.X_AttrId == d.X_AId && x.X_Status && !x.X_IsDeleted) != null)
                         {
-                            ipfs.value = d.X_AnswerTitle;
+                            IncomeProdFieldSetModel ipfs = new IncomeProdFieldSetModel();
+                            ipfs.id = d.X_AId;
+                            if (d.X_AnswerId == 0)
+                            {
+                                ipfs.value = d.X_AnswerTitle;
+                            }
+                            else
+                            {
+                                ipfs.value = d.X_AnswerId;
+                            }
+                            dedicated.Add(ipfs);
                         }
-                        else
-                        {
-                            ipfs.value = d.X_AnswerId;
-                        }
-                        dedicated.Add(ipfs);
                     }
                 }
                 AllProducts.P_DedicatedField = JsonConvert.SerializeObject(dedicated);
