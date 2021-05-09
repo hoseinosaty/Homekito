@@ -8,7 +8,7 @@ using Barayand.Models.Extra;
 
 namespace Barayand.Models.Entity
 {
-    public class PromotionBoxProductsModel:BaseModel
+    public class PromotionBoxProductsModel : BaseModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,5 +24,9 @@ namespace Barayand.Models.Entity
         public DateTime X_EndDate { get; set; }//استفاده فقط در فروش ویژه
         public bool X_Status { get; set; } = true;//استفاده فقط در فروش ویژه
         public bool X_ShowInIndex { get; set; } = false;//استفاده فقط در فروش ویژه
+        [NotMapped]
+        public bool showDateDialog { get; set; } = false;
+        [NotMapped]
+        public bool showTimeDialog { get; set; } = false;
     }
 }

@@ -1512,7 +1512,7 @@ h3.titleAccItem:after {
     border-radius: 10px;
     font-family: 'Font Awesome 5 Pro';
     font-weight: 300;
-    content: "\f068";
+    content: "\f067";
     top: 0;
     color: #fff;
     justify-content: center;
@@ -1521,7 +1521,7 @@ h3.titleAccItem:after {
 }
 
 .accItem.open h3.titleAccItem:after {
-    content: "\f067";
+    content: "\f068";
 }
 
 .accItem .contentAddItem {

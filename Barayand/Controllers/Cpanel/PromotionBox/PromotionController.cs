@@ -37,9 +37,9 @@ namespace Barayand.Controllers.Cpanel.PromotionBox
                 PromotionBoxModel pbm = (PromotionBoxModel)_mapper.Map<Barayand.OutModels.Models.PromotionBox, PromotionBoxModel>(pb);
                 return new JsonResult(await _promotionrepo.Insert(pbm));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new JsonResult(ResponseModel.ServerInternalError(data:ex));
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
         [Route("LoadBox/{type}")]
@@ -48,22 +48,22 @@ namespace Barayand.Controllers.Cpanel.PromotionBox
         {
             try
             {
-                var AllPromotions = ((List<PromotionBoxModel>)(await _promotionrepo.GetAll()).Data).Where(x=>x.B_Type == type).ToList();
-                return new JsonResult(ResponseModel.Success(data:AllPromotions));
+                var AllPromotions = ((List<PromotionBoxModel>)(await _promotionrepo.GetAll()).Data).Where(x => x.B_Type == type).ToList();
+                return new JsonResult(ResponseModel.Success(data: AllPromotions));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new JsonResult(ResponseModel.ServerInternalError(data:ex));
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
-        [Route("AddProductToBox")]
+        [Route("AddProductToBox/{secid?}")]
         [HttpPost]
-        public async Task<IActionResult> AddProductToBox(List<Barayand.OutModels.Models.PromotionBoxProducts> pb)
+        public async Task<IActionResult> AddProductToBox(List<Barayand.OutModels.Models.PromotionBoxProducts> pb, int secid = 0)
         {
             try
             {
                 List<PromotionBoxProductsModel> pbm = (List<PromotionBoxProductsModel>)_mapper.Map<List<Barayand.OutModels.Models.PromotionBoxProducts>, List<PromotionBoxProductsModel>>(pb);
-                return new JsonResult(await _promotionBoxProd.UpdateRelation(pbm));
+                return new JsonResult(await _promotionBoxProd.UpdateRelation(pbm, secid));
             }
             catch (Exception ex)
             {

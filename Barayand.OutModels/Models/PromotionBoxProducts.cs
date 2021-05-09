@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Barayand.OutModels.Models
@@ -22,14 +23,17 @@ namespace Barayand.OutModels.Models
         public DateTime X_EndDate { get { return ConvertDatetime(X_ED); } set { X_StartDate = value; } }//استفاده فقط در فروش ویژه
         public bool X_Status { get; set; } = true;//استفاده فقط در فروش ویژه
         public bool X_ShowInIndex { get; set; } = false;//استفاده فقط در فروش ویژه
+        public bool showDateDialog { get; set; } = false;
+        public bool showTimeDialog { get; set; } = false;
         public DateTime ConvertDatetime(string date)
         {
             try
             {
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
                 var d = DateTime.Parse(date);
                 return d;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return DateTime.Now;
             }

@@ -41,7 +41,7 @@
                        
                     </div>
                     <div class="ItemCompare__Properties">
-                        <div class="ItemCompare__Properties__name">رنگ</div>
+                        @*<div class="ItemCompare__Properties__name">رنگ</div>
                         <div class="ItemCompare__Properties__value">
                             @if (item.Colors.Count > 0)
                             {
@@ -50,12 +50,12 @@
                                     <i class="itemColor" style="background-color: @color.ColorCode;"></i>
                                 }
                             }
-                        </div>
+                        </div>*@
                         <div class="ItemCompare__Properties__name">کشور سازنده</div>
                         <div class="ItemCompare__Properties__value">@item.Cuntry.M_Title</div>
-                        @foreach (var atr in attrcat)
+                        @foreach (var atr in productAttr)
                         {
-                            var existsAttr = await _attributes.GetById(atr.X_AttrId);
+                            @*var existsAttr = await _attributes.GetById(atr.X_AttrId);
                             if (existsAttr != null)
                             {
                                 var existstAns = productAttr.FirstOrDefault(x => x.AttributeId == atr.X_AttrId);
@@ -66,7 +66,9 @@
                                         <span>@existstAns.AnswerTitle</span>
                                     }
                                 </div>
-                            }
+                            }*@
+                         <div class="ItemCompare__Properties__name">@atr.AttributeTitle</div>
+                        <div class="ItemCompare__Properties__value">@atr.AnswerTitle</div>
                         }
                     </div>
                 </div>
