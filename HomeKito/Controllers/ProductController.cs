@@ -30,9 +30,9 @@ namespace HomeKito.Controllers
         private readonly IFavoriteRepository _favoritrepostory;
         private readonly IPromotionBoxProdRepository _PromotionBoxProdRepo;
         private readonly IPCalcRepository _PCalcRepository;
+        private readonly IProductAttrAnswerRepository _prodansRepo;
 
-
-        public ProductController(ILogger<ProductController> logger, IPublicMethodRepsoitory<ManufacturContryModel> cuntry, IPublicMethodRepsoitory<AttributeModel> attrrepo, IPublicMethodRepsoitory<CatAttrRelationModel> catattrrepo, IPublicMethodRepsoitory<AttrAnswerModel> attransrepo, IPublicMethodRepsoitory<ProductModel> productrepo, IPCRepository categories, IViewRenderer view, IPublicMethodRepsoitory<BrandModel> brandrepo, IPublicMethodRepsoitory<ProductCombineModel> combine, IFavoriteRepository favoritrepostory, IPromotionBoxProdRepository promotionBoxProdRepo, IPCalcRepository pCalcRepository)
+        public ProductController(ILogger<ProductController> logger, IPublicMethodRepsoitory<ManufacturContryModel> cuntry, IPublicMethodRepsoitory<AttributeModel> attrrepo, IPublicMethodRepsoitory<CatAttrRelationModel> catattrrepo, IPublicMethodRepsoitory<AttrAnswerModel> attransrepo, IPublicMethodRepsoitory<ProductModel> productrepo, IPCRepository categories, IViewRenderer view, IPublicMethodRepsoitory<BrandModel> brandrepo, IPublicMethodRepsoitory<ProductCombineModel> combine, IFavoriteRepository favoritrepostory, IPromotionBoxProdRepository promotionBoxProdRepo, IPCalcRepository pCalcRepository, IProductAttrAnswerRepository prodansRepo)
         {
             _logger = logger;
             _productrepo = productrepo;
@@ -47,6 +47,7 @@ namespace HomeKito.Controllers
             _favoritrepostory = favoritrepostory;
             _PromotionBoxProdRepo = promotionBoxProdRepo;
             _PCalcRepository = pCalcRepository;
+            _prodansRepo = prodansRepo;
         }
         [Route("/Products/{cat1}/{title?}/{cat2?}/{title2?}")]
         public async Task<IActionResult> Index(
@@ -193,11 +194,16 @@ namespace HomeKito.Controllers
                 {
                     AllProduct = AllProduct.Where(x => Brand.Contains(x.P_BrandId)).ToList();
                 }
-                //if (attribute != null && attribute.Count() > 0)
-                //{
-
-                //    AllProduct = AllProduct.Where(x => x.att).ToList();
-                //}
+                if (attribute != null && attribute.Count() > 0)
+                {
+                    List<int> AllFilteredProdsByAnsId = new List<int>();
+                    foreach (int aid in attribute)
+                    {
+                        var r = await _prodansRepo.GetProductsByAnswer(aid);
+                        AllFilteredProdsByAnsId.AddRange(r);
+                    }
+                    AllProduct = AllProduct.Where(x => AllFilteredProdsByAnsId.Contains(x.P_Id)).ToList();
+                }
                 if (fast)
                 {
                     AllProduct = AllProduct.Where(x => x.P_ImmediateSend).ToList();
@@ -216,6 +222,11 @@ namespace HomeKito.Controllers
                 Paging paging = new Paging();
                 paging.TotalCount = AllProduct.Count();
                 paging.PageSize = 30;
+                
+                if((int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize) < page)
+                {
+                    page = 1;
+                }
                 paging.CurrentPage = page;
                 paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                 ViewBag.paging = paging;

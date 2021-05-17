@@ -8,6 +8,9 @@ nav.navbar {
     box-shadow: 0px 0px 10px -6px #000;
     z-index: 1000000;
 }
+body.lock .sidebar.show .contentSidebar {
+    overflow-y: auto;
+}
 .alertNav {
     position: relative;
     width: 100%;
@@ -19,6 +22,8 @@ nav.navbar {
     transition: all 0.5s;
     overflow: hidden;
     max-height: 100px;
+    padding: 0 40px;
+    text-align: center;
 }
 .noalert .alertNav , .alertNav.hide {
     max-height: 0px;
@@ -128,9 +133,9 @@ nav.navbar a.logoNav img{
 nav.navbar .SearchNav {
     position: relative;
     width: 540px;
-    padding: 0px;
+    padding: 0;
     height: 50px;
-    border-radius: 6px;
+    border-radius: 15px;
     background: #f6f6f7;
 }
 nav.navbar .SearchNav input.inputSearch {
@@ -147,9 +152,10 @@ nav.navbar .SearchNav button.btnSearch {
     position: absolute;
     left: 0;
     top: 0;
+    padding: 0 !important;
     bottom: 0;
-    width: 50px;
-    height: 40px;
+    width: 50px !important;
+    height: 45px;
     margin: auto;
     background: transparent;
     border: none;
@@ -157,11 +163,12 @@ nav.navbar .SearchNav button.btnSearch {
     justify-content: center;
     align-items: center;
     font-size: 20px;
-    border-right: 1px solid #c8c8c8;
+    border-right: 0px solid #c8c8c8;
     color: #8a8a8a;
     cursor: pointer;
     pointer-events: none;
     z-index: 11;
+    border-radius: 35px;
 }
 
 nav.navbar .SearchNav button.btnSearch:hover {
@@ -175,20 +182,99 @@ nav.navbar .SearchNav button.btnSearch:hover {
     align-items: center;
     justify-content: flex-end;
 }
+.userAccount {
+    position: relative;
+}
+.AccountLinks {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 6px);
+    width: 280px;
+    background: #fff;
+    z-index: 10000000000;
+    padding: 10px;
+    border-radius: 15px;
+    filter: drop-shadow(0px 0px 6px #eee);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.98, 0.36, 0, 1.35);
+    transform-origin: top left;
+    transform: scale(0);
+    opacity: 0;
+}
+.userAccount:hover .AccountLinks {
+    transform: scale(1);
+    opacity: 1;
+}
+.AccountLinks h4.username {
+    position: relative;
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #0046bf;
+    border-bottom: 1px solid #eee;
+}
+a.linkAcc {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 40px 0 1px;
+    color: #8a8a8a;
+    background: no-repeat right center / 40px;
+}
+a.linkAcc:hover {
+    color: #0046bf;
+}
+span.IconUserAcc.fal.fa-user {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    padding: 0 10px 0 20px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 100;
+    border-radius: 10px;
+    border: 1px solid #e2e2e2;
+    font-size: 20px;
+}
+span.IconUserAcc.fal.fa-user:hover {
+    color: #0046bf;
+    border-color: #0046bf;
+}
+span.IconUserAcc.fal.fa-user i {
+    position: absolute;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-size: 14px;
+}
 a.SignInNav {
     position: relative;
     width: 200px;
     height: 50px;
     border: 1px solid #e5e5e5;
-    border-radius: 6px;
+    border-radius: 15px;
     padding: 0 50px 0 10px;
     display: flex;
     align-items: center;
-    background: url(../img/icons/OtherIcons/3.png) no-repeat right center / 40px;
+    background: url(../img/icons/OtherIcons/3.png) no-repeat right center/40px;
     font-weight: bold;
     color: #838383;
     cursor: pointer;
-    filter:grayscale(1)
+    filter: grayscale(1);
 }
 a.SignInNav:hover {
     border: 1px solid #1555c4;
@@ -298,8 +384,8 @@ a.CallUs:hover {
     position: relative;
     width: 100%;
     padding: 10px 0;
-    background-color: #f2f3f5;
-    transition:all 0.5s ;
+    background-color: #fbfbfb;
+    transition: all 0.5s;
     overflow: hidden;
 }
 
@@ -307,10 +393,10 @@ a.CallUs:hover {
     position: absolute;
     width: 100%;
     padding: 0px 0;
-    background-color: #f2f3f5;
+    background-color: #fbfbfb;
     top: 100%;
     left: 0px;
-    transition:all 0.5s ;
+    transition: all 0.5s;
     overflow: hidden;
 }
 .SubCategoryInNavbar .MegaMenuContent {
@@ -330,13 +416,17 @@ a.CallUs:hover {
     transition-delay: 0.2s;
     pointer-events: auto;
 }
-.CategoryInNavbar .container  {
+.CategoryInNavbar .container {
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
+    padding: 0 0px;
 }
 .SubCategoryInNavbar .container {
     display: flex;
     justify-content: flex-start;
+    overflow: hidden;
+    padding: 0 0px;
 }
 .CategoryInNavbar .itemCatNav, .SubCategoryInNavbar .itemCatNav {
     width: 100px;
@@ -377,6 +467,8 @@ a.CallUs:hover {
     }
 .itemCatNav label {
     cursor: pointer;
+    overflow: hidden;
+    max-width: 90%;
 }
 .menuTopSlider.swiper-container {
     width: 100%;
@@ -613,7 +705,7 @@ a.showBasket:hover span.quantity, a.showCompare:hover span.quantity {
 
     .sidebar a.logoSidebar {
         position: relative;
-        width: calc(100% - 60px);
+        width: 120px;
         margin: 0px auto;
         display: flex;
         justify-content: center;
@@ -652,13 +744,12 @@ a.showBasket:hover span.quantity, a.showCompare:hover span.quantity {
         }
 
             .sidebar .contentSidebar a:hover {
-                background: #0046bf;
-                color: #fff;
-                padding-right: 40px;
+                color: #0046bf;
+                padding-right: 20px;
             }
 
             .sidebar .contentSidebar a:active {
-                background: #fdf026;
+                /* background: #fdf026; */
                 color: #333;
             }
 
@@ -766,12 +857,78 @@ i.bgsidebar {
 .contentNavSearch i.removeVal.show {
     display: flex;
 }
+
+.sidebar .contentSidebar a {
+    font-size: 12px;
+    height: 30px;
+}
+.contentSidebar .categoriesProduct span.parentCatProd {
+    padding: 0 0px 0 40px;
+}
+.categoriesProduct span.parentCatProd {
+    position: relative;
+    width: 100%;
+    min-height: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.contentSidebar .categoriesProduct span.parentCatProd span.parentCatProd {
+    padding: 0 20px 0 40px;
+}
+.contentSidebar .categoriesProduct span.parentCatProd i {
+    position: absolute;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 1px;
+}
+.contentSidebar .categoriesProduct span.parentCatProd i:before {
+    font-weight: 900;
+}
+.contentSidebar .categoriesProduct span.parentCatProd span.childCatProd {
+    width: calc(100% + 40px) !important;
+    margin-left: -40px;
+}
+.contentSidebar .categoriesProduct span.parentCatProd.iconCatside , .categoriesProduct span.parentCatProd span.childCatProd span.childChildCatProd.iconCatside , .categoriesProduct span.parentCatProd span.childCatProd.iconCatside{
+    padding-right: 30px !important;
+}
+
+
+.contentSidebar .categoriesProduct .iconCatside:before {
+    position: absolute;
+    top: 5PX;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background:  no-repeat center / 30px;
+    background-image: var(--iconCat);
+    content: '';
+}
+span.titleSidebar {
+    position: relative;
+    width: 100%;
+    padding: 0 10px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0046bf;
+    border-bottom: 1px solid #eee;
+}
 @media only screen and (max-width: 1150px) {
         nav.navbar .SearchNav {
             width: 360px;
         }
 }
 @media only screen and (max-width: 980px) {
+    .CategoryInNavbar, .SubCategoryInNavbar {
+        visibility: hidden;
+        max-height: 0px;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+    }
     nav.navbar a.logoNav {
         width: 140px;
     }
@@ -793,38 +950,69 @@ i.bgsidebar {
     }
 }
 
-@media only screen and (max-width: 840px) {
+@media only screen and (max-width: 920px) {
+    .userAccount {
+        position: absolute;
+        right: 30px;
+        top: -60px;
+    }
+    .showSidebar {
+        position: absolute;
+        top: 15px;
+        right: 0;
+        left: auto;
+    }
+    .basketCompare {
+        position: absolute;
+        top: -55px;
+        left: 0;
+        right: auto;
+    }
     nav.navbar .SearchNav {
         width: 300px;
     }
-}
-@media only screen and (max-width: 840px) {
+    .QuickBtnsNav {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 0;
+    }
     nav.navbar .NavContent .container {
         display: grid;
         grid-template-columns: 1fr;
         grid-gap: 10px;
     }
     nav.navbar a.logoNav {
-        width: 180px;
-        margin: auto;
+        width: 120px;
+        margin: 10px auto;
         grid-column: 1;
         grid-row: 1;
     }
     nav.navbar .SearchNav {
-        width: 100%;
+        width: calc(100% - 210px);
         grid-column: 1;
         grid-row: 3;
-    }
-    .QuickBtnsNav {
-        margin: auto;
-        grid-column: 1;
-        grid-row: 2;
     }
     .showSidebar {
         margin: auto;
     }
+    a.SignInNav {
+        position: absolute;
+        left: 0;
+        bottom: -60px;
+    }
 }
 @media only screen and (max-width: 600px) {
+    .userAccount {
+        position: relative;
+        top: 0;
+        margin: 0 auto;
+        right: 0;
+    }
+    
     a.SignInNav {
         width: 180px;
         height: 40px;
@@ -832,10 +1020,47 @@ i.bgsidebar {
     }
     .QuickBtnsNav {
         position: relative;
-        width: 260px;
+        width: 100%;
         height: 50px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        top: 0;
+        left: 0;
+        right: auto;
+    }
+    nav.navbar .SearchNav {
+        width: 100%;
+    }
+    .basketCompare {
+        position: absolute;
+        top: -55px;
+        left: 0;
+        right: auto;
+    }
+    a.SignInNav {
+        bottom: 0;
+        position: relative;
+        margin: 0 AUTO;
+    }
+}
+@media only screen and (max-width: 480px) {
+    
+    .QuickBtnsNav {
+        width: 100%;
+    }
+    nav.navbar .SearchNav {
+        width: 100%;
+    }
+    a.SignInNav {
+        width: 100%;
+        height: 50px;
+    }
+    nav.navbar a.logoNav {
+        width: 100px;
+        margin: 10px auto 15px;
+        grid-column: 1;
+        grid-row: 1;
+        right: 15px;
     }
 }

@@ -1,5 +1,3 @@
-
-
 html, body {
     padding: 0;
     margin: 0;
@@ -23,6 +21,9 @@ html {
     -ms-text-size-adjust: 100%;
     -ms-overflow-style: scrollbar;
     -webkit-tap-highlight-color: transparent
+}
+body.lock {
+    overflow: hidden;
 }
 
 a {
@@ -204,45 +205,47 @@ button.inputFrm {
         background: #003ba1;
     }
 
-.container {
-    position: relative;
-    width: calc(100% - 80px);
-    margin: auto;
-    /* max-width: 1200px; */
-}
+    .container {
+        position: relative;
+        width: calc(100% - 80px);
+        margin: auto;
+        max-width: 1566px;
+    }
 
-.contentMain {
-    position: relative;
-    width: 100%;
-    margin-top: 335px;
-    /* min-height: 100vh; */
-    padding: 20px 0;
-    transition: all 0.5s;
-}
+    .contentMain {
+        position: relative;
+        width: 100%;
+        margin-top: 345px;
+        /* min-height: 100vh; */
+        padding: 20px 0;
+        transition: all 0.5s;
+    }
 
-body.scrollDown .contentMain {
-    margin-top: 150px;
-}
+    body.scrollDown .contentMain {
+        margin-top: 130px;
+    }
 
 body.noalert .contentMain {
-    margin-top: 285px;
+    margin-top: 295px;
 }
 
 body.noalert.scrollDown .contentMain {
     margin-top: 125px;
 }
-
+section.secCheapStore , section.secBoxSpecial {
+    position: relative;
+    margin: 20px 0 0;
+}
 .card {
     position: relative;
     width: 100%;
-    box-shadow: 0px 0px 8px -5px;
-    padding: 10px;
+    box-shadow: 0 0 8px -5px;
+    padding: 15px 20px;
     box-sizing: border-box;
-    margin: 10px 0;
+    margin: 20px 0 2;
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 15px;
 }
-
     .card.Contact {
         padding: 50px;
     }
@@ -331,19 +334,19 @@ button.btnAddAddress {
         color: #fff;
     }
 
-.rowCustom.BoxesADS, .rowCustom.BxADS {
-    justify-content: space-between;
-    margin: 0 0 10px 0;
-}
+    .rowCustom.BoxesADS, .rowCustom.BxADS {
+        justify-content: space-between;
+        margin: 0 0 20px 0;
+    }
 
 .rowCustom .col1 {
     position: relative;
-    width: calc(66.666% - 5px);
+    width: calc(66.666% - 10px);
 }
 
 .rowCustom .col2 {
     position: relative;
-    width: calc(33.333% - 5px);
+    width: calc(33.333% - 10px);
 }
 
 .SliderOne.swiper-container {
@@ -351,7 +354,6 @@ button.btnAddAddress {
     width: 100%;
     /* overflow: hidden; */
     border-radius: 5px;
-    max-height: 35vw;
 }
 
 .SliderOne .itemSliderOne {
@@ -360,22 +362,33 @@ button.btnAddAddress {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 35vw;
-    background: no-repeat center / cover;
-    border-radius: 5px;
+    background: no-repeat center/cover;
+    border-radius: 25px;
+    margin-bottom: 10px;
 }
-
+.SliderOne .itemSliderOne:before {
+    position: inherit;
+    width: 100%;
+    padding-top: calc(50% + 15px);
+    content: '';
+}
 a.itemBoxADS {
     position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(17.5vw - 5px);
-    margin: 0 0 10px 0;
-    border-radius: 5px;
+    margin: 0 0 20px 0;
+    border-radius: 25px;
     background: no-repeat center / cover;
     transition: all 0.5s;
+}
+a.itemBoxADS:before {
+    position: relative;
+    width: 100%;
+    display: block;
+    content: '';
+    padding-top: 50%;
 }
 
     a.itemBoxADS:hover {
@@ -391,7 +404,7 @@ a.itemBoxADS {
 }
 
 .rowCustom.BoxesADS a.itemBoxADS {
-    width: calc((100% / 3) - 5px);
+    width: calc((100%/3) - 20px);
 }
 
 section.secSurprisingly {
@@ -401,6 +414,7 @@ section.secSurprisingly {
     background: #0046bf url(../img/light-bg.png) no-repeat top center / auto 100%;
     display: flex;
     justify-content: space-between;
+    border-radius: 25px;
 }
 
     section.secSurprisingly .col1 {
@@ -512,7 +526,7 @@ a.hoverLink {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: no-repeat center / cover;
+    background: no-repeat center/80%;
 }
 
     .itemSurpriseBox .pic:before {
@@ -523,13 +537,16 @@ a.hoverLink {
         display: block;
     }
 
-.itemSurpriseBox h2.title {
-    position: relative;
-    margin: 0;
-    font-size: 12px;
-    padding: 0 5px 0 5px;
-    text-align: right;
-}
+    .itemSurpriseBox h2.title {
+        position: relative;
+        margin: 0;
+        font-size: 12px;
+        padding: 0 5px 0 5px;
+        text-align: right;
+        min-height: 40px;
+        max-height: 40px;
+        overflow: hidden;
+    }
 
 .itemSurpriseBox .priceRealAndPrecent {
     position: relative;
@@ -636,7 +653,6 @@ a.hoverLink {
     position: relative;
     width: 100%;
     overflow: hidden;
-    MAX-HEIGHT: 350px;
 }
 
 .arrowCustom .NextPrevSlider {
@@ -700,20 +716,20 @@ a.hoverLink {
     flex-wrap: wrap;
 }
 
-    .rowCustom.promotion .col {
-        position: relative;
-        width: calc(50% - 5px);
-    }
-
-.itemPromotionBox {
+.rowCustom.promotion .col {
     position: relative;
-    width: calc(100% - 10px);
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px -10px #fff;
-    transition: all 0.5s;
-    margin: auto;
+    width: calc(50% - 10px);
 }
+
+    .itemPromotionBox {
+        position: relative;
+        width: calc(100% - 10px);
+        padding: 5px;
+        border-radius: 15px;
+        box-shadow: rgb(255,255,255) 0px 0px 15px -10px;
+        transition: all 0.5s ease 0s;
+        margin: auto;
+    }
 
     .itemPromotionBox:hover {
         box-shadow: 0px 0px 15px -10px #000;
@@ -725,9 +741,8 @@ a.hoverLink {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: no-repeat center / cover;
+        background: no-repeat center/ 80%;
     }
-
         .itemPromotionBox .pic:before {
             position: relative;
             padding-top: 90%;
@@ -740,7 +755,6 @@ a.hoverLink {
     position: relative;
     width: 100%;
     overflow: hidden;
-    max-height: 250px;
 }
 
 .itemPromotionBox h2.title {
@@ -771,11 +785,11 @@ a.hoverLink {
     justify-content: space-between;
 }
 
-    .rowCustom.AllDayDiscount .col:first-child {
-        position: relative;
-        width: calc(100% - 210px);
-        overflow: hidden;
-    }
+.rowCustom.AllDayDiscount .col:first-child {
+    position: relative;
+    width: calc(100% - 220px);
+    overflow: hidden;
+}
 
     .rowCustom.AllDayDiscount .col:last-child {
         position: relative;
@@ -786,7 +800,6 @@ a.hoverLink {
 .SliderAllDayDiscount {
     position: relative;
     width: 100%;
-    max-height: 300px;
 }
 
 .itemADDiscount {
@@ -811,7 +824,7 @@ a.hoverLink {
     padding: 10px 10px 20px;
     box-shadow: 0px 0px 15px -10px #fff;
     transition: all 0.5s;
-    border-radius: 10px;
+    border-radius: 25px;
     transition: all 0.5s;
     display: flex;
     flex-direction: column;
@@ -911,18 +924,18 @@ a.hoverLink {
     padding: 5px 0;
 }
 
-    .rowCustom.festivalRow .col {
-        width: calc(50% - 5px);
-    }
-
-a.itemFestival {
-    position: relative;
-    width: 100%;
-    border-radius: 5px;
-    background: no-repeat center / cover;
-    display: block;
-    transition: all 0.5s;
+.rowCustom.festivalRow .col {
+    width: calc(50% - 10px);
 }
+
+    a.itemFestival {
+        position: relative;
+        width: 100%;
+        border-radius: 25px;
+        background: no-repeat center / cover;
+        display: block;
+        transition: all 0.5s;
+    }
 
     a.itemFestival:hover {
         filter: brightness(1.2);
@@ -958,21 +971,9 @@ a.itemFestival {
 .SlidPromotion6 {
     position: relative;
     width: 100%;
-    max-height: 300px;
 }
 
-a.itemCheapStoreADS {
-    display: flex;
-    position: relative;
-    width: 100%;
-    border-radius: 5px;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 0px 10px -6px #333;
-    transition: all 0.5s;
-}
+
 
     a.itemCheapStoreADS:hover {
         filter: brightness(1.2);
@@ -999,27 +1000,27 @@ a.itemCheapStoreADS {
         opacity: 0;
     }
 
-a.itemCheapStoreADS {
-    display: flex;
-    position: relative;
-    width: 100%;
-    border-radius: 5px;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 0px 10px -6px #333;
-    background: no-repeat center / cover;
-}
+    a.itemCheapStoreADS {
+        display: flex;
+        position: relative;
+        width: 100%;
+        border-radius: 25px;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0px 10px -6px #333;
+        background: no-repeat center / cover;
+    }
 
-a.itemBoxSpecial {
-    position: relative;
-    width: 100%;
-    display: block;
-    border-radius: 5px;
-    background: no-repeat center / cover;
-    transition: all 0.5s;
-}
+    a.itemBoxSpecial {
+        position: relative;
+        width: 100%;
+        display: block;
+        border-radius: 25px;
+        background: no-repeat center / cover;
+        transition: all 0.5s;
+    }
 
     a.itemBoxSpecial:hover {
         filter: brightness(1.2);
@@ -1044,7 +1045,9 @@ a.itemBoxSpecial {
     padding-top: 70%;
     width: 100%;
 }
-
+.rowCustom.BoxSpecial.squar {
+    margin: 0 0;
+}
 a.itemBoxSpecial img {
     position: absolute;
     top: 0;
@@ -1058,18 +1061,18 @@ a.itemBoxSpecial img {
     position: relative;
     display: flex;
     justify-content: space-between;
-    margin: 0 0 10px;
+    margin: 0 0 20px;
 }
 
-    .rowCustom.BoxSpecial.hor .col {
-        position: relative;
-        width: calc(50% - 5px);
-    }
+.rowCustom.BoxSpecial.hor .col {
+    position: relative;
+    width: calc(50% - 10px);
+}
 
-    .rowCustom.BoxSpecial.squar .col {
-        position: relative;
-        width: calc(25% - 8px);
-    }
+.rowCustom.BoxSpecial.squar .col {
+    position: relative;
+    width: calc(25% - 15px);
+}
 
 .rowCustom.AllServices .col {
     position: relative;
@@ -1544,35 +1547,40 @@ h3.titleAccItem:after {
     display: flex;
     flex-wrap: wrap;
     min-height: 50px;
-    border: 1px solid #eee;
+    border: none;
     align-items: center;
     padding: 0 10px !important;
     background: #f6f6f7;
     border-radius: 5px;
 }
 
-    .tabDetailProduct.fixed {
-        border-radius: 0;
-        position: fixed;
-        top: 80px;
-        z-index: 100;
-        width: calc(100% + 40px);
-        margin: 0 -20px;
-    }
+.tabDetailProduct.fixed {
+    border-radius: 0;
+    position: fixed;
+    top: 80px;
+    z-index: 100;
+    width: 100%;
+    margin: 0 0px;
+    right: 0;
+    padding-top: 10px !important;
+}
+section.secMostSale {
+    margin-bottom: 20px;
+}
+.tabDetailProduct button.btnTabDP {
+    position: relative;
+    padding: 0 20px;
+    height: 50px;
+    margin: 0;
+    background: transparent;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0 0 0 1px;
+    border-color: #e2e2e2;
+    border-radius: 25px 25px 0 0 !important;
+}
 
-    .tabDetailProduct button.btnTabDP {
-        position: relative;
-        padding: 0 20px;
-        height: 50px;
-        margin: 0;
-        background: transparent;
-        border-radius: 0;
-        border-style: solid;
-        border-width: 0 0 0 1px;
-        border-color: #e2e2e2;
-    }
-
-        .tabDetailProduct button.btnTabDP:hover {
+    .tabDetailProduct button.btnTabDP:hover , .tabDetailProduct button.btnTabDP.active {
             background: #fff;
             border-color: #fff;
         }
@@ -1665,12 +1673,13 @@ section.contentTabDP {
     width: 100%;
 }
 
-    .rowCustom.rowdetailprod .col1 .productPics .largPicProd {
-        position: relative;
-        width: 330px;
-        background: no-repeat center / cover;
-        cursor: pointer;
-    }
+.rowCustom.rowdetailprod .col1 .productPics .largPicProd {
+    position: relative;
+    width: 330px;
+    cursor: pointer;
+    background: center center / 70% no-repeat;
+    padding: 0px;
+}
 
         .rowCustom.rowdetailprod .col1 .productPics .largPicProd:before {
             position: relative;
@@ -1685,14 +1694,17 @@ section.contentTabDP {
         width: 100px;
     }
 
-.largPicProd img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-}
+    .largPicProd img {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 70%;
+        height: 70%;
+        opacity: 0;
+        bottom: 0px;
+        right: 0px;
+        margin: auto;
+    }
 
 .rowCustom.rowdetailprod .col1 .productPics .smallPicProd {
     position: absolute;
@@ -1888,8 +1900,8 @@ span.btnfunc.like.active:after {
     width: 100%;
     margin: 0;
     background: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 8px -5px #000;
+    border-radius: 15px;
+    box-shadow: 0 0 8px -5px #000;
     padding: 10px;
 }
 
@@ -2010,7 +2022,7 @@ span.btnfunc.like.active:after {
 
     .modal.m800 .BoxModal {
         width: calc(100% - 40px);
-        max-width: 800px;
+        max-width: 1024px;
     }
 
     .modal.round5 .BoxModal {
@@ -2038,19 +2050,19 @@ span.btnfunc.like.active:after {
     justify-content: space-between;
 }
 
-    .rowPicProductDet .col {
-        position: relative;
-        width: 70%;
-    }
+.rowPicProductDet .col {
+    position: relative;
+    width: 50%;
+}
 
         .rowPicProductDet .col:last-child {
-            width: 35%;
+            width: 50%;
         }
 
         .rowPicProductDet .col .LargPicLightboxDetailProd {
             position: relative;
             width: 100%;
-            background: no-repeat center / cover;
+            background: no-repeat center / 80%;
         }
 
             .rowPicProductDet .col .LargPicLightboxDetailProd:before {
@@ -2118,6 +2130,8 @@ h4.titlePicCardProd {
     opacity: 0;
     transform: scale(0);
     transition: all 0.2s;
+    background-repeat: no-repeat;
+    background-color: #fff;
 }
 
 .rowCustom.rowdetailprod .col1 .productPics .largPicProd .img-zoom-result {
@@ -2195,14 +2209,13 @@ h4.titlePicCardProd {
     .titleSmallProd label {
         position: relative;
         padding: 0 0 0 10px;
-        color: #000354;
+        color: #b3b3b3;
         background: #fff;
-        font-size: 15px;
+        font-size: 12px;
         font-family: Arial;
     }
 
 .SliderOneProgress.swiper-container {
-    max-height: 260px;
     position: relative;
     width: 100%;
 }
@@ -3066,20 +3079,20 @@ button.submit.bg-info {
     }
 
 
-.BoxBreads {
-    position: relative;
-    width: 100%;
-    min-height: 40px;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 8px -5px #bbb;
-    font-weight: bold;
-    flex-wrap: wrap;
-}
+    .BoxBreads {
+        position: relative;
+        width: 100%;
+        min-height: 40px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 8px -5px #bbb;
+        font-weight: bold;
+        flex-wrap: wrap;
+    }
 
 .breadcrumbs {
     position: relative;
@@ -3129,14 +3142,16 @@ a.feedback {
         align-items: center;
         color: #757575;
     }
-
-a.boxADS {
-    position: relative;
-    width: 100%;
-    border-radius: 5px;
-    overflow: hidden;
-    display: block;
-}
+    .BoxBreads a {
+        color: #8e8e8e ;
+    }
+    a.boxADS {
+        position: relative;
+        width: 100%;
+        border-radius: 25px;
+        overflow: hidden;
+        display: block;
+    }
 
     a.boxADS:hover {
         filter: brightness(1.1);
@@ -3159,11 +3174,11 @@ a.boxADS {
     padding: 20px 0;
 }
 
-    .ContentListProducts .col1 {
-        position: relative;
-        width: 270px;
-        margin-left: 10px;
-    }
+.ContentListProducts .col1 {
+    position: relative;
+    width: 260px;
+    margin-left: 20px;
+}
 
     .ContentListProducts .col2 {
         width: calc(100% - 280px);
@@ -3327,15 +3342,15 @@ h3.titleCard.noBorder, h3.titleCard.noBorder label {
         }
 
 
-.accordion {
-    position: relative;
-    width: 100%;
-    margin: 10px 0;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 8px -5px #000;
-    padding: 5px;
-}
+        .accordion {
+            position: relative;
+            width: 100%;
+            margin: 10px 0;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 8px -5px #000;
+            padding: 5px;
+        }
 
     .accordion .titleAccordion {
         color: #434343;
@@ -3415,13 +3430,14 @@ h3.titleCard.noBorder, h3.titleCard.noBorder label {
         transform: rotate(180deg);
     }
 
-input.inputSearchProduct, input.searchFilterBrand {
-    position: relative;
-    width: 100%;
-    height: 40px;
-    padding: 0 40px 0 0;
-    background: #efefef url(../img/icons/search.png) no-repeat calc(100% - 5px) center / 30px;
-}
+    input.inputSearchProduct, input.searchFilterBrand {
+        position: relative;
+        width: 100%;
+        height: 40px;
+        padding: 0 40px 0 0;
+        background: #efefef url(../dist/img/icons/search.png) no-repeat calc(100% - 5px) center/30px;
+        border-radius: 10px;
+    }
 
 
 
@@ -3538,16 +3554,15 @@ input.inputSearchProduct, input.searchFilterBrand {
             font-style: normal;
         }
 
-.cardFilter {
-    position: relative;
-    width: 100%;
-    margin: 10px 0;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 8px -5px #000;
-    padding: 10px;
-}
-
+        .cardFilter {
+            position: relative;
+            width: 100%;
+            margin: 10px 0;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 8px -5px #000;
+            padding: 10px;
+        }
 button.btnsubmitFillter {
     position: relative;
     width: 100%;
@@ -3705,8 +3720,8 @@ button.btnsubmitFillter {
             transform: scale(1) rotate(0deg);
         }
 
-        .checkboxs input:checked + label.lblinput small {
-            color: #00cc9c;
+        .checkboxs input:checked+label.lblinput small {
+            color: #0046bf;
         }
 /*---------------------- checkbox --------------*/
 
@@ -3823,23 +3838,23 @@ button.btnsubmitFillter {
 
 .itemProductBox {
     position: relative;
-    width: calc((100% / 4) - 10px);
-    margin: 5px;
+    width: calc((100% / 4) - 20px);
+    margin: 10px;
     background: #fff;
-    padding: 20px;
-    box-shadow: 0px 0px 5px -3px;
+    padding: 10px 10px 10px;
+    box-shadow: 0px 0px 10px -6px;
     transition: all 0.5s;
-    min-width: 240px;
+    min-width: 210px;
+    border-radius: 15px;
 }
 
-    .itemProductBox:hover {
-        box-shadow: 0px 0px 15px -8px;
-    }
-
+.itemProductBox:hover {
+    box-shadow: 0px 0px 30px -13px;
+}
     .itemProductBox .pic {
         position: relative;
         width: 100%;
-        background: no-repeat center / cover;
+        background: no-repeat center / 80%;
         pointer-events: none;
     }
 
@@ -3908,18 +3923,19 @@ button.btnsubmitFillter {
             margin: auto;
         }
 
-.itemProductBox h3.titleProd {
-    position: relative;
-    width: 100%;
-    font-size: 14px;
-    justify-content: center;
-    text-align: center;
-    margin: 0;
-    max-height: 50px;
-    display: flex;
-    min-height: 50px;
-    color: #666;
-}
+        .itemProductBox h3.titleProd {
+            position: relative;
+            width: 100%;
+            font-size: 12px;
+            justify-content: center;
+            text-align: center;
+            margin: 0;
+            max-height: 40px;
+            display: flex;
+            min-height: 40px;
+            color: #666;
+            overflow: hidden;
+        }
 
 .prices {
     position: relative;
@@ -3978,14 +3994,17 @@ button.btnsubmitFillter {
         height: 20px;
     }
 
-.itemProductBox .pic .colorProd {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
+    .itemProductBox .pic .colorProd {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        width: 10px;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        padding: 10px 0 0;
+    }
 
 .colorProd i.itemColor {
     position: relative;
@@ -4054,7 +4073,38 @@ span.itemSort {
     flex-direction: column;
     align-items: flex-start;
 }
-
+.itemProductBox .rowPriceProduct {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.itemProductBox .rowPriceProduct .priceRealAndPrecent {
+    position: relative;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+}
+.itemProductBox .rowPriceProduct .priceRealAndPrecent.real {
+    color: #bbb;
+    font-size: 12px;
+}
+.itemProductBox .rowPriceProduct .priceRealAndPrecent.Descount {
+    color: #da190b;
+    font-size: 14px;
+}
+.itemProductBox .rowPriceProduct .priceRealAndPrecent.real:before {
+    background-color: #bbb;
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    width:100%;
+    height:1px;
+    content:'';
+    margin:auto;
+    transform:rotate(-5deg)
+}
     .itemProductBox .labelsProd label.bdg {
         position: relative;
         font-size: 12px;
@@ -4133,34 +4183,35 @@ span.itemSort {
         transform: rotate(180deg);
     }
 
-section.windowProd {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin: 10px 0;
-}
-
-    section.windowProd .col1 {
-        position: relative;
-        width: calc(40% - 5px);
+    section.windowProd {
         display: flex;
-        flex-wrap: wrap;
         justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 20px 0 0;
     }
+
+section.windowProd .col1 {
+    position: relative;
+    width: calc(40% - 10px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
     section.windowProd .col2 {
         position: relative;
-        width: calc(60% - 5px);
+        width: calc(60% - 10px);
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
 
-a.itemWinProduct {
-    box-shadow: 0px 0px 15px -11px;
-    position: relative;
-    transition: all 0.5s;
-}
+    a.itemWinProduct {
+        box-shadow: 0px 0px 15px -11px;
+        position: relative;
+        transition: all 0.5s;
+        border-radius: 25px !important;
+    }
 
     a.itemWinProduct:hover {
         filter: brightness(1.1);
@@ -4179,15 +4230,14 @@ a.itemWinProduct {
         opacity: 0;
     }
 
-section.windowProd .col1 a.itemWinProduct {
-    position: relative;
-    width: 100%;
-    background: no-repeat center / cover;
-    display: block;
-    margin: 0 0 10px;
-    border-radius: 5px;
-    overflow: hidden;
-}
+    section.windowProd .col1 a.itemWinProduct {
+        position: relative;
+        width: 100%;
+        background: no-repeat center / cover;
+        display: block;
+        margin: 0 0 20px;
+        overflow: hidden;
+    }
 
     section.windowProd .col1 a.itemWinProduct:before {
         position: relative;
@@ -4197,15 +4247,14 @@ section.windowProd .col1 a.itemWinProduct {
         display: block;
     }
 
-section.windowProd .col2 a.itemWinProduct {
-    position: relative;
-    width: calc(50% - 5px);
-    background: no-repeat center / cover;
-    display: block;
-    margin: 0 0 10px;
-    border-radius: 5px;
-    overflow: hidden;
-}
+    section.windowProd .col2 a.itemWinProduct {
+        position: relative;
+        width: calc(50% - 10px);
+        background: no-repeat center / cover;
+        display: block;
+        margin: 0 0 20px;
+        overflow: hidden;
+    }
 
     section.windowProd .col2 a.itemWinProduct:before {
         position: relative;
@@ -4215,12 +4264,15 @@ section.windowProd .col2 a.itemWinProduct {
         display: block;
     }
 
-section.sliderListProd {
-    overflow: hidden;
-}
-
+    section.sliderListProd {
+        overflow: hidden;
+        border-radius: 25px;
+    }
 .SliderSingle .swiper-wrapper {
     height: auto;
+}
+.swiper-wrapper {
+    height: auto !important;
 }
 
 a.sliderListProd {
@@ -4451,7 +4503,7 @@ section.CompareContent {
     position: relative;
     width: 100%;
     background: #fff;
-    border-radius: 5px;
+    border-radius: 25px 25px 10px 10px;
     padding: 20px;
     border-bottom: 2px solid #0046bf;
     margin-bottom: 30px;
@@ -4529,8 +4581,8 @@ span.ItemCompare__top__price {
 
 i.ItemCompare__remove {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 10px;
+    top: 10px;
     z-index: 2;
     width: 30px;
     height: 30px;
@@ -5020,11 +5072,11 @@ button.btntab.active i {
 }
 
     .accotdionFAQ span.AnswerQuestion:after {
-        content: 'Ù…Ø´Ø§Ù‡Ø¯Ù‡ Ù¾Ø§Ø³Ø®';
+        content: 'مشاهده پاسخ';
     }
 
 .accotdionFAQ.active span.AnswerQuestion:after {
-    content: 'Ø¨Ø³ØªÙ† Ù¾Ø§Ø³Ø®';
+    content: 'بستن پاسخ';
 }
 
 .accotdionFAQ span.AnswerQuestion {
@@ -5067,7 +5119,9 @@ button.btntab.active i {
     align-items: center;
     transition: all 0.5s;
 }
-
+section.secFestivals {
+    margin-top: 20px;
+}
 .accotdionFAQ.active span.AnswerQuestion:before {
     transform: rotate(180deg);
 }
@@ -5157,7 +5211,7 @@ a.moreAcc {
 .BoxMapnfo {
     position: relative;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 25px;
     overflow: hidden;
     margin: 10px 0;
     height: 350px;
@@ -5244,8 +5298,8 @@ span.office {
 .BoxesDepartement {
     position: relative;
     width: 100%;
-    border-radius: 5px;
-    margin: 10px 0;
+    border-radius: 25px;
+    margin: 20px 0;
     padding: 8vw 2vw 9vw;
     background: url(../img/contactBg.jpg) no-repeat center / cover;
 }
@@ -5499,13 +5553,14 @@ span.childChildCatProd.open i.openchildchild:before {
     position: relative;
     width: 100%;
     padding: 20px 20px 40px;
-    background: #ffffff;
+    background: #fff;
     border-radius: 6px;
-    margin: 0px 0 5px;
+    margin: 0 0 5px;
     text-align: justify;
     font-size: 14px;
     box-sizing: border-box;
     min-height: 100%;
+    color: #000;
 }
 
     .BoxTextListProd h3.title {
@@ -5601,7 +5656,7 @@ form#frmNewsletter {
 
     .countProduct span.textNum {
         position: absolute;
-        content: 'ÃƒËœÃ‚Â¹ÃƒËœÃ‚Â¯ÃƒËœÃ‚Â¯';
+        content: 'ÃƒÆ’Ã‹Å“Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã‹Å“Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã‹Å“Ãƒâ€šÃ‚Â¯';
         display: block;
         left: 41px;
         top: 0;
@@ -5708,12 +5763,12 @@ a.btnStep.btnGologin {
         display: flex;
     }
 
-.modal .BoxModal .contentModal {
-    position: relative;
-    padding: 10px;
-    max-height: calc(100vw - 210px);
-    overflow: auto;
-}
+    .modal .BoxModal .contentModal {
+        position: relative;
+        padding: 10px;
+        max-height: calc(100vw - 300px);
+        overflow: auto;
+    }
 /* ------------- feedback --------------- */
 .BoxCheck.resultSearchCheckbox {
     position: relative;
@@ -5794,3 +5849,40 @@ a.btnStep.btnGologin {
 .rowCustom.rowdetailprod .col1 .productPics .largPicProd {
     width: 400px;
 }
+
+
+
+/* New CSS  */
+.zoomContainer {
+    z-index: 200000000000000000000;
+}
+.zoomLens {
+    max-width: 70%;
+    max-height: 40%;
+}
+.zoomWindowContainer>div {
+    width: 856px!important;
+    height: 514px!important;
+    float: right!important;
+    left: inherit;
+    right: calc(100% + 20px)!important;
+    top: 0!important;
+    border: 0 !important;
+    border-radius: 10px!important;
+    pointer-events: none!important;
+}
+.zoomWindowContainer>div {
+    width: 770px!important;
+    top: 0!important;
+}
+.zoomWindowContainer .zoomWindow {
+    position: absolute !important;
+    right: 100% !important;
+    left: auto !important;
+    top: -50px !important;
+}
+
+.BrandFooter.swiper-container {
+    overflow: hidden;
+}
+/* New CSS  */

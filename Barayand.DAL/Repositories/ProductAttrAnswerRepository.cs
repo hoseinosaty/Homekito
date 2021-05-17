@@ -94,8 +94,8 @@ namespace Barayand.DAL.Repositories
                     bool isInteger = int.TryParse(item.value + "", out AnswerId);
                     if (ans != null)
                     {
-                        ans.X_AnswerId = (isInteger) ? AnswerId : 0;
-                        ans.X_AnswerTitle = (!isInteger) ? item.value : null;
+                        ans.X_AnswerId = (item.type == 1) ? AnswerId : 0;
+                        ans.X_AnswerTitle = (item.type == 2) ? item.value : null;
                         _context.ProductAttributeAnswer.Update(ans);
                         await this.CommitAllChanges();
                     }
@@ -103,8 +103,8 @@ namespace Barayand.DAL.Repositories
                     {
                         ProductAttributeModel answer = new ProductAttributeModel();
                         answer.X_PId = item.productid;
-                        answer.X_AnswerTitle = (!isInteger) ? item.value : null;
-                        answer.X_AnswerId = (isInteger) ? AnswerId : 0;
+                        answer.X_AnswerTitle = (item.type == 2) ? item.value : null;
+                        answer.X_AnswerId = (item.type == 1) ? AnswerId : 0;
                         answer.X_AId = item.id;
                         _context.ProductAttributeAnswer.Add(answer);
                         await this.CommitAllChanges();

@@ -188,7 +188,7 @@
                                             @foreach (var ans in attr.Answers)
                                             {
                                                 <div class="checkboxs">
-                                                    <input type="checkbox" value="@ans.X_Id" id="ans@(ans.X_Id)" data-attr="@attr.Attribute.A_Id" name="attr" tabindex="3">
+                                                    <input type="checkbox" value="@ans.X_Id" id="ans@(ans.X_Id)" data-attr="@attr.Attribute.A_Id" onchange="FilterSearch()" name="attr" tabindex="3">
                                                     <label for="ans@(ans.X_Id)" class="lblinput">
                                                         <span>@ans.X_Answer</span>
                                                     </label>

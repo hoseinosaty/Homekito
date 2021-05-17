@@ -48,6 +48,10 @@ namespace Barayand.DAL.Repositories
                     foreach (var item in _context.PromotionBoxProducts.Where(x => x.X_SectionId == box.B_SectionId))
                     {
                         var p = _context.Product.FirstOrDefault(x=>x.P_Id == item.X_ProdId);
+                        if(Type == 6)
+                        {
+                            p.P_Title = item.X_ProdTitle;
+                        }
                         var combine = _context.ProductCombine.FirstOrDefault(x=>x.X_ColorId == item.X_ColorId && x.X_WarrantyId == item.X_WarrantyId && x.X_ProductId == item.X_ProdId);
                         if(combine != null)
                         {

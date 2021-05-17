@@ -159,7 +159,7 @@ namespace Barayand
             services.AddScoped(typeof(IExpertReviewRepository), typeof(ExpertReviewRespository));
             services.AddScoped(typeof(IPromotionBoxProdRepository), typeof(PromotionBoxProdRepository));
             services.AddScoped(typeof(IPCalcRepository), typeof(PCalcRepository));
-
+            services.AddScoped(typeof(IProductAttrAnswerRepository), typeof(ProductAttrAnswerRepository));
             #endregion
             services.AddMvc().AddNewtonsoftJson();
             services.AddControllers();

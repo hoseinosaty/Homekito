@@ -4,14 +4,16 @@ using Barayand.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Barayand.DAL.Migrations
 {
     [DbContext(typeof(BarayandContext))]
-    partial class BarayandContextModelSnapshot : ModelSnapshot
+    [Migration("20210511113350_add-field-to-promotion-product-table")]
+    partial class addfieldtopromotionproducttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

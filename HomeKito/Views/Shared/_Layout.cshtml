@@ -7,7 +7,7 @@
 @{
     var Profits = ((List<Barayand.Models.Entity.ServiceModel>)(await _Profits.GetAll()).Data).Where(x => x.S_Status && x.S_Type == 2).ToList();
     var AllCategories = ((List<Barayand.Models.Entity.ProductCategoryModel>)(await _ProdCatrepo.GetAllMenu()).Data).OrderBy(x => x.PC_OrderField).ToList();
-    var catlvl1 = AllCategories.Where(x => x.PC_ParentId == 0 && x.PC_IsDeleted == false && x.PC_Status).OrderBy(x=>x.PC_OrderField).ToList();
+    var catlvl1 = AllCategories.Where(x => x.PC_ParentId == 0 && x.PC_IsDeleted == false && x.PC_Status).OrderBy(x => x.PC_OrderField).ToList();
     var catlvl2 = AllCategories.Where(x => x.PC_ParentId != 0 && x.PC_IsDeleted == false && x.PC_Status).OrderBy(x => x.PC_OrderField).ToList();
     var Brands = ((List<Barayand.Models.Entity.BrandModel>)(await _brandrepo.GetAll()).Data).Where(x => x.B_ShowInIndex && x.B_Status).ToList();
     var AllPages = ((List<Barayand.Models.Entity.DynamicPagesContent>)(await _dynamicpagerepo.GetAll()).Data);
@@ -74,17 +74,18 @@
                         <a href="/Compare" class="showCompare">
                             <span id="compareQuantity" class="quantity">0</span>
                         </a>
-                        @if (Barayand.Common.Services.TokenService.AuthorizeUser(Context.Request) < 1)
-                        {
-
-                            <a href="/User" class="SignInNav">ورود به حساب کاربری</a>
-                        }
-                        else
-                        {
-                            <a href="/user/Profile" class="SignInNav">پنل کاربری</a>
-
-                        }
                     </div>
+
+                    @if (Barayand.Common.Services.TokenService.AuthorizeUser(Context.Request) < 1)
+                    {
+
+                        <a href="/User" class="SignInNav">ورود به حساب کاربری</a>
+                    }
+                    else
+                    {
+                        <a href="/user/Profile" class="SignInNav">پنل کاربری</a>
+                    }
+
 
                 </div>
                 <div class="showSidebar">
@@ -179,8 +180,30 @@
         <a href="/" class="logoSidebar">
             <img src="/dist/img/logo.png" alt="">
         </a>
+
         <div class="contentSidebar">
-            sadad
+            <span class="titleSidebar">دسته بندی محصولات</span>
+            <div class="categoriesProduct">
+                @foreach (var c in catlvl1)
+                {
+                    var seolvl1 = Barayand.Common.Services.UtilesService.ParseSeoData(c.PC_Seo);
+                <span class="parentCatProd iconCatside" style="--iconCat:url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductCatMainImage")@c.PC_Logo);">
+                    <i class="openparent fal fa-chevron-left"></i>
+                    <a href="#" class="linkcat">@c.PC_Title</a>
+
+                    @foreach (var c2 in catlvl2.Where(x => x.PC_ParentId == c.PC_Id).ToList())
+                    {
+                        var seolvl2 = Barayand.Common.Services.UtilesService.ParseSeoData(c2.PC_Seo);
+                        <span class="childCatProd iconCatside" style="--iconCat: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductCatMainImage")@c2.PC_Logo);">
+                            <a href="/Products/@c.PC_Id/@seolvl1.url/@c2.PC_Id/@seolvl2.url" class="linkcat">@c2.PC_Title</a>
+                        </span>
+                    }
+
+
+                </span>
+                }
+
+            </div>
         </div>
         <div class="socialIcons">
             @foreach (var s in Data.social)
@@ -245,22 +268,24 @@
                     </div>
                 </div>
             </div>
-            <div class="BrandFooter swiper-container">
-                <div class="swiper-wrapper">
+            <div class="container footerBrandCenter">
+                <div class="BrandFooter swiper-container">
+                    <div class="swiper-wrapper">
 
-                    @foreach (var item in footlogo)
-                    {
-                        <div class="swiper-slide">
-                            <a href="@item.E_Link" class="ItemBrandFooter" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image);">
-                                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image" alt="@item.E_Title">
-                            </a>
-                        </div>
-                    }
-                </div>
-                <!-- Add Arrows -->
-                <div class="NextPrevSlider">
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                        @foreach (var item in footlogo)
+                        {
+                            <div class="swiper-slide">
+                                <a href="@item.E_Link" class="ItemBrandFooter" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image);">
+                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image" alt="@item.E_Title">
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="NextPrevSlider">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
                 </div>
             </div>
         </div>

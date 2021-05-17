@@ -41,9 +41,6 @@ a.boxItemHR {
     }
 }
 @media only screen and (max-width: 980px) {
-    .container {
-        width: calc(100% - 40px);
-    }
     header.headerNews {
         height: 30vw;
     }

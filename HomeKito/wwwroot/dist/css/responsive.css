@@ -1,11 +1,9 @@
 .overHidden {
     overflow: hidden;
 }
-
 .boxbrandPic, .BoxTextListProd {
     min-height: 100%;
 }
-
 .rowTitleProd h2.titleProductDetail {
     position: relative;
     margin: 0;
@@ -16,7 +14,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 button.btnFilterMobile {
     position: fixed;
     bottom: 0;
@@ -34,20 +31,18 @@ button.btnFilterMobile {
     cursor: pointer;
     display: none;
 }
-
-    button.btnFilterMobile:before {
-        position: relative;
-        height: 40px;
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Font Awesome 5 Pro';
-        font-weight: 300;
-        content: "\f0b0";
-        font-size: 24px;
-    }
-
+button.btnFilterMobile:before {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Font Awesome 5 Pro';
+    font-weight: 300;
+    content: "\f0b0";
+    font-size: 24px;
+}
 button.closeFilterMobile {
     position: fixed;
     width: 100%;
@@ -60,56 +55,104 @@ button.closeFilterMobile {
     z-index: 10001;
     display: none;
 }
-
 @media only screen and (max-width: 3000px) {
-}
 
+}
+@media only screen and (max-width: 2000px) {
+    .contentMain.DetailProductContainer .container {
+        max-width: 1480px !important;
+    }
+}
+@media only screen and (max-width: 1500px) {
+    .contentMain.DetailProductContainer .container {
+        max-width: 1280px !important;
+    }
+
+    .buttonsDetailProd {
+        justify-content: space-between;
+    }
+
+    .rowCustom.rowdetailprod .col1 {
+        width: 430px;
+    }
+
+    .rowCustom.rowdetailprod .col2 {
+        width: calc(100% - 450px);
+    }
+
+    .rowCustom.rowdetailprod .col1 .productPics .largPicProd {
+        width: 330px;
+    }
+}
 @media only screen and (max-width: 1300px) {
+    .itemProductBox {
+        width: calc((100% / 3) - 20px);
+    }
     .btnDetailProd {
         width: 120px;
         padding: 0 30px 0 0;
         font-size: 10px;
     }
-
-        .btnDetailProd:before {
-            width: 30px;
-            height: 40px;
-            background-size: 100% !important;
-        }
+    .btnDetailProd:before {
+        width: 30px;
+        height: 40px;
+        background-size: 100% !important;
+    }
 }
 
 @media only screen and (max-width: 1200px) {
+    .modal.m800 .BoxModal {
+        max-width: 800px;
+    }
+    .zoomWindowContainer>div {
+        width: 600px!important;
+        top: 0!important;
+    }
     .rowCustom.rowdetailprod .col1 {
         width: 400px;
     }
-
     .rowCustom.rowdetailprod .col2 {
-        width: calc(100% - 420px);
+        width: calc(100% - 440px);
     }
 }
-
 @media only screen and (max-width: 1180px) {
     .btnDetailProd {
         width: 100%;
         padding: 0 40px 0 0;
         font-size: 12px;
     }
-
-        .btnDetailProd:before {
-            width: 40px;
-            height: 40px;
-            background-size: 100% !important;
-        }
+    .btnDetailProd:before {
+        width: 40px;
+        height: 40px;
+        background-size: 100% !important;
+    }
 }
-
 @media only screen and (max-width: 1120px) {
 }
-
 @media only screen and (max-width: 1100px) {
+    
+    .itemProductBox {
+        width: calc((100% / 2) - 20px);
+    }
+    span.itemInfo {
+        font-size: 12px;
+    }
+    
+    .zoomWindowContainer>div {
+        width: 400px!important;
+        top: 0!important;
+    }
+    .rowInfoDetailprod {
+        flex-direction: column;
+    }
+    .rowCustom.rowdetailprod .col2 .rowInfoDetailprod .col2, .rowCustom.rowdetailprod .col2 .rowInfoDetailprod .col1 {
+        width: 100% !important;
+        min-width: 100%;
+    }
+    
     .rowCustom.rowdetailprod .col1:before {
         display: block;
-    }
-
+    }    
     .zoomWindow {
         right: 0 !important;
         z-index: 100000 !important;
@@ -118,17 +161,18 @@ button.closeFilterMobile {
         min-width: 350px !important;
         min-height: 350px !important;
     }
-
     .FunctionalButtons {
         width: 100%;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         left: 0;
-        right: 0;
-        bottom: -20px;
-        top: auto;
-        height: 40px;
+        right: auto;
+        bottom: 0;
+        top: 0;
+        height: 100%;
         align-items: center;
+        margin: auto;
+        width: 40px;
     }
 
     .rowCustom.rowdetailprod .col1 .productPics .largPicProd {
@@ -158,132 +202,202 @@ button.closeFilterMobile {
         width: 70px;
         margin: 5px;
     }
-
     .rowCustom.rowdetailprod .col1 {
         width: 100%;
-        max-width: 400px;
-        margin: auto;
+        max-width: 430px;
+        margin: 0 auto;
     }
-
-    .rowCustom.rowdetailprod .col2 {
-        width: 100%;
-        margin: auto;
-    }
-
     .btnDetailProd {
-        width: 150px;
+        width: 130px;
         padding: 0 40px 0 0;
-        font-size: 11px;
+        font-size: 12px;
     }
-
     .rowInfoDetailprod .col1 {
         max-width: calc(100% - 310px) !important;
     }
 }
-
 @media only screen and (max-width: 980px) {
+    
+    .btnDetailProd {
+        width: 100% !important;
+    }
     .container {
         width: calc(100% - 40px);
     }
-
-    a.itemLogo {
+        a.itemLogo {
         width: calc((100% / 4) - 20px);
     }
-
     .tabDetailProduct.fixed {
         position: relative;
         top: 0;
         width: 100%;
         margin: auto;
     }
-
-    .contentMain, body.noalert .contentMain {
+    .contentMain , body.noalert .contentMain {
         margin-top: 0 !important;
     }
-
     .MoreBrand {
         width: 210px;
     }
-
     .brands {
         width: calc(100% - 220px);
         flex-wrap: wrap;
     }
 }
-
 @media only screen and (max-width: 940px) {
-}
 
+}
 @media only screen and (max-width: 890px) {
+    .rowCustom.rowdetailprod .col1 .productPics .largPicProd .img-zoom-result {
+        right: 0;
+        display: none;
+    }
+    .BoxBreads {
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        width: auto;
+        min-width: 100%;
+        flex-wrap: nowrap;
+    }
+    .breadcrumbs {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+    .breadcrumbs a.breadc {
+        float: right;
+        height: 40px;
+        font-size: 12px;
+        width: max-content;
+    }
+    a.feedback {
+        position: relative;
+        min-width: 120px;
+        float: right;
+        margin-right: 25px;
+    }
+    .rowProp.discription {
+        width: 100% !important;
+    }
+    .rowProp.discription .col1 {
+        width: 35% !important;
+    }
+    .rowProp.discription .col2 {
+        width: 65% !important;
+    }
+    
+    .modal .BoxModal .contentModal .rowCustom.rowProductPics {
+        flex-direction: row;
+    }
+    .rowPicProductDet .col {
+        position: relative;
+        width: 50% !important;
+    }
+    
+    .modal .BoxModal .contentModal .rowCustom {
+        flex-direction: column;
+        align-items: center;
+    }
+    .modal .BoxModal .contentModal .rowCustom .col2 {
+        width: 100%;
+        flex-direction: column;
+        display: flex;
+    }
+    .FunctionalButtons {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        left: 0;
+        right: 0;
+        bottom: -20px;
+        top: auto;
+        height: 40px;
+        align-items: center;
+    }
+    .rowInfoDetailprod span.itemInfo {
+        flex-wrap: wrap;
+    }
+    .btnDetailProd {
+        width: calc((100% / 3) - 10px) !important;
+    }
+    .rowCustom.rowdetailprod .col2, .rowCustom.rowdetailprod .col1 {
+        width: 100% !important;
+        margin: 0 auto;
+    }
+    .rowCustom.rowdetailprod .col2 {
+        margin-top: 20px !important;
+    }
+    .zoomContainer {
+        display: none;
+    }
     .propertiesRows .rowProp {
         width: 100%;
     }
-
     a.itemBrand {
         width: calc((100% / 3) - 10px);
     }
-
     .menuTopSlider.swiper-container {
         width: 100%;
-        max-height: 100px;
     }
 
     .SliderOne.swiper-container {
-        max-height: 35vw;
     }
 
     .SlidPromotion3.swiper-container {
-        max-height: 250px;
     }
 
     .SliderSurprising.swiper-container {
-        MAX-HEIGHT: 350px;
     }
 
     .SliderAllDayDiscount {
-        max-height: 300px;
     }
 
     .SlidPromotion6 {
-        max-height: 300px;
     }
 }
-
 @media only screen and (max-width: 840px) {
+    
+    .itemProductBox {
+        width: calc((100% / 1) - 20px);
+    }
     .btnDetailProd {
         width: 100%;
     }
 }
-
 @media only screen and (max-width: 768px) {
-    .SlidPromotion6 {
-        max-height: 350px;
+    
+    .itemProductBox {
+        width: calc((100% / 2) - 20px);
     }
-
-    a.itemLogo {
+    a.itemBoxSpecial {
+        margin-bottom: 10px;
+    }
+    .rowCustom.BoxesADS a.itemBoxADS {
+        width: 100%;
+        margin: 10px 0 0;
+    }
+    .SlidPromotion6 {
+    }
+        a.itemLogo {
         width: calc((100% / 3) - 20px);
     }
-
     .FAQTitle {
         width: 100%;
     }
-
     .BoxMapnfo .contactInfoBox {
         position: relative;
         width: 100%;
         height: auto;
         padding: 60px 20px 20px;
     }
-
     .BoxMapnfo {
         height: auto;
     }
-
     .js-map.mapboxgl-map {
         width: 100%;
         height: 350px;
     }
-
     .BoxMapnfo .contactInfoBox .socialIcons {
         position: absolute;
         left: 0;
@@ -294,40 +408,32 @@ button.closeFilterMobile {
         justify-content: center;
         background-color: #f1f1f1;
     }
-
     .ContentListProducts .col1, .ContentListProducts .col2 {
         width: 100%;
         margin: 0 0 10px;
         min-height: 35vw;
     }
-
     .contentBasket .rightBasket {
         width: 100%;
         margin: auto;
     }
-
     .contentBasket .leftBasket {
         width: 100%;
         margin: 10px 0 0;
     }
-
     .contentCustomer .row {
         flex-wrap: wrap;
     }
-
-        .contentCustomer .row input, .contentCustomer .row textarea, .contentCustomer .row select {
-            width: calc(100% - 120px);
-            margin: 0 0 10px 0;
-        }
-
+    .contentCustomer .row input, .contentCustomer .row textarea, .contentCustomer .row select {
+        width: calc(100% - 120px);
+        margin: 0 0 10px 0;
+    }
     a.itemBrand {
         width: calc((100% / 2) - 10px);
     }
-
     .rowCustom .col1 {
         width: 100%;
     }
-
     .rowCustom .col2 {
         position: relative;
         width: 100%;
@@ -336,58 +442,44 @@ button.closeFilterMobile {
         grid-template-columns: 1fr 1fr;
         grid-gap: 10px;
     }
-
-    .SliderOne.swiper-container {
-        max-height: 51vw;
-    }
-
-    .SliderOne .itemSliderOne {
-        height: 51vw;
-    }
-
     .rowCustom.festivalRow .col {
         width: 100%;
-        margin: 10px 0 0;
+        margin: 0;
     }
-
+    .rowCustom.festivalRow .col:first-child {
+        margin: 0 0 20px ;
+    }
     a.itemFestival:before {
         padding-top: 27%;
     }
-
     .rowCustom.BoxSpecial.hor .col {
         position: relative;
         width: 100%;
         margin: 10px 0 0;
     }
-
     .rowCustom.BoxSpecial.squar .col {
         position: relative;
         width: 100%;
     }
-
     .rowCustom.BoxSpecial {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 10px;
     }
-
     a.itemBoxADS {
         margin: 0 0 0px 0;
     }
-
     .boxRahgiri {
         flex-direction: column;
         align-items: center;
     }
-
+    
     section.windowProd .col1, section.windowProd .col2 {
         width: 100%;
     }
-
-        section.windowProd .col2 a.itemWinProduct:before {
-            padding-top: 100%;
-        }
-
+    section.windowProd .col2 a.itemWinProduct:before {
+        padding-top: 100%;
+    }
     a.sliderListProd {
         position: relative;
         width: 100%;
@@ -395,31 +487,39 @@ button.closeFilterMobile {
         height: 30vw;
         background: no-repeat center / cover;
     }
-
-    .rowCustom.rowdetailprod .col2 {
+    .rowCustom.rowdetailprod .col2  {
         display: flex;
         flex-wrap: wrap;
     }
+    
+    .rowProp.rowdetailprod .col1 , .rowProp.rowdetailprod .col2 {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
 }
-
 @media only screen and (max-width: 680px) {
+    a.itemBoxADS:first-child {
+        margin-bottom: 10px;
+    }
+    .rowCustom.rowdetailprod .col2 {
+        margin-top: 60px !important;
+    }
+    .FunctionalButtons {
+        bottom: -40px;
+    }
     .RowFAQ .col1 {
         display: none;
     }
-
     .RowFAQ .col2 {
         width: 100%;
     }
-
     .propertiesRows .rowProp .col1 {
         width: 100%;
     }
-
     .rowInfoDetailprod {
         flex-direction: column;
         width: 100%;
     }
-
     .rowCustom.rowdetailprod .col1 .productPics .smallPicProd {
         position: absolute;
         left: 0;
@@ -434,67 +534,55 @@ button.closeFilterMobile {
         right: 0;
         margin: auto;
     }
-
     .productPics .smallPicProd .itemSmallPic {
         width: calc((100% / 4) - 20px);
         margin: 5px;
     }
-
     .rowCustom.rowdetailprod .col1 .productPics .largPicProd {
         width: 100%;
     }
-
     .rowInfoDetailprod .col1, .rowInfoDetailprod .col2 {
         width: 100% !important;
         max-width: unset !important;
     }
-
     .rowCustom.rowdetailprod .col1 .productPics {
         position: relative;
         width: 100%;
         margin-bottom: 100px;
     }
-
     .Departements .itemDep {
         width: calc((100% / 2) - 20px);
     }
-
     .ContentFormCM .boxInput {
         position: relative;
         width: 100%;
     }
-
     .contentCustomer .row input, .contentCustomer .row textarea, .contentCustomer .row select, .contentCustomer .row label {
         width: 100% !IMPORTANT;
         max-width: unset;
         text-align: right;
         min-width: 100% !important;
     }
-
     .itemAddress .checkboxs {
         height: auto;
         min-height: 40px;
     }
-
+    
     .rowCustom .col2 {
         grid-template-columns: 1fr;
     }
-
     a.itemBoxADS {
         height: calc(51vw - 5px);
     }
-
     .rowCustom.BoxesADS {
         display: grid;
         grid-template-columns: 1fr;
         grid-gap: 10px;
     }
-
-        .rowCustom.BoxesADS a.itemBoxADS {
-            width: 100%;
-            margin: 0px 0;
-        }
-
+    .rowCustom.BoxesADS a.itemBoxADS {
+        width: 100%;
+        margin: 10px 0 0;
+    }
     a.itemCheapStoreADS:before {
         position: relative;
         width: 100%;
@@ -502,18 +590,15 @@ button.closeFilterMobile {
         content: '';
         padding-top: 20%;
     }
-
     .card .contentCard.brandContent1 {
         display: flex;
         flex-direction: column-reverse;
     }
-
     .MoreBrand {
         width: auto;
         height: 150px;
         box-sizing: border-box;
     }
-
     .brands {
         width: 100%;
         box-sizing: border-box;
@@ -521,63 +606,88 @@ button.closeFilterMobile {
 }
 
 @media only screen and (max-width: 600px) {
+    
+    .rowPicProductDet .col {
+        width: 70% !important;
+    }
+    .img-zoom-result {
+        DISPLAY: NONE;
+    }
+    section.secPropertiesDetail.contentTabDP {
+        max-height: 5000px;
+    }
+    .contentTabsDP {
+        display: none;
+    }
+    .rowPicProductDet {
+        flex-direction: column;
+        align-items: center;
+    }
+    .rowPicProductDet .col:last-child {
+        width: 100% !important;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .modal .BoxModal .contentModal .rowCustom.rowProductPics {
+        flex-direction: row;
+        justify-content: center;
+    }
+    .modal.m800 .contentModal {
+        max-height: calc(100vw - 120px);
+    }
     .accotdionFAQ span.AnswerQuestion {
         position: relative;
         margin: 10px 10px 0px 0;
         box-sizing: border-box;
         width: 100%;
     }
-
     .RowFAQ .col2 {
         padding: 0px 0 0;
         flex-direction: column;
         height: auto;
     }
-
+    
     .ContentListProducts .col1 {
         width: 100%;
         margin-left: 0;
         display: none;
     }
-
-        .ContentListProducts .col1.fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #f1f1f1;
-            z-index: 9999999999950;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 20px 50px;
-            overflow: auto;
-        }
-
+    .ContentListProducts .col1.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #f1f1f1;
+        z-index: 9999999999950;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 20px 50px;
+        overflow: auto;
+    }
+    
     button.btnFilterMobile {
         display: flex;
     }
-
     .ContentListProducts .col2 {
         width: 100%;
         margin-top: 10px;
     }
-
     button.closeFilterMobile {
         display: flex;
         align-items: center;
         justify-content: center;
     }
-
     .rowCustom.BoxSpecial {
         grid-template-columns: 1fr;
     }
-
-        .rowCustom.BoxSpecial.hor .col {
-            margin: 0;
-        }
-
+    .rowCustom.BoxSpecial.hor .col {
+        margin: 0;
+    }
     .card .contentCard {
         flex-wrap: wrap;
     }
@@ -585,41 +695,60 @@ button.closeFilterMobile {
     a.itemBrand {
         width: calc(100% - 10px);
     }
+    
 }
-
 @media only screen and (max-width: 560px) {
+   
 }
-
 @media only screen and (max-width: 540px) {
+    
+    .itemProductBox {
+        width: calc((100% / 1) - 20px);
+    }
+    .selectColor .titleColor {
+        position: relative;
+        width: 100%;
+    }
+    .radioColor {
+        width: calc((100% / 2) - 5px);
+    }
+    .radioColor label {
+        width: 100%;
+        justify-content: flex-start;
+        padding-right: 40px;
+    }
+    .btnDetailProd {
+        width: 100% !important;
+    }
     a.itemLogo {
         width: calc((100% / 2) - 20px);
     }
-
     section.secSurprisingly .col1 {
         width: 200px;
         box-sizing: border-box;
         margin-bottom: 20px;
     }
-
     .SliderOneProgress.swiper-container {
-        max-height: 430px;
         position: relative;
         width: 100%;
     }
-
-    section.secSurprisingly .col2 {
+    section.secSurprisingly .col2{
         width: 100%;
         box-sizing: border-box;
     }
-
     section.secSurprisingly {
         overflow: hidden;
         flex-direction: column;
         align-items: center;
     }
 }
-
 @media only screen and (max-width: 480px) {
+    .rowPicProductDet .col {
+        width: 100% !important;
+    }
+    section.windowProd .col2 a.itemWinProduct {
+        width: 100%;
+    }
     .rowCustom.rowdetailprod .col1 {
         max-width: 320px;
     }
@@ -634,47 +763,40 @@ button.closeFilterMobile {
     }
 
     .SlidPromotion3.swiper-container {
-        max-height: 400px;
     }
 
     .rowCustom.BoxSpecial.squar a.itemBoxSpecial:before {
         padding-top: 95%;
-    }
-
+    }    
     .itemCM {
         flex-wrap: wrap;
     }
-
-        .itemCM .colAvatar {
-            width: 100%;
-            height: 100px;
-        }
-
-            .itemCM .colAvatar:before {
-                position: absolute;
-                left: 0;
-                right: 0;
-                width: 100%;
-                background: #e7bc15;
-                content: '';
-                height: 2px;
-                margin: auto;
-                top: 0;
-                bottom: 0;
-            }
-
+    .itemCM .colAvatar {
+        width: 100%;
+        height: 100px;
+    }
+    .itemCM .colAvatar:before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: #e7bc15;
+        content: '';
+        height: 2px;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+    }
     .tabDetailProduct button.btnTabDP:after {
         top: auto;
         bottom: 0;
         border-color: transparent transparent #0348c0 transparent;
     }
-
     .itemCM .colText {
         position: relative;
         width: 100%;
         text-align: center;
     }
-
     .tabDetailProduct button.btnTabDP {
         width: 100%;
         border: none !important;
@@ -682,26 +804,21 @@ button.closeFilterMobile {
         margin: 10px 0 0;
         border-radius: 5px;
     }
-
     .Departements .itemDep {
         width: 100%;
     }
-
     .ContentListProducts .col1, .ContentListProducts .col2 {
         min-height: 55vw;
     }
-
     .helpDeskFooter .container {
         display: flex;
         flex-direction: column;
     }
-
-        .helpDeskFooter .container .col {
-            width: 100%;
-            flex-direction: column;
-            align-items: center;
-        }
-
+    .helpDeskFooter .container .col {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
     .newsLetterBox .ContentNewsLetter {
         padding: 0 10px 20px;
         display: flex;
@@ -709,22 +826,19 @@ button.closeFilterMobile {
         align-items: center;
         text-align: center;
     }
-
     .newsLetterBox h3.titleNewsletter {
         font-size: 16px;
         margin: 20px 0;
         height: auto;
     }
-
     .newsLetterBox .ContentNewsLetter .FormNewsletter {
         flex-direction: column;
         align-items: center;
     }
-
     .FormNewsletter input {
         width: 100%;
     }
-
+    
     .newsLetterBox .ContentNewsLetter:before {
         position: relative;
         width: 70px;
@@ -732,51 +846,27 @@ button.closeFilterMobile {
         display: block;
         margin: 0 auto;
     }
-
     .rowCustom.promotion .col {
         width: 100%;
     }
-
-    .rowCustom.AllDayDiscount .col:first-child, .rowCustom.AllDayDiscount .col:last-child {
+    .rowCustom.AllDayDiscount .col:first-child , .rowCustom.AllDayDiscount .col:last-child{
         width: 100%;
     }
 }
-
 @media only screen and (max-width: 420px) {
+    
+    .radioColor {
+        width: 100%;
+    }
     .ShareRate {
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
 }
-
 @media only screen and (max-width: 380px) {
+    
 }
-
 @media only screen and (max-width: 280px) {
+
 }
-@media only screen and (max-width: 2000px) {
-    .contentMain.DetailProductContainer .container {
-        max-width: 1480px !important;
-    }
-}
-@media only screen and (max-width: 1500px) {
-    .contentMain.DetailProductContainer .container {
-        max-width: 1280px !important;
-    }
 
-    .buttonsDetailProd {
-        justify-content: space-between;
-    }
-
-    .rowCustom.rowdetailprod .col1 {
-        width: 430px;
-    }
-
-    .rowCustom.rowdetailprod .col2 {
-        width: calc(100% - 450px);
-    }
-
-    .rowCustom.rowdetailprod .col1 .productPics .largPicProd {
-        width: 330px;
-    }
-}

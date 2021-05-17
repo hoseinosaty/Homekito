@@ -27,17 +27,17 @@
 <form id="frmData748">
     @if (Model.DefaultProductCombine != null)
     {
-<input type="hidden" name="ProductCombineId" id="data748" value="@Model.DefaultProductCombine.X_Id" />}
+        <input type="hidden" name="ProductCombineId" id="data748" value="@Model.DefaultProductCombine.X_Id" />}
     <input type="hidden" name="ProductType" id="data748" value="1" />
     <input type="hidden" name="Quantity" class="countProdInput justnumber" value="1" />
 </form>
 @if (productmanual != null)
 {
-<form id="frmDatamanual">
-    <input type="hidden" name="ProductManualId" id="data748" value="@productmanual.M_Id" />
-    <input type="hidden" name="ProductType" id="data748" value="2" />
-    <input type="hidden" name="Quantity" class="countProdInput justnumber" value="1" />
-</form>}
+    <form id="frmDatamanual">
+        <input type="hidden" name="ProductManualId" id="data748" value="@productmanual.M_Id" />
+        <input type="hidden" name="ProductType" id="data748" value="2" />
+        <input type="hidden" name="Quantity" class="countProdInput justnumber" value="1" />
+    </form>}
 <input type="hidden" value="@Model.P_Id" id="ProdId" />
 <div class="contentMain DetailProductContainer">
     <div class="container">
@@ -46,7 +46,7 @@
                 <a href="/" class="breadc fas fa-chevron-left">خانه</a>
                 <a href="/Products/@cat1.PC_Id/@seo.url" class="breadc fas fa-chevron-left">@cat1.PC_Title</a>
                 <a href="/Products/@cat1.PC_Id/@seo.url/@cat2.PC_Id/@seo2.url" class="breadc fas fa-chevron-left">@cat2.PC_Title</a>
-                <a class="breadc fas fa-chevron-left">@Model.P_Title</a>
+
             </div>
             <a href="#" class="feedback fas fa-ellipsis-h itemModal" data-modalname="feedbackBox">بازخورد این کالا</a>
         </div>
@@ -65,9 +65,9 @@
                                         flag = 2;
 
                                     }
-                    <span onclick="Favoriteprod(@Model.P_Id)" id="FavoriteView" class="btnfunc like fal fa-heart @FavState" data-flag="@flag">
-                        <span class="tooltips">افزودن به علاقمندی ها</span>
-                    </span>}
+                                    <span onclick="Favoriteprod(@Model.P_Id)" id="FavoriteView" class="btnfunc like fal fa-heart @FavState" data-flag="@flag">
+                                        <span class="tooltips">افزودن به علاقمندی ها</span>
+                                    </span>}
                                 <span class="btnfunc itemModal share fal fa-share-alt" data-modalName="share">
                                     <span class="tooltips">اشتراک گذاری</span>
                                 </span>
@@ -77,16 +77,16 @@
                             </div>
                             <div class="productPics">
                                 <div class="largPicProd" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@Model.P_Image);">
-                                    <img id="zoom_01" class="zoomLargPic" src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@Model.P_Image"
+                                    <img id="myimage" class="zoomLargPic" src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@Model.P_Image"
                                          data-zoom-image="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@Model.P_Image" />
                                 </div>
                                 <div class="smallPicProd">
                                     @foreach (var item in Model.P_ImgGallery.Split(","))
                                     {
-                        <div class="itemSmallPic itemModal " data-modalName="picsSlideProduct"
-                             style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item);"
-                             data-pic="@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item">
-                        </div>}
+                                        <div class="itemSmallPic itemModal " data-modalName="picsSlideProduct"
+                                             style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item);"
+                                             data-pic="@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item">
+                                        </div>}
                                 </div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
 
                                         @if (energy != null)
                                         {
-                            <label class="qualityTag">@energy.E_Title</label>}
+                                            <label class="qualityTag">@energy.E_Title</label>}
                                     </div>
                                     <div class="rowCustom brandCat">
                                         <span class="itembc">
@@ -133,24 +133,24 @@
                                             {
                                                 if (Model.DefaultProductCombine.X_ColorId == color.Id)
                                                 {
-                            <div class="radioColor">
-                                <input type="radio" id="c@(color.Id)" name="colorProd" checked="checked" value="@color.Id" onchange="ChangePrice(@Model.P_Id)" />
-                                <label for="c@(color.Id)">
-                                    <i class="color"
-                                       style="background-color: @color.ColorCode;"></i>@color.Title
-                                </label>
-                            </div> }
-                        else
-                        {
-    <div class="radioColor">
-        <input type="radio" id="c@(color.Id)" name="colorProd" value="@color.Id" onchange="ChangePrice(@Model.P_Id)" />
-        <label for="c@(color.Id)">
-            <i class="color"
-               style="background-color: @color.ColorCode;"></i>@color.Title
-        </label>
-    </div>}
-}
-}
+                                                    <div class="radioColor">
+                                                        <input type="radio" id="c@(color.Id)" name="colorProd" checked="checked" value="@color.Id" onchange="ChangePrice(@Model.P_Id)" />
+                                                        <label for="c@(color.Id)">
+                                                            <i class="color"
+                                                               style="background-color: @color.ColorCode;"></i>@color.Title
+                                                        </label>
+                                                    </div> }
+                                                else
+                                                {
+                                                    <div class="radioColor">
+                                                        <input type="radio" id="c@(color.Id)" name="colorProd" value="@color.Id" onchange="ChangePrice(@Model.P_Id)" />
+                                                        <label for="c@(color.Id)">
+                                                            <i class="color"
+                                                               style="background-color: @color.ColorCode;"></i>@color.Title
+                                                        </label>
+                                                    </div>}
+                                            }
+                                        }
                                     </div>
                                     <div class="rowCustom flexDir">
                                         <h4>ویژگی های برتر محصول :</h4>
@@ -159,8 +159,8 @@
                                         {
                                             if (item.ShowInDetail)
                                             {
-                            <span class="itemInfo"><label><span style="color:#353535">@item.AttributeTitle:</span> @item.AnswerTitle</label></span>}
-                    }
+                                                <span class="itemInfo"><label><span style="color:#353535">@item.AttributeTitle:</span> @item.AnswerTitle</label></span>}
+                                        }
 
                                         <span class="itemInfo betwen">
                                             <label></label>
@@ -182,11 +182,11 @@
                                     <div class="otherInfoDetailProd">
                                         @if (Model.Gift != null)
                                         {
-                            <a href="" class="giftBox">
-                                <i class="icon"></i>
-                                <label>هدیه خرید: </label>
-                                <span>@Model.Gift.P_Title</span>
-                            </a>}
+                                            <a href="" class="giftBox">
+                                                <i class="icon"></i>
+                                                <label>هدیه خرید: </label>
+                                                <span>@Model.Gift.P_Title</span>
+                                            </a>}
                                         <div class="garanty">
                                             <h4>نوع گارانتی</h4>
                                             @if (Model.Warranties.Count > 0)
@@ -195,19 +195,19 @@
                                                 {
                                                     if (Model.DefaultProductCombine.X_WarrantyId == warranty.Id)
                                                     {
-                                <div class="radioCheckbox">
-                                    <input type="radio" id="g@(warranty.Id)" name="garanty" checked="checked" value="@warranty.Id" onchange="ChangePrice(@Model.P_Id)" />
-                                    <label for="g@(warranty.Id)">@warranty.Title</label>
-                                </div> }
-                            else
-                            {
-        <div class="radioCheckbox">
-            <input type="radio" id="g@(warranty.Id)" name="garanty" value="@warranty.Id" onchange="ChangePrice(@Model.P_Id)" />
-            <label for="g@(warranty.Id)">@warranty.Title</label>
-        </div>}
+                                                        <div class="radioCheckbox">
+                                                            <input type="radio" id="g@(warranty.Id)" name="garanty" checked="checked" value="@warranty.Id" onchange="ChangePrice(@Model.P_Id)" />
+                                                            <label for="g@(warranty.Id)">@warranty.Title</label>
+                                                        </div> }
+                                                    else
+                                                    {
+                                                        <div class="radioCheckbox">
+                                                            <input type="radio" id="g@(warranty.Id)" name="garanty" value="@warranty.Id" onchange="ChangePrice(@Model.P_Id)" />
+                                                            <label for="g@(warranty.Id)">@warranty.Title</label>
+                                                        </div>}
 
-}
-}
+                                                }
+                                            }
                                         </div>
 
                                         @if (Model.DefaultProductCombine != null)
@@ -215,39 +215,39 @@
                                             if (Model.DefaultProductCombine.PriceModel != null && Model.DefaultProductCombine.PriceModel.Price > 0)
                                             {
 
-                            <div id="PriceHolder">
-                                @if (Model.DefaultProductCombine.PriceModel.HasDiscount)
-                                {
-            <div class="PriceBox real">
-                <label>قیمت اصلی :</label>
-                <span id="PriceAjax">@Model.DefaultProductCombine.X_Price.ToString("#,#")<small>تومان</small></span>
-            </div>
-                                    <div class="PriceBox">
-                                        <label>قیمت نهایی :</label>
-                                        <span id="discountAjax">@Model.DefaultProductCombine.PriceModel.DiscountedPrice.ToString("#,#")<small>تومان</small></span>
-                                    </div> }
-                                else
-                                {
-            <div class="PriceBox">
-                <label>قیمت اصلی :</label>
-                <span id="PriceAjax">@Model.DefaultProductCombine.X_Price.ToString("#,#")<small>تومان</small></span>
-            </div>}
-                            </div> }
+                                                <div id="PriceHolder">
+                                                    @if (Model.DefaultProductCombine.PriceModel.HasDiscount)
+                                                    {
+                                                        <div class="PriceBox real">
+                                                            <label>قیمت اصلی :</label>
+                                                            <span id="PriceAjax">@Model.DefaultProductCombine.X_Price.ToString("#,#")<small>تومان</small></span>
+                                                        </div>
+                                                        <div class="PriceBox">
+                                                            <label>قیمت نهایی :</label>
+                                                            <span id="discountAjax">@Model.DefaultProductCombine.PriceModel.DiscountedPrice.ToString("#,#")<small>تومان</small></span>
+                                                        </div> }
+                                                    else
+                                                    {
+                                                        <div class="PriceBox">
+                                                            <label>قیمت اصلی :</label>
+                                                            <span id="PriceAjax">@Model.DefaultProductCombine.X_Price.ToString("#,#")<small>تومان</small></span>
+                                                        </div>}
+                                                </div> }
 
 
-        @if (Model.DefaultProductCombine.X_AvailableCount != 0 && Model.DefaultProductCombine.X_AvailableCount > 0)
-        {
-            //if (isActiveopt)
-            //{
-<button id="btnAddToCart" onclick="AddToBasket()" class="addToCardDetail">
-    <i class="icon"></i><label>
-        افزودن به سبد خرید
-    </label>
-</button> //}
-}
-else
-{
-<button onclick="CountAvalible()" class="btnAvilable">موجود شد به من اطلاع بده</button>}}
+                                            @if (Model.DefaultProductCombine.X_AvailableCount != 0 && Model.DefaultProductCombine.X_AvailableCount > 0)
+                                            {
+                                                //if (isActiveopt)
+                                                //{
+                                                <button id="btnAddToCart" onclick="AddToBasket()" class="addToCardDetail">
+                                                    <i class="icon"></i><label>
+                                                        افزودن به سبد خرید
+                                                    </label>
+                                                </button> //}
+                                            }
+                                            else
+                                            {
+                                                <button onclick="CountAvalible()" class="btnAvilable">موجود شد به من اطلاع بده</button>}}
                                     </div>
                                     <div class="priceIsRight">
                                         <label>آیا قیمت مناسب تری سراغ دارید ؟</label>
@@ -264,57 +264,59 @@ else
         </section>
         @if (Model.CompletelyProducts.Count() > 0)
         {
-<section class="secMostSale">
-    <div class="rowCustom Promotion2">
-        <div class="col">
-            <div class="card">
-                <h3 class="titleCard">
-                    <label>محصولات همراه</label>
-                    <a href="/Products/More/@Model.P_Id/3/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
-                </h3>
-                <div class="contentCard">
-                    <div class="SlidPromotion6 arrowCustom swiper-container">
-                        <div class="swiper-wrapper">
-                            @foreach (var item in Model.CompletelyProducts)
-                            {
-                                var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
-                                var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
-                                var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
-                                var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
-            <div class="swiper-slide">
-                <div class="todayRecomended">
-                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
-                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
-                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
-                             alt="@item.P_Title">
-                    </div>
-                    <h2 class="title">@item.P_Title</h2>
-                    @if (item.IsAvailable)
-                    {
-<div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>}
-                </div>
-            </div>}
+            <section class="secMostSale">
+                <div class="rowCustom Promotion2">
+                    <div class="col">
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>محصولات همراه</label>
+                                <a href="/Products/More/@Model.P_Id/3/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                            </h3>
+                            <div class="contentCard">
+                                <div class="SlidPromotion6 arrowCustom swiper-container">
+                                    <div class="swiper-wrapper">
+                                        @foreach (var item in Model.CompletelyProducts)
+                                        {
+                                            var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                            var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                            var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                            var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                            <div class="swiper-slide">
+                                                <div class="todayRecomended">
+                                                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                             alt="@item.P_Title">
+                                                    </div>
+                                                    <h2 class="title">@item.P_Title</h2>
+                                                    @if (item.IsAvailable)
+                                                    {
+                                                        <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>}
+                                                </div>
+                                            </div>}
+                                    </div>
+                                    <!-- Add Arrows -->
+                                    <div class="NextPrevSlider">
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- Add Arrows -->
-                        <div class="NextPrevSlider">
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>}
+            </section>}
         <div class="contentTabsDP">
             <div class="tabDetailProduct">
-                <button class="btnTabDP active" data-tabdp="ProductIntro"> معرفی محصول</button>
-                <button class="btnTabDP" data-tabdp="Review"> بررسی تخصصی</button>
-                <button class="btnTabDP" data-tabdp="TechnicalSpecifications">مشخصات فنی</button>
-                <button class="btnTabDP" data-tabdp="Manuals">دفترچه راهنمای استفاده</button>
-                <button class="btnTabDP" data-tabdp="UserExperience">ویدئو ها</button>
-                <button class="btnTabDP" data-tabdp="Comments">نظرات کاربران</button>
-                <button class="btnTabDP" data-tabdp="SendComment">ارسال نظر</button>
+                <div class="container">
+                    <button class="btnTabDP active" data-tabdp="ProductIntro"> معرفی محصول</button>
+                    <button class="btnTabDP" data-tabdp="Review"> بررسی تخصصی</button>
+                    <button class="btnTabDP" data-tabdp="TechnicalSpecifications">مشخصات فنی</button>
+                    <button class="btnTabDP" data-tabdp="Manuals">دفترچه راهنمای استفاده</button>
+                    <button class="btnTabDP" data-tabdp="UserExperience">ویدئو ها</button>
+                    <button class="btnTabDP" data-tabdp="Comments">نظرات کاربران</button>
+                    <button class="btnTabDP" data-tabdp="SendComment">ارسال نظر</button>
+                </div>
             </div>
         </div>
         <section class="secVideoDetail contentTabDP active" data-tabdp="ProductIntro">
@@ -348,19 +350,19 @@ else
 
                                     @foreach (var item in exview.OrderBy(x => x.E_Sort).ToList())
                                     {
-                        <div class="accItem">
-                            <h3 class="titleAccItem">@item.E_Title</h3>
-                            <div class="contentAddItem">
-                                @Html.Raw(item.E_Description)
-                                <br>
+                                        <div class="accItem">
+                                            <h3 class="titleAccItem">@item.E_Title</h3>
+                                            <div class="contentAddItem">
+                                                @Html.Raw(item.E_Description)
+                                                <br>
 
-                                @if (item.E_Image != null)
-                                {
-                <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.E_Image" alt="@item.E_Title">}
+                                                @if (item.E_Image != null)
+                                                {
+                                                    <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.E_Image" alt="@item.E_Title">}
 
 
-                            </div>
-                        </div>}
+                                            </div>
+                                        </div>}
                                 </div>
                             </div>
                         </div>
@@ -383,21 +385,20 @@ else
                                 {
                                     if (item.AttributeTitle != "سایر مشخصات")
                                     {
-                    <div class="rowProp">
-                        <div class="col1">@item.AttributeTitle</div>
-                        <div class="col2">@item.AnswerTitle</div>
-                    </div>}
-                else
-                {
-                    lastChld = @"<div style='width:100% !important' class='rowProp'>
-                                                <div class='col1' style='    width: 17.5%;'>" + item.AttributeTitle + @"</div>
-                                                <div class='col2' style='    width: 79%;
-                        text-align: justify;'>" + item.AnswerTitle + @"</div>
-                                                </div>";
-                }
+                                        <div class="rowProp">
+                                            <div class="col1">@item.AttributeTitle</div>
+                                            <div class="col2">@item.AnswerTitle</div>
+                                        </div>}
+                                    else
+                                    {
+                                        lastChld = @"<div class='rowProp rowdetailprod'>
+                                                                                        <div class='col1' >" + item.AttributeTitle + @"</div>
+                                                                                        <div class='col2' style='text-align: justify;'>" + item.AnswerTitle + @"</div>
+                                                                                        </div>";
+                                    }
 
 
-            }
+                                }
                                 @Html.Raw(lastChld)
                             </div>
                         </div>
@@ -440,13 +441,13 @@ else
                             </div>
                             @if (!string.IsNullOrEmpty(Model.P_Video))
                             {
-                <div class="videoProduct">
-                    <div class="h_iframe-aparat_embed_frame">
-                        <span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash/@Model.P_Video/vt/frame"
-                                                                                     allowfullscreen="true" webkitallowfullscreen="true"
-                                                                                     mozallowfullscreen="true" style="pointer-events: auto;"></iframe>
-                    </div>
-                </div>}
+                                <div class="videoProduct">
+                                    <div class="h_iframe-aparat_embed_frame">
+                                        <span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash/@Model.P_Video/vt/frame"
+                                                                                                     allowfullscreen="true" webkitallowfullscreen="true"
+                                                                                                     mozallowfullscreen="true" style="pointer-events: auto;"></iframe>
+                                    </div>
+                                </div>}
                         </div>
                     </div>
                 </div>
@@ -501,97 +502,97 @@ else
         </section>
         @if (Model.RelatedProducts.Count() > 0)
         {
-<section class="secMostSale">
-    <div class="rowCustom Promotion2">
-        <div class="col">
-            <div class="card">
-                <h3 class="titleCard">
-                    <label>محصولات مرتبط</label>
-                    <a href="/Products/More/@Model.P_Id/1/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
-                </h3>
-                <div class="contentCard">
-                    <div class="SlidPromotion6 arrowCustom swiper-container">
-                        <div class="swiper-wrapper">
-                            @foreach (var item in Model.RelatedProducts)
-                            {
-                                var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
-                                var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
-                                var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
-                                var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
-            <div class="swiper-slide">
-                <div class="todayRecomended">
-                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
-                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
-                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
-                             alt="@item.P_Title">
-                    </div>
-                    <h2 class="title">@item.P_Title</h2>
-                    @if (item.IsAvailable)
-                    {
-<div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>}
-                </div>
-            </div>}
+            <section class="secMostSale">
+                <div class="rowCustom Promotion2">
+                    <div class="col">
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>محصولات مرتبط</label>
+                                <a href="/Products/More/@Model.P_Id/1/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                            </h3>
+                            <div class="contentCard">
+                                <div class="SlidPromotion6 arrowCustom swiper-container">
+                                    <div class="swiper-wrapper">
+                                        @foreach (var item in Model.RelatedProducts)
+                                        {
+                                            var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                            var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                            var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                            var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                            <div class="swiper-slide">
+                                                <div class="todayRecomended">
+                                                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                             alt="@item.P_Title">
+                                                    </div>
+                                                    <h2 class="title">@item.P_Title</h2>
+                                                    @if (item.IsAvailable)
+                                                    {
+                                                        <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>}
+                                                </div>
+                                            </div>}
+                                    </div>
+                                    <!-- Add Arrows -->
+                                    <div class="NextPrevSlider">
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- Add Arrows -->
-                        <div class="NextPrevSlider">
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
+
+
+
                     </div>
                 </div>
-            </div>
 
-
-
-        </div>
-    </div>
-
-</section>}
+            </section>}
         @if (Model.SetProducts.Count() > 0)
         {
-<section class="secMostVisit">
-    <div class="rowCustom Promotion2">
-        <div class="col">
+            <section class="secMostVisit">
+                <div class="rowCustom Promotion2">
+                    <div class="col">
 
-            <div class="card">
-                <h3 class="titleCard">
-                    <label>محصولات ست</label>
-                    <a href="/Products/More/@Model.P_Id/2/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
-                </h3>
-                <div class="contentCard">
-                    <div class="SlidPromotion6 arrowCustom swiper-container">
-                        <div class="swiper-wrapper">
-                            @foreach (var item in Model.SetProducts)
-                            {
-                                var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
-                                var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
-                                var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
-                                var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
-            <div class="swiper-slide">
-                <div class="todayRecomended">
-                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
-                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
-                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
-                             alt="@item.P_Title">
-                    </div>
-                    <h2 class="title">@item.P_Title</h2>
-                    @if (item.IsAvailable)
-                    {
-<div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>}
-                </div>
-            </div>}
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>محصولات ست</label>
+                                <a href="/Products/More/@Model.P_Id/2/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                            </h3>
+                            <div class="contentCard">
+                                <div class="SlidPromotion6 arrowCustom swiper-container">
+                                    <div class="swiper-wrapper">
+                                        @foreach (var item in Model.SetProducts)
+                                        {
+                                            var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                            var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                            var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                            var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                            <div class="swiper-slide">
+                                                <div class="todayRecomended">
+                                                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                             alt="@item.P_Title">
+                                                    </div>
+                                                    <h2 class="title">@item.P_Title</h2>
+                                                    @if (item.IsAvailable)
+                                                    {
+                                                        <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>}
+                                                </div>
+                                            </div>}
+                                    </div>
+                                    <!-- Add Arrows -->
+                                    <div class="NextPrevSlider">
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- Add Arrows -->
-                        <div class="NextPrevSlider">
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>}
+            </section>}
     </div>
 
     <div class="modal m400 round10" data-modalName="share">
@@ -616,22 +617,22 @@ else
     </div>
     @if (productmanual != null)
     {
-<div class="modal m400 round10" data-modalName="ManualsModal">
-    <i class="bgModal" onclick="closeModal()"></i>
-    <div class="BoxModal">
-        <i class="close fas fa-times" onclick="closeModal()"></i>
-        <h3 class="titleModal"><label>دفترچه راهنمای محصول</label></h3>
-        <div class="contentModal">
-            <div class="text rowPrice">
-                قصد خرید به قیمت <span class="priceModal">@productmanual.M_Price</span> تومان دارید؟
+        <div class="modal m400 round10" data-modalName="ManualsModal">
+            <i class="bgModal" onclick="closeModal()"></i>
+            <div class="BoxModal">
+                <i class="close fas fa-times" onclick="closeModal()"></i>
+                <h3 class="titleModal"><label>دفترچه راهنمای محصول</label></h3>
+                <div class="contentModal">
+                    <div class="text rowPrice">
+                        قصد خرید به قیمت <span class="priceModal">@productmanual.M_Price</span> تومان دارید؟
+                    </div>
+                    <div class="rowCustom center">
+                        <button id="btnAddToCartmanual" type="button" onclick="AddToBasketManual()" class="submit bg-info">بلی</button>
+                        <button class="btnBack" onclick="closeModal()">بازگشت</button>
+                    </div>
+                </div>
             </div>
-            <div class="rowCustom center">
-                <button id="btnAddToCartmanual" type="button" onclick="AddToBasketManual()" class="submit bg-info">بلی</button>
-                <button class="btnBack" onclick="closeModal()">بازگشت</button>
-            </div>
-        </div>
-    </div>
-</div>}
+        </div>}
     <div class="modal m600" data-modalName="notification">
         <i class="bgModal" onclick="closeModal()"></i>
         <div class="BoxModal">
@@ -640,51 +641,51 @@ else
             <div class="contentModal">
                 @if (Barayand.Common.Services.TokenService.AuthorizeUser(Context.Request) < 1)
                 {
-    <div class="notiticationNotLogin">
-        <span>لطفا ابتدا وارد حساب کاربریتان شوید</span>
-        <div class="rowCustom center">
-            <button class="submit bg-info">ورود</button>
-            <button class="btnBack" onclick="closeModal()">بازگشت</button>
-        </div>
-    </div> }
-else
-{
-    var iduser = Barayand.Common.Services.TokenService.AuthorizeUser(Context.Request);
+                    <div class="notiticationNotLogin">
+                        <span>لطفا ابتدا وارد حساب کاربریتان شوید</span>
+                        <div class="rowCustom center">
+                            <button class="submit bg-info">ورود</button>
+                            <button class="btnBack" onclick="closeModal()">بازگشت</button>
+                        </div>
+                    </div> }
+                else
+                {
+                    var iduser = Barayand.Common.Services.TokenService.AuthorizeUser(Context.Request);
 
-    var user = await _userrepo.GetById(iduser);
+                    var user = await _userrepo.GetById(iduser);
 
-<input type="hidden" id="userid" value="@iduser" />
+                    <input type="hidden" id="userid" value="@iduser" />
 
-                <div class="notificationContent">
-                    <div class="col fal fa-bell"></div>
-                    <div class="col">
-                        <h3 class="titleSugg">پیشنهاد شگفت‌انگیز</h3>
+                    <div class="notificationContent">
+                        <div class="col fal fa-bell"></div>
+                        <div class="col">
+                            <h3 class="titleSugg">پیشنهاد شگفت‌انگیز</h3>
 
-                        <div class="NotifyBy">
-                            <h4>از طریق:</h4>
-                            @if (user.U_Email != null)
-                            {
-            <div class="checkboxRadio">
-                <input type="checkbox" id="EmailOnly" name="notify" />
-                <label for="EmailOnly">
-                    <i class="color" style="background-color: #ddd;"></i>ایمیل به
-                    @user.U_Email
-                </label>
-            </div>}
-                            <div class="checkboxRadio">
-                                <input type="checkbox" id="SmsOnly" name="notify" />
-                                <label for="SmsOnly">
-                                    <i class="color" style="background-color: #ddd;"></i>پیامک به
-                                    @user.U_Phone
-                                </label>
-                            </div>
-                            <div class="rowCustom">
-                                <button type="button" class="submit bg-info" onclick="submitNotify()">ثبت</button>
-                                <button class="btnBack" onclick="closeModal()">بازگشت</button>
+                            <div class="NotifyBy">
+                                <h4>از طریق:</h4>
+                                @if (user.U_Email != null)
+                                {
+                                    <div class="checkboxRadio">
+                                        <input type="checkbox" id="EmailOnly" name="notify" />
+                                        <label for="EmailOnly">
+                                            <i class="color" style="background-color: #ddd;"></i>ایمیل به
+                                            @user.U_Email
+                                        </label>
+                                    </div>}
+                                <div class="checkboxRadio">
+                                    <input type="checkbox" id="SmsOnly" name="notify" />
+                                    <label for="SmsOnly">
+                                        <i class="color" style="background-color: #ddd;"></i>پیامک به
+                                        @user.U_Phone
+                                    </label>
+                                </div>
+                                <div class="rowCustom">
+                                    <button type="button" class="submit bg-info" onclick="submitNotify()">ثبت</button>
+                                    <button class="btnBack" onclick="closeModal()">بازگشت</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>}
+                    </div>}
             </div>
         </div>
     </div>
@@ -699,7 +700,6 @@ else
                         <div class="LargPicLightboxDetailProd"
                              style="background-image: url(/dist/img/product-1.jpg);">
                             <img src="/dist/img/product-1.jpg" id="myimage1" class="picCardDerProd">
-                            @*<div id="myresult1" class="img-zoom-result"></div>*@
                         </div>
                     </div>
                     <div class="col">
@@ -707,9 +707,9 @@ else
                         <div class="rowCustom rowProductPics">
                             @foreach (var item in Model.P_ImgGallery.Split(","))
                             {
-                <div class="itemProductPic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item);"
-                     onclick="changeLargPic('@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item')">
-                </div>}
+                                <div class="itemProductPic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item);"
+                                     onclick="changeLargPic('@Barayand.Common.Services.UtilesService.MediaUrls("ProductImageGallery")@item')">
+                                </div>}
                         </div>
                     </div>
                 </div>
@@ -833,22 +833,110 @@ else
 </div>
 
 @section Scripts{
+    <script src="/dist/js/jquery.elevatezoom.js"></script>
 
-    <script src="/dist/js/jquery.elevatezoom.min.js" type="text/javascript"></script>
     <script>
-        if ($(".zoomLargPic").length) {
-            $("#zoom_01").elevateZoom({ scrollZoom: true, zoomLevel: 0.4 });
+
+        if ($(".itemSmallPic.itemModal[data-modalName]")) {
+            $(".itemSmallPic.itemModal").click(function () {
+                $(".rowPicProductDet .col .LargPicLightboxDetailProd .img-zoom-lens").remove();
+                var pic = $(this).attr("data-pic");
+                $(".rowPicProductDet .col .LargPicLightboxDetailProd img").attr("src", pic);
+                $(".rowPicProductDet .col .LargPicLightboxDetailProd").css({ "background-image": `url(${pic})` });
+
+                if ($(".img-zoom-result").length) {
+                    imageZoom("myimage");
+                }
+                if ($("#myimage1").length) {
+                    imageZoom1("myimage1");
+                }
+            });
         }
-        function changeZoomLargPic(item, elLargPic) {
-            var elLarg = $(`${elLargPic}`), pic = $(item).data("zoom-image"), itemZoom = $(item).attr('class');
-            $(`.${itemZoom}`).removeClass('active')
-            $(item).addClass('active')
-            elLarg.addClass("hide");
-            setTimeout(function () {
-                elLarg.html(`<img id="zoom_01" class="zoomLargPic" src="${pic}" data-zoom-image="${pic}"/>`)
-                elLarg.removeClass("hide");
-                $("#zoom_01").elevateZoom({ scrollZoom: true });
-            }, 500)
+        $(".largPicProd").hover(function () {
+
+        })
+        function zoomRemove() {
+            $(".zoomContainer").remove();
+            $("#otherPicProducts").remove();
+            if ($("#myimage").length) {
+                imageZoom("myimage");
+            }
+        }
+        function changeLargPic(url) {
+
+            $(".rowPicProductDet .col .LargPicLightboxDetailProd .img-zoom-lens").remove();
+            $(".LargPicLightboxDetailProd").css({ "background-image": `url(${url})` });
+            $(".LargPicLightboxDetailProd img").attr("src", url);
+
+            $("#otherPicProducts").remove();
+            if ($("#myimage1").length) {
+                imageZoom1("myimage1");
+            }
+        }
+        function imageZoom(imgID) {
+            $("#otherPicProducts").remove();
+            $(".zoomContainer").remove();
+            $(`#${imgID}`).elevateZoom({
+                easing: true,
+                responsive: true,
+                lensSize: 10,
+                scrollZoom: false,
+                borderSize: 1,
+                borderColour: 'rgb(136,136,136)',
+                tintColour: '#e7e7e7',
+                zoomWindowFadeIn: 50,
+                zoomWindowFadeOut: 50,
+                zoomWindowOffsetx: 30,
+                zoomWindowOffsety: 40,
+                lensFadeIn: 50,
+                lensFadeOut: 50,
+            });
+        }
+
+
+        function imageZoom1(imgID) {
+            $("#otherPicProducts").remove();
+            $(".zoomContainer").remove();
+            $("body").append(`
+                <style id="otherPicProducts">
+                    .zoomContainer {
+                        pointer-events: none !important;
+                    }
+                    .zoomWindowContainer>div, .zoomWindowContainer .zoomWindow {
+                        width: 100% !important;
+                        right: 0 !important;
+                        height: 100% !important;
+                        top: 0 !important;
+                    }
+                </style>
+            `);
+            $(`#${imgID}`).elevateZoom({
+                easing: true,
+                zoomType: "inner",
+                cursor: "crosshair",
+                zoomLevel: 0.9
+            });
+        }
+        if ($("#myimage").length) {
+            imageZoom("myimage");
         }
     </script>
+
+    @*<script src="/dist/js/jquery.elevatezoom.min.js" type="text/javascript"></script>
+        <script>
+            if ($(".zoomLargPic").length) {
+                $("#zoom_01").elevateZoom({ scrollZoom: true, zoomLevel: 0.4 });
+            }
+            function changeZoomLargPic(item, elLargPic) {
+                var elLarg = $(`{elLargPic}`), pic = $(item).data("zoom-image"), itemZoom = $(item).attr('class');
+                $(`.{itemZoom}`).removeClass('active')
+                $(item).addClass('active')
+                elLarg.addClass("hide");
+                setTimeout(function () {
+                    elLarg.html(`<img id="zoom_01" class="zoomLargPic" src="${pic}" data-zoom-image="${pic}"/>`)
+                    elLarg.removeClass("hide");
+                    $("#zoom_01").elevateZoom({ scrollZoom: true });
+                }, 500)
+            }
+        </script>*@
 }

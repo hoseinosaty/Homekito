@@ -1,19 +1,3 @@
-@import 'fonts.css';
-@import 'animate.css';
-@import 'hrb_notify.css';
-@import "jquery.mCustomScrollbar.css";
-@import "loadingSvg.css";
-@import "nouislider.css";
-@import "GalleryPopUp.css";
-@import "navbarNews.css";
-@import "basket.css";
-@import "mapbox.css";
-@import "swiper.css";
-@import "fiveStar.css";
-@import "lightBoxHome.css";
-@import "mapbox.css";
-@import "footer.css";
-
 html, body {
     padding: 0;
     margin: 0;
@@ -55,7 +39,7 @@ input, button, select, textarea {
     background-color: #fff;
     padding: 5px 10px;
     background-color: #efefef;
-    border-radius: 5px;
+    border-radius: 25px;
     border: none;
     outline: none;
     min-height: 40px;
@@ -191,7 +175,7 @@ button.inputFrm:active {
 }
 .container {
     position: relative;
-    width: calc(100% - 80px);
+    width: calc(100% - 40px);
     margin: auto;
     /* max-width: 1200px; */
 }
@@ -215,7 +199,7 @@ button.inputFrm:active {
     box-sizing: border-box;
     margin: 10px 0;
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 .card.Contact {
     padding: 50px;
@@ -313,7 +297,7 @@ button.btnAddAddress:active {
     position: relative;
     width: 100%;
     /* overflow: hidden; */
-    border-radius: 5px;
+    border-radius: 25px;
 }
 .SliderOne .itemSliderOne {
     position: relative;
@@ -323,7 +307,7 @@ button.btnAddAddress:active {
     align-items: center;
     height: 35vw;
     background: no-repeat center / cover;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 a.itemBoxADS {
     position: relative;
@@ -333,7 +317,7 @@ a.itemBoxADS {
     align-items: center;
     height: calc(17.5vw - 5px);
     margin: 0 0 10px 0;
-    border-radius: 5px;
+    border-radius: 25px;
     background: no-repeat center / cover;
     transition: all 0.5s;
 }
@@ -420,7 +404,7 @@ a.itemBoxADS:active {
     width: calc(100% - 20px);
     margin: 10px;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 .NewstNews .itemNewest .pic {
     position: relative;
@@ -549,7 +533,7 @@ a.hoverLink {
 .itemTopNews {
     position: relative;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 25px;
     overflow: hidden;
 }
 .itemTopNews:before {
@@ -611,13 +595,13 @@ a.hoverLink {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 .SliderNewsDetail .SliderOneNews {
     height: auto;
 }
 .SliderOneNews .itemTopNews {
-    border-radius: 0;
+    border-radius: 25px;
 }
 .SliderOneNews .itemTopNews:before {
     padding-top: calc(70% + 3px);
@@ -701,7 +685,7 @@ a.hoverLink {
 }
 .TabBoxNews {
     position: relative;
-    border-radius: 5px;
+    border-radius: 25px;
     box-shadow: 0px 0px 8px -5px #333;
 }
 .showTabsContent {
@@ -736,7 +720,7 @@ a.hoverLink {
     right: 0;
     width: 180px;
     height: 150px;
-    border-radius: 5px;
+    border-radius: 25px;
     background: no-repeat center / cover;
 }
 .QAitemNews h2.title {
@@ -838,7 +822,7 @@ a.hoverLink {
     display: block;
     width: 5px;
     height: 5px;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 
 .CheckProducts {
@@ -922,7 +906,7 @@ a.boxItemHR {
     position: relative;
     height: 17vw;
     background: no-repeat center / cover;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 
 .boxVideoNotify {
@@ -940,7 +924,7 @@ a.boxItemHR {
 .videoSlider .contentVideoSlider {
     position: relative;
     background: #212121;
-    border-radius: 5px;
+    border-radius: 25px;
     padding: 10px;
     overflow: hidden;}
 .videoSlider .titleCard {
@@ -968,7 +952,7 @@ a.boxItemHR {
 a.itemUsefullink {
     position: relative;
     height: 11vw;
-    border-radius: 5px;
+    border-radius: 25px;
     background: no-repeat center / cover;
 }
 .notifications .card {
@@ -988,7 +972,7 @@ a.itemUsefullink {
     justify-content: space-between;
     margin-bottom: 10px;
     transition: all 0.5s;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 .itemNotifyNews:hover {
     background: #343434;
@@ -1002,7 +986,7 @@ a.itemUsefullink {
     position: relative;
     width: 100px;
     height: 80px;
-    border-radius: 5px;
+    border-radius: 25px;
     background: no-repeat center / cover;
 }
 .itemNotifyNews .text {
@@ -1038,7 +1022,7 @@ a.moreSmallNews {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 25px;
     z-index: 100;
 }
 a.moreSmallNews:hover {
@@ -1056,7 +1040,7 @@ a.moreSmallNews:active {
     position: relative;
     width: calc(100% - 80px);
     height: 31.2vw;
-    border-radius: 5px;
+    border-radius: 25px;
     overflow: hidden;
     margin: auto;
     padding: 30px 0 20px;
@@ -1071,7 +1055,7 @@ a.moreSmallNews:active {
     position: relative;
     width: 100%;
     height: 25vw;
-    border-radius: 5px;
+    border-radius: 25px;
     background: no-repeat center / cover;
     cursor: pointer;
 }
@@ -1122,7 +1106,7 @@ a.moreSmallNews:active {
     width: 100%;
     height: 100%;
     border: navajowhite;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 .hoverlight {
     transition: all 0.2s;
@@ -1147,7 +1131,7 @@ a.moreSmallNews:active {
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
-    border-radius: 5px;
+    border-radius: 25px;
     box-shadow: 0px 0px 8px -5px #bbb;
     font-weight: bold;
     flex-wrap: wrap;
@@ -1271,7 +1255,7 @@ header.headerNews {
     width: calc(100% - 20px);
     margin: 10px;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 .itemrelatedNews .pic {
     position: relative;
@@ -1581,7 +1565,7 @@ header.headerNews {
     max-width: 800px;
 }
 .modal.round5 .BoxModal {
-    border-radius: 5px;
+    border-radius: 25px;
 }
 .modal.round10 .BoxModal {
     border-radius: 10px;

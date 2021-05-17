@@ -32,7 +32,7 @@ span.showSidebar {
     background: #fdf026;
     color: #0046bf;
     font-size: 18px;
-    border-radius: 6px;
+    border-radius: 25px;
     cursor: pointer;
 }
 a.Announcements {
@@ -40,7 +40,7 @@ a.Announcements {
     width: 100px;
     height: 35px;
     background: #fdf026;
-    border-radius: 6px;
+    border-radius: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
