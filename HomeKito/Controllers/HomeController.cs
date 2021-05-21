@@ -59,6 +59,7 @@ namespace HomeKito.Controllers
             ViewBag.moveableBox = await _promotionrepo.GetByType(2);
             ViewBag.specialOffer = await _promotionrepo.GetByType(6);
             ViewBag.IsMobile = _detectionService.Device.Type == Device.Mobile;
+            
             var IndexSeo = ((List<DynamicPagesContent>)(await _dynamicrepeo.GetAll()).Data).FirstOrDefault(x => x.PageName == "IndexSeo");
             ViewBag.IndexSeo = JsonConvert.DeserializeObject<SeoIndex>(IndexSeo.PageOtherSetting);
             return View();

@@ -20,10 +20,12 @@ namespace Barayand.Controllers.BaseSetting
     {
         private readonly IMapper _mapper;
         private readonly IPublicMethodRepsoitory<CatAttrRelationModel> _repository;
-        public CatAttributeController(IMapper mapper, IPublicMethodRepsoitory<CatAttrRelationModel> repository)
+        private readonly IPublicMethodRepsoitory<CatAttrRelationModel> _catattrrepo;
+        public CatAttributeController(IMapper mapper, IPublicMethodRepsoitory<CatAttrRelationModel> repository, IPublicMethodRepsoitory<CatAttrRelationModel> catattrrepo)
         {
             this._repository = repository;
             this._mapper = mapper;
+            _catattrrepo = catattrrepo;
         }
         [Route("AddCategoryAttribute")]
         [HttpPost]
@@ -46,6 +48,7 @@ namespace Barayand.Controllers.BaseSetting
             try
             {
                 CatAttrRelationRepository carr = new CatAttrRelationRepository(new DAL.Context.BarayandContext(null));
+                var attrs = ((List<CatAttrRelationModel>)(await _catattrrepo.GetAll()).Data);
                 return new JsonResult(await carr.GetAttrsByCat(catid));
             }
             catch (Exception ex)

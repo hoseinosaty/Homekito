@@ -33,7 +33,7 @@ namespace Barayand.Controllers.BaseSetting
             {
                 var answers =(List<AttrAnswerModel>)((await this._repository.GetAll())).Data;
                 answers = answers.Where(x=>x.X_IsDeleted == false).ToList();
-                var catAnswers = answers.Where(x=>x.X_CatAttrId == rid);
+                var catAnswers = answers.Where(x=>x.X_CatAttrId == rid).ToList();
                 return new JsonResult(ResponseModel.Success(data:catAnswers));
             }
             catch(Exception ex)
