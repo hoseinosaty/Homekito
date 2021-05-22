@@ -55,14 +55,14 @@ namespace Barayand.DAL.Repositories
             {
                 var allproduct = this._context.Product.ToList();
                 var getProdsByCats = this._context.Product.Where(x=>x.P_MainCatId == entity.P_MainCatId && x.P_EndLevelCatId == entity.P_EndLevelCatId).ToList();
-                int Seed = 0;
+                int Seed = 1;
                 if(allproduct.Count() > 0)
                 {
                     Seed = allproduct.Max(x => x.P_Id) + 1;
                 }
                 var c1 = _context.ProductCategory.FirstOrDefault(x=>x.PC_Id == entity.P_MainCatId);
                 var c2 = _context.ProductCategory.FirstOrDefault(x=>x.PC_Id == entity.P_EndLevelCatId);
-                    entity.P_Code ="HKO-"+ c1.PC_PrefixCode +""+ c2.PC_PrefixCode + ""+entity.P_BrandId+"0" +Seed;
+                    entity.P_Code ="HKO-"+Seed;
                     this._context.Product.Add(entity);
                     await this.CommitAllChanges();
                     //Product Atrribute And Answer Registration

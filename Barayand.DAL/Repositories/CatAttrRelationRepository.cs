@@ -87,9 +87,9 @@ namespace Barayand.DAL.Repositories
                 {
                     return ResponseModel.Error("فیلد اختصاصی مورد نظر برای دسته بندی انتخاب شده قبلا تعریف گردیده است");
                 }
-                await this._context.CategoryAttribute.AddAsync(entity: entity);
+                var add = await this._context.CategoryAttribute.AddAsync(entity: entity);
                 await this.CommitAllChanges();
-                var catattrid = this._context.CategoryAttribute.FirstOrDefault(x => x.X_AttrId == entity.X_AttrId && x.X_CatId == entity.X_CatId);
+                var catattrid = add.Entity;
                 if(catattrid == null)
                 {
                     return ResponseModel.ServerInternalError();
@@ -102,14 +102,14 @@ namespace Barayand.DAL.Repositories
                     List<AttrAnswerModel> attrAnswerModels = new List<AttrAnswerModel>();
                     for(int i = 0;i<answers.Length;i++)
                     {
-                        attrAnswerModels.Add(new AttrAnswerModel() {
-                        X_Answer = answers[i],
-                        X_CatAttrId = catattrid.X_Id,
-                        X_Sort = int.Parse(sorts[i]),
-                        X_Status = true
+                       var r =  this._context.AttributeAnswer.Add(new AttrAnswerModel()
+                        {
+                            X_Answer = answers[i],
+                            X_CatAttrId = catattrid.X_Id,
+                            X_Sort = int.Parse(sorts[i]),
+                            X_Status = true
                         });
                     }
-                    await this._context.AttributeAnswer.AddRangeAsync(attrAnswerModels);
                     await this.CommitAllChanges();
                 }
                 return ResponseModel.Success("operation successfully completed");
