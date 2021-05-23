@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion active">
+                        @*<div class="accordion active">
                             <div class="titleAccordion">
                                 <label>برند</label> <span class="fas fa-chevron-down"></span>
                             </div>
@@ -85,7 +85,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="accordion active">
                             <div class="titleAccordion">
                                 <label>برند</label> <span class="fas fa-chevron-down"></span>
@@ -133,13 +133,13 @@
                                          data-min="@ViewBag.Minprice" data-max="@(ViewBag.MaxPrice+1)" data-step="1000">
                                         <div class="box-sliderrange">
                                             <label>تا</label>
-                                            <input type="text" id="input-with-keypress-1" data-type="rageSlider"
+                                            <input type="text" id="input-with-keypress-1" onchange="separateNum(this.value, this)" data-type="rageSlider"
                                                    disabled="">
                                             <span>تومان</span>
                                         </div>
                                         <div class="box-sliderrange">
                                             <label>از</label>
-                                            <input type="text" id="input-with-keypress-0" data-type="rageSlider"
+                                            <input type="text" onchange="separateNum(this.value, this)" id="input-with-keypress-0" data-type="rageSlider"
                                                    disabled="">
                                             <span>تومان</span>
                                         </div>

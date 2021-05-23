@@ -40,9 +40,29 @@ if ($(".showRagePrice").length) {
     });
 
     stepsSlider.noUiSlider.on('update', function (values, handle) {
-        inputs[handle].value = values[handle].split(".")[0];
+        //inputs[handle].value = values[handle].split(".")[0];
+        separateNum(values[handle].split(".")[0], inputs[handle])
         myValues = values;
+
     });
+    function separateNum(value, input) {
+        /* seprate number input 3 number */
+        var nStr = value + '';
+        nStr = nStr.replace(/\,/g, "");
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        if (input !== undefined) {
+
+            input.value = x1 + x2;
+        } else {
+            return x1 + x2;
+        }
+    }
 }
 if ($("input.Repetitiouscheck").length) {
     $("input.Repetitiouscheck").click(function () {
@@ -866,20 +886,20 @@ if ($('.copyPathUrl').length) {
     });
 }
 
-if ($("button.addToCardDetail").length) {
-    $("button.addToCardDetail").click(function () {
-        hrb_notify([
-            'homekito',
-            picProd,
-            'fa-basket',
-            "محصول مورد نظر با موفقیت به سبد خرید اضافه شد",
-            'bottomLeft',
-            'flipInY',
-            'flipOutX',
-            '5'
-        ]);
-    })
-}
+//if ($("button.addToCardDetail").length) {
+//    $("button.addToCardDetail").click(function () {
+//        hrb_notify([
+//            'homekito',
+//            picProd,
+//            'fa-basket',
+//            "محصول مورد نظر با موفقیت به سبد خرید اضافه شد",
+//            'bottomLeft',
+//            'flipInY',
+//            'flipOutX',
+//            '5'
+//        ]);
+//    })
+//}
 
 function addToCompare(t) {
     if ($(t).hasClass("okAdd")) {
@@ -895,7 +915,7 @@ function addToCompare(t) {
         ]);
     } else {
         hrb_notify([
-            'success',
+            'info',
             picProd,
             'fa-exchange',
             "محصول مورد نظر با موفقیت به لیست مقایسه اضافه شد",
@@ -940,17 +960,18 @@ function removeAllFilter() {
     stepsSlider.noUiSlider.set([startrange, endrange]);
 }
 function removeIS(id, $t) {
-    var el1 = $(`#${id}`);
     showLoading()
+    var el1 = $(`#${id}`);
+
+
     if (id == "rageSlider") {
         stepsSlider.noUiSlider.set([startrange, endrange]);
     } else {
         if (el1.prop('checked')) {
-            el1.prop("checked", false);
+            el1.click();
         }
     }
     $t.parent().remove();
-    hideLoading()
 }
 
 

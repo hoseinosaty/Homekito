@@ -66,14 +66,14 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card"  style="--data-open:'مشاهده پاسخ';--data-close:'بستن پاسخ'">
                 <div class="contentCard flexDir">
                     <div class="tabContent" id="tab0" data-tab="0">
 
                     </div>
                     @foreach (var item in Model)
                     {
-                        <div class="tabContent" id="tab@(item.F_Id)" data-tab="@item.F_Id">
+                        <div class="tabContent" id="tab@(item.F_Id)" data-tab="@item.F_Id"  style="--data-open:'مشاهده پاسخ';--data-close:'بستن پاسخ'">
 
                         </div>
                     }

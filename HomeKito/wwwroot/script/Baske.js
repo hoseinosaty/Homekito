@@ -232,11 +232,21 @@ async function TestCheckout(type) {
     });
 }
 async function GetBasketAmount() {
+
+
     await axios.post('/cart/GetTotalBasketAmount', {})
         .then(function (res) {
             var data = res.data;
             if (data.status) {
-                $("#basketAmountHolder").html(data.data.count);
+                var c = parseInt(data.data);
+                if (c > 0) {
+                    $("#basketAmountHolder").html(data.data);
+                    $("#basketAmountHolder").css('display', 'flex');
+                }
+                else {
+                    $("#basketAmountHolder").css('display', 'none');
+                }
+                //$("#basketAmountHolder").html(data.data.count);
             }
         })
         .catch(function (err) { console.dir(err); });

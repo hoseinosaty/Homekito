@@ -310,3 +310,13 @@ a.ItemBrandFooter img {
     font-size: 16px;
     direction: ltr;
 }
+
+.container.footerBrandCenter {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap:wrap;
+}
+.container.footerBrandCenter a.ItemBrandFooter {
+    width: calc((100% / 4) - 20px);
+    margin: 10px;
+}

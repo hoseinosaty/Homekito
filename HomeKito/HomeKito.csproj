@@ -240,6 +240,9 @@
     <None Include="wwwroot\dist\js\hrb_notify.js" />
     <None Include="wwwroot\dist\js\jquery-3.2.1.min.js" />
     <None Include="wwwroot\dist\js\jquery.countdownTimer.min.js" />
+    <None Include="wwwroot\dist\js\jquery.elevateZoom-2.2.3.min.js" />
+    <None Include="wwwroot\dist\js\jquery.elevatezoom.js" />
+    <None Include="wwwroot\dist\js\jquery.elevatezoom.min.js" />
     <None Include="wwwroot\dist\js\jquery.mCustomScrollbar.concat.min.js" />
     <None Include="wwwroot\dist\js\jquery.nicescroll.min.js" />
     <None Include="wwwroot\dist\js\jquery.scrollify.min.js" />
@@ -254,6 +257,7 @@
     <None Include="wwwroot\dist\js\owl.carousel.min1.js" />
     <None Include="wwwroot\dist\js\parallax.js" />
     <None Include="wwwroot\dist\js\script.js" />
+    <None Include="wwwroot\dist\js\script.min.js" />
     <None Include="wwwroot\dist\js\swiper.js" />
     <None Include="wwwroot\dist\js\swiper.js.map" />
     <None Include="wwwroot\dist\js\swiper.min.js" />
