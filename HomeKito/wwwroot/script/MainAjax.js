@@ -2,7 +2,9 @@
 var ordering = null;
 var paging = 1;
 var EF = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+function ex_normalNum(num) {
+    num = num.replace(/,\s?/g, "");
+}
 function Pagination(type, page = 1) {
     paging = page;
     switch (type) {
@@ -23,8 +25,8 @@ function Pagination(type, page = 1) {
 function FilterSearch(filterByPrice = false) {
     showLoading()
     var TitleSerch = $("#ProductTitle").val();
-    var Maxprice = (filterByPrice) ? $("#input-with-keypress-1").val() : 0;
-    var Minprice = (filterByPrice)? $("#input-with-keypress-0").val() : 0;
+    var Maxprice = (filterByPrice) ? ex_normalNum($("#input-with-keypress-1").val()) : 0;
+    var Minprice = (filterByPrice) ? ex_normalNum($("#input-with-keypress-0").val()) : 0;
     var immediat = $("input[name='immediatesending']:checked").length > 0;
     var Avilable = $("input[name='isAvilable']:checked").length > 0;
     paging = (filterByPrice) ? 1 : paging;
@@ -512,10 +514,10 @@ function addTocompare(Id, reload = false) {
             if (res.status) {
                 closeModal();
                 hrb_notify([
-                    'success',
+                    'homekito',
                     picProd,
                     'fa-comments-alt-dollar',
-                    "اطلاعات با موفقیت ثبت شد",
+                    "محصول مورد نظر با موفقیت به لیست مقایسه اضافه شد",
                     'bottomLeft',
                     'flipInY',
                     'flipOutX',
