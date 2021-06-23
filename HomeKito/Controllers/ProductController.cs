@@ -67,7 +67,16 @@ namespace HomeKito.Controllers
         {
             try
             {
+                var refUrl = Request.Headers["Referer"].ToString(); 
                 var ProdCatList = (List<ProductCategoryModel>)(await _categories.GetAll()).Data;
+                if(refUrl.Contains("offer") || refUrl.Contains("Offer"))
+                {
+                    ViewBag.FilterOffered = true;
+                }
+                else
+                {
+                    ViewBag.FilterOffered = false;
+                }
                 ViewBag.ProductCategory = ProdCatList.Where(x => x.PC_ParentId == cat1 && x.PC_Status && !x.PC_IsDeleted).ToList();
                 var Catlvl1 = await _categories.GetById(cat1);
                 if (Catlvl1 != null)
@@ -111,7 +120,7 @@ namespace HomeKito.Controllers
                     AllProduct = AllProduct.Where(x => x.P_EndLevelCatId == cat2).ToList();
                 }
                 ViewBag.Minprice = 0;
-                ViewBag.MaxPrice = 0;
+                ViewBag.MaxPrice = 10;
                 #region GetPrice
                 if (AllProduct.Where(x => x.IsAvailable).Count() > 0)
                 {
@@ -231,6 +240,10 @@ namespace HomeKito.Controllers
                 paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                 ViewBag.paging = paging;
                 #endregion
+                if(ViewBag.Minprice == ViewBag.MaxPrice)
+                {
+                    ViewBag.MaxPrice = ViewBag.MaxPrice + 100; 
+                }
                 var items = AllProduct.Skip((paging.CurrentPage - 1) * paging.PageSize).Take(paging.PageSize).ToList();
                 if (isajax)
                 {
@@ -490,7 +503,6 @@ namespace HomeKito.Controllers
                 ViewBag.MaxPrice = items.Where(x => x.IsAvailable).Max(x => x.DefaultProductCombine.CalculatedPrice());
             }
             #endregion
-
             #region Brand
             var BrandGroups = items.GroupBy(x => x.P_BrandId)?.Select(x => x.FirstOrDefault().P_BrandId).ToList();
             ViewBag.Brands = ((List<BrandModel>)(await _brandrepo.GetAll()).Data).Where(x => BrandGroups.Contains(x.B_Id)).ToList();
@@ -718,6 +730,23 @@ namespace HomeKito.Controllers
             {
                 ViewBag.pagetype = 5;
                 var AllProduct = ((List<ProductModel>)(await _productrepo.GetAll()).Data).Where(x => x.P_Status).ToList();
+                AllProduct = AllProduct.Where(x => x.DefaultProductCombine != null && x.DefaultProductCombine.PriceModel != null && x.DefaultProductCombine.PriceModel.Avl > 0 && x.DefaultProductCombine.PriceModel.HasDiscount).ToList();
+                var AllCategories = ((List<ProductCategoryModel>)(await _categories.GetAll()).Data).ToList();
+                if (catid != null && catid != 0)
+                {
+                    var catSelected = AllCategories.FirstOrDefault(x=>x.PC_Id == catid);
+                    if(catSelected != null)
+                    {
+                        if(catSelected.PC_ParentId == null || catSelected.PC_ParentId == 0)
+                        {
+                            AllProduct = AllProduct.Where(x=>x.P_MainCatId == catid).ToList();
+                        }
+                        else
+                        {
+                            AllProduct = AllProduct.Where(x=>x.P_EndLevelCatId == catid).ToList();
+                        }
+                    }
+                }
                 #region GetPrice
                 if (AllProduct.Where(x => x.IsAvailable).Count() > 0)
                 {
@@ -729,6 +758,10 @@ namespace HomeKito.Controllers
                 var BrandGroups = AllProduct.GroupBy(x => x.P_BrandId)?.Select(x => x.FirstOrDefault().P_BrandId).ToList();
                 ViewBag.Brands = ((List<BrandModel>)(await _brandrepo.GetAll()).Data).Where(x => BrandGroups.Contains(x.B_Id)).ToList();
                 #endregion
+                var Catlvl2 = AllProduct.GroupBy(x => x.P_EndLevelCatId)?.Select(x => x.FirstOrDefault().P_EndLevelCatId).ToList();
+                var Catlvl1 = AllProduct.GroupBy(x => x.P_MainCatId)?.Select(x => x.FirstOrDefault().P_MainCatId).ToList();
+                ViewBag.Catlvl2 = AllCategories.Where(x => Catlvl2.Contains(x.PC_Id)).ToList();
+                ViewBag.Catlvl1 = AllCategories.Where(x => Catlvl1.Contains(x.PC_Id)).ToList();
                 #region Filter
                 if (!string.IsNullOrEmpty(TitleSerch))
                 {

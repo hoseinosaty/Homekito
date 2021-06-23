@@ -28,6 +28,44 @@
                 </div>
             </div>
         </section>
+        @{
+            string[] Images = Model.S_ImageGallery.Split(",");
+        }
+        @if (Images.Count() > 0)
+        {
+            <section class="carouselPopup">
+                <div class="card">
+                    <h3 class="titleCard">
+                        <label>گالری تصاویر</label>
+                    </h3>
+                    <div class="contentCard ">
+                        <div class="slider5Item swiper-container">
+                            <div class="swiper-wrapper">
+                                @foreach (var item in Images)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="ItemOtherPic">
+                                            <a href="javascript:void(0)" class="contentItemOtherPic" data-pic="@Barayand.Common.Services.UtilesService.MediaUrls("Content")@item"
+                                               onclick="javascript:lightBoxPic(event,this);"
+                                               style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Content")@item)"></a>
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- Add Pagination -->
+                            <div class="swiper-pagination"></div>
+                            <!-- Add Arrows -->
+                            <div class="NextPrevSlider">
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+
         <div class="modal m400 round10" data-modalName="share">
             <i class="bgModal" onclick="closeModal()"></i>
             <div class="BoxModal">

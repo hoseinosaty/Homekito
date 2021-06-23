@@ -178,25 +178,26 @@ function submitNotify() {
 }
 
 function CountAvalible() {
-    var model = {};
-    model.A_ProductId = $("#ProdId").val();
-    model.A_UserId = $("#userid").val();
-    model.A_Type = 2;
-    axios.post("/api/cpanel/basesetting/AmzingRequestes/AddAmzingRequest", model).then(function (res) {
-        hrb_notify([
-            'success',
-            picProd,
-            'fa-comments-alt-dollar',
-            "اطلاعات با موفقیت ثبت شد",
-            'bottomLeft',
-            'flipInY',
-            'flipOutX',
-            '5'
-        ]);
-    }).catch(function (err) {
+    $("div[data-modalName='notification']").addClass("show active");
+    //var model = {};
+    //model.A_ProductId = $("#ProdId").val();
+    //model.A_UserId = $("#userid").val();
+    //model.A_Type = 2;
+    //axios.post("/api/cpanel/basesetting/AmzingRequestes/AddAmzingRequest", model).then(function (res) {
+    //    hrb_notify([
+    //        'success',
+    //        picProd,
+    //        'fa-comments-alt-dollar',
+    //        "اطلاعات با موفقیت ثبت شد",
+    //        'bottomLeft',
+    //        'flipInY',
+    //        'flipOutX',
+    //        '5'
+    //    ]);
+    //}).catch(function (err) {
 
-        console.error("");
-    })
+    //    console.error("");
+    //})
 }
 //************ End Product ***************
 $("select").on('change', function () {
@@ -502,7 +503,25 @@ function GalleryCatPaging(Page = 1) {
 
 //***********  Compare **************
 
-function addTocompare(Id, reload = false) {
+function addTocompare(Id, el = null, checkbox = false) {
+    if (checkbox) {
+        console.warn(el);
+        var checked = $(`input#compare${Id}:checked`).length > 0;
+        if (checked == true) {
+            ExecuteCompare(Id);
+
+        }
+        else {
+            removeCompare(Id,true);
+        }
+    }
+    else {
+        ExecuteCompare(Id,true);
+    }
+    
+
+}
+function ExecuteCompare(Id, reload = false) {
     $.ajax({
         url: '/AddToCompare/' + Id,
         data: {
@@ -523,13 +542,46 @@ function addTocompare(Id, reload = false) {
                     'flipOutX',
                     '5'
                 ]);
-                if (reload)
-                    window.location.reload();
+                if (reload) {
+                    window.location.href = window.location.href;
+                }
+                GetCompareCount();
             } else {
                 ErrorDialog(res.msg);
             }
         },
         error: function (a, b, c) { console.error(a, b, c); }
+    });
+}
+function removeCompare(t, id, inProductList = false) {
+    var $t = $(t).parent();
+    $.ajax({
+        url: '/DeleteCompare/' + id + '',
+        success: function (result) {
+            if (inProductList == false) {
+                var t = "#parentcompare" + id;
+                debugger
+                setTimeout(function () {
+                    $(t).remove()
+                }, 1000)
+            }
+            else {
+                closeModal();
+                hrb_notify([
+                    'homekito',
+                    picProd,
+                    'fa-comments-alt-dollar',
+                    "محصول مورد نظر با موفقیت از لیست مقایسه حذف شد",
+                    'bottomLeft',
+                    'flipInY',
+                    'flipOutX',
+                    '5'
+                ]);
+               
+            }
+            GetCompareCount();
+
+        }
     });
 
 }

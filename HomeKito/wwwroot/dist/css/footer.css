@@ -18,19 +18,22 @@ footer {
     justify-content: center;
     align-items: center;
 }
-.newsLetterBox .ContentNewsLetter {
-    position: relative;
-    padding-right: 70px;
-}
-.newsLetterBox  .ContentNewsLetter:before {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 70px;
-    height: 100%;
-    content: '';
-    background: url(../img/iconNewsLetter.png) no-repeat bottom center / 50px;
-}
+    .newsLetterBox .ContentNewsLetter {
+        position: relative;
+        padding-right: 70px;
+        width: 60%;
+        min-width: 280px;
+    }
+        .newsLetterBox .ContentNewsLetter:before {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 70px;
+            height: 100%;
+            content: '';
+            background: var(--bgIcon);
+            background-position: center;
+        }
 .newsLetterBox  h3.titleNewsletter {
     margin: 0;
     height: 30px;
@@ -188,18 +191,18 @@ a.linkMoreBrand:before {
     padding: 5px 0;
     flex-wrap: wrap;
 }
-.socialIcons a.socicon {
-    position: relative;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    color: #515152;
-    cursor: pointer;
-    transition: all 0.1s;
-}
+    .socialIcons a.socicon {
+        position: relative;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        color: #515152;
+        cursor: pointer;
+        transition: all .1s;
+    }
 .socialIcons a.socicon:hover {
     transform: scale(1.2);
 }
@@ -288,9 +291,9 @@ a.ItemBrandFooter {
     display: flex;
     height: 100px;
 }
-a.ItemBrandFooter:hover {
-    filter: brightness(0);
-}
+    a.ItemBrandFooter:hover {
+        transform: scale(0.9);
+    }
 a.ItemBrandFooter img {
     position: absolute;
     width: 100%;

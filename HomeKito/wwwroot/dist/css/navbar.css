@@ -1064,3 +1064,6 @@ span.titleSidebar {
         right: 15px;
     }
 }
+.SubCategoryInNavbar .MegaMenuContent .itemCatNav i.icon {
+    background-size: 110% !important;
+}

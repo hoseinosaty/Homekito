@@ -24,10 +24,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home Kito</title>
     <link rel="stylesheet" href="/dist/css/styleNews.css">
     <link rel="stylesheet" href="/dist/css/responsiveNews.css">
-    <title>ومجله</title>
+    <title>مجله | هومکیتو</title>
     <meta name="keywords" content="ومجله">
     <meta name="description" content="ومجله">
     <meta property='og:image' content="ومجله" />
@@ -37,7 +36,7 @@
 <body class="news">
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logoRight"></a>
+            <a href="/" class="logoRight"></a>
             <div class="MenuTop">
                 <div class="Menu">
                     @foreach (var item in AllCategory.Take(AllCategory.Count / 2))
@@ -85,14 +84,14 @@
                                     {
                                         <div class="swiper-slide">
                                             <div class="itemTopNews">
-                                                <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="hoverlink"></a>
+                                                <a href="/Blog/Detail/@item.N_Id/@item.N_Url" class="hoverlink"></a>
                                                 <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
                                                     <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
                                                 </div>
                                                 <div class="text">
                                                     <i class="bg" style="background-color:#0046bf;"></i>
                                                     <span>
-                                                        @item.N_Title
+                                                        @Html.Raw(item.N_Title)
                                                     </span>
                                                 </div>
                                             </div>
@@ -116,14 +115,14 @@
                         <div class="itemnewstop" data-itme="@i">
                             <div class="thisContent">
                                 <div class="itemTopNews">
-                                    <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="hoverlink"></a>
+                                    <a href="/Blog/Detail/@item.N_Id/@item.N_Url" class="hoverlink"></a>
                                     <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
-                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
+                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="@item.N_Title">
                                     </div>
                                     <div class="text">
                                         <i class="bg" style="background-color:#f46e71;"></i>
                                         <span>
-                                            @item.N_Title
+                                            @Html.Raw(item.N_Title)
                                         </span>
                                     </div>
                                 </div>
@@ -150,13 +149,13 @@
                             {
                                 <div class="swiper-slide">
                                     <div class="itemNewest">
-                                        <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="hoverLink"></a>
+                                        <a href="/Blog/Detail/@item.N_Id/@item.N_Url" class="hoverLink"></a>
                                         <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);">
                                             <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image"
                                                  alt="@item.N_Title">
                                         </div>
                                         <div class="text">
-                                            @item.N_Title
+                                            @Html.Raw(item.N_Title)
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +185,8 @@
                                     {
                                         foreach (var item in AllProdCategory.Where(x => x.PC_ParentId == 0))
                                         {
-                                            <a href="#" class="itemCheckProd">
+                                            var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.PC_Seo);
+                                            <a href="/Products/@item.PC_Id/@seo.url" class="itemCheckProd">
                                                 <i class="icon" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductCatMainImage")@item.PC_Logo);"></i>
                                                 <label for="title">@item.PC_Title</label>
                                             </a>
@@ -217,13 +217,13 @@
                                                         <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
                                                     </div>
                                                     <h2 class="title">
-                                                        @item.N_Title
+                                                        @Html.Raw(item.N_Title)
                                                         <span class="dateTime fas fa-calendar-alt">@item.Created_At</span>
                                                     </h2>
                                                     <div class="text">
-                                                        @item.N_Summary
+                                                        @Html.Raw(item.N_Summary)
                                                     </div>
-                                                    <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="showMoreNews">
+                                                    <a href="/Blog/Detail/@item.N_Id/@item.N_Url" class="showMoreNews">
                                                         <span>مشاهده</span>
                                                     </a>
                                                 </div>
@@ -243,13 +243,13 @@
                                                             <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
                                                         </div>
                                                         <h2 class="title">
-                                                            @item.N_Title
+                                                            @Html.Raw(item.N_Title)
                                                             <span class="dateTime fas fa-calendar-alt">@item.Created_At</span>
                                                         </h2>
                                                         <div class="text">
-                                                            @item.N_Summary
+                                                            @Html.Raw(item.N_Summary)
                                                         </div>
-                                                        <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="showMoreNews">
+                                                        <a href="/Blog/Detail/@item.N_Id/@item.N_Url" class="showMoreNews">
                                                             <span>مشاهده</span>
                                                         </a>
                                                     </div>
@@ -301,7 +301,7 @@
                                             <div class="swiper-slide">
                                                 <div class="itemVideoSlide">
                                                     <div class="pic itemModal" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image);" data-aparat="6lP7b" data-modalName="videoaprat"></div>
-                                                    <label>@item.N_Title</label>
+                                                    <label>@Html.Raw(item.N_Title)</label>
                                                 </div>
                                             </div>
                                         }
@@ -345,7 +345,7 @@
                                                     <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Notice")@item.N_Image" alt="">
                                                 </div>
                                                 <div class="text">
-                                                    @item.N_Title
+                                                    @Html.Raw(item.N_Title)
                                                 </div>
                                             </div>
                                         }

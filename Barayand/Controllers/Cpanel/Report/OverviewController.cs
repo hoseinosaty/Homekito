@@ -25,9 +25,9 @@ namespace Barayand.Controllers.Cpanel.Report
             {
                 return new JsonResult(await _reportservice.LastOrders());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new JsonResult(ResponseModel.ServerInternalError(data:ex));
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
         [Route("SaleByCategory")]
@@ -37,9 +37,9 @@ namespace Barayand.Controllers.Cpanel.Report
             {
                 return new JsonResult(await _reportservice.SaleByCategories());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new JsonResult(ResponseModel.ServerInternalError(data:ex));
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
         [Route("TodayIncome")]
@@ -49,9 +49,33 @@ namespace Barayand.Controllers.Cpanel.Report
             {
                 return new JsonResult(await _reportservice.TodayIncome());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new JsonResult(ResponseModel.ServerInternalError(data:ex));
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
+            }
+        }
+        [Route("LastSixMonthIncome")]
+        public async Task<IActionResult> LastSixMonthIncome()
+        {
+            try
+            {
+                return new JsonResult(await _reportservice.LastSixMonthIncome());
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
+            }
+        }
+        [Route("TodayCustomers")]
+        public async Task<IActionResult> TodayCustomers()
+        {
+            try
+            {
+                return new JsonResult(await _reportservice.TodayNewCustomers());
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
         [Route("TodaySale")]
@@ -61,9 +85,9 @@ namespace Barayand.Controllers.Cpanel.Report
             {
                 return new JsonResult(await _reportservice.TodaySale());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new JsonResult(ResponseModel.ServerInternalError(data:ex));
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
     }

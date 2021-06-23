@@ -35,7 +35,7 @@ namespace HomeKito.Controllers
                     #region Paging
                     Paging paging = new Paging();
                     paging.TotalCount = brand.Count();
-                    paging.PageSize = 16;
+                    paging.PageSize = 24;
                     paging.CurrentPage = page;
                     paging.TotalPages = (int)Math.Ceiling(paging.TotalCount / (double)paging.PageSize);
                     ViewBag.paging = paging;
@@ -112,6 +112,10 @@ namespace HomeKito.Controllers
                         ViewBag.Minprice = AllProduct.Where(x => x.IsAvailable).Min(x => x.DefaultProductCombine.CalculatedPrice());
                         ViewBag.MaxPrice = AllProduct.Where(x => x.IsAvailable).Max(x => x.DefaultProductCombine.CalculatedPrice());
                     
+                    }
+                    if (ViewBag.Minprice == ViewBag.MaxPrice)
+                    {
+                        ViewBag.MaxPrice = ViewBag.MaxPrice + 100;
                     }
                     #endregion
 

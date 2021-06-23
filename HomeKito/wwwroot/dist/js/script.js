@@ -16,17 +16,16 @@ if ($(".accordion .titleAccordion").length) {
 }
 if ($(".showRagePrice").length) {
     var el = $(".showRagePrice");
-    var startrange = (el.data("start").length) ? parseInt(el.data("start")) : 0;
-    var endrange = (el.data("end").length) ? parseInt(el.data("end")) : 1000000;
-    var steprange = (el.data("step").length) ? parseInt(el.data("step")) : 100;
-    var minrange = (el.data("min").length) ? parseInt(el.data("min")) : 0;
-    var maxrange = (parseInt(el.data("rtl")) > 1) ? parseInt(el.data("max")) : 1000000
-    var dir = ($(".showRagePrice").data("rtl").length) ? rtl : "ltr"
+    var startrange = (el.attr("data-start").length) ? parseInt(el.attr("data-start")) : 0;
+    var endrange = (parseInt(el.attr("data-end")) > 0) ? parseInt(el.attr("data-end")) : 200000;
+    var steprange = (parseInt(el.attr("data-step")) > 0) ? parseInt(el.attr("data-step")) : 100;
+    var minrange = (parseInt(el.attr("data-min")) > 0) ? parseInt(el.attr("data-min")) : 0;
+    var maxrange = (parseInt(el.attr("data-max")) > 0) ? parseInt(el.attr("data-max")) : 300000;
+    var dir = (parseInt($(".showRagePrice").attr("data-rtl")) == 1) ? 'rtl' : 'ltr';
     var stepsSlider = document.getElementById('steps-slider');
     var input0 = document.getElementById('input-with-keypress-0');
     var input1 = document.getElementById('input-with-keypress-1');
     var inputs = [input0, input1];
-
     noUiSlider.create(stepsSlider, {
         // tooltips: true,
         start: [startrange, endrange],
@@ -40,6 +39,7 @@ if ($(".showRagePrice").length) {
     });
 
     stepsSlider.noUiSlider.on('update', function (values, handle) {
+        console.log(values[handle].split(".")[0])
         //inputs[handle].value = values[handle].split(".")[0];
         separateNum(values[handle].split(".")[0], inputs[handle])
         myValues = values;
@@ -958,6 +958,7 @@ function removeAllFilter() {
         $(this).prop("checked", false);
     });
     stepsSlider.noUiSlider.set([startrange, endrange]);
+    var to = window.setTimeout(function () { FilterSearch(); window.clearTimeout(to); }, 1000);
 }
 function removeIS(id, $t) {
     showLoading()
@@ -1150,19 +1151,7 @@ if ($(".resultSearchCompare").length) {
 }
 
 
-function removeCompare(id) {
-    $.ajax({
-        url: 'DeleteCompare/' + id + '',
-        success: function (result) {
-            $("#parentcompare").addClass('zoomOutUp');
-            debugger
-            setTimeout(function () {
-                $("#parentcompare").remove()
-            }, 1000)
-        }
-    });
 
-}
 if ($("button[data-tab]").length) {
     $("button[data-tab]").click(function () {
         var data = $(this).attr("data-tab");

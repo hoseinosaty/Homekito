@@ -23,7 +23,9 @@ namespace HomeKito.Controllers
         [Route("GetSearch/{id}")]
         public async Task<IActionResult> GetSearch(string id)
         {
-            var AllProduct = ((List<ProductModel>)(await _productrepo.GetAll()).Data).Where(x => x.P_Status && x.P_Title.Contains(id,StringComparison.InvariantCultureIgnoreCase) || (x.P_Description!= null && x.P_Description.Contains(id))).Take(8).ToList();
+            string[] QueryStrings = id.Split(" ");
+            var AllProduct = ((List<ProductModel>)(await _productrepo.GetAll()).Data).Where(x => x.P_Status && QueryStrings.Any(y => x.P_Title.Contains(y,StringComparison.InvariantCultureIgnoreCase) || x.P_Description.Contains(y,StringComparison.InvariantCultureIgnoreCase) || (x.P_BrandTitle != null && x.P_BrandTitle.Contains(y, StringComparison.InvariantCultureIgnoreCase)))).Take(8).ToList();
+
             ViewBag.search = id;
             if (AllProduct.Count() < 1)
             {
@@ -48,8 +50,13 @@ namespace HomeKito.Controllers
 
          )
         {
-
-           var AllProduct = ((List<ProductModel>)(await _productrepo.GetAll()).Data).Where(x => x.P_Status&&x.P_Title.Contains(q)|| x.P_Description.Contains(q)).ToList();
+            var AllProduct = ((List<ProductModel>)(await _productrepo.GetAll()).Data).ToList();
+            string[] QueryStrings = q.Split(" ");
+            if(QueryStrings.Count() > 0)
+            {
+                 AllProduct = AllProduct.Where(x => x.P_Status && QueryStrings.Any(y => x.P_Title.Contains(y, StringComparison.InvariantCultureIgnoreCase) || x.P_Description.Contains(y, StringComparison.InvariantCultureIgnoreCase) || (x.P_BrandTitle != null && x.P_BrandTitle.Contains(y, StringComparison.InvariantCultureIgnoreCase)))).Take(8).ToList();
+            }
+           
 
             if (Catid > 0)
             {

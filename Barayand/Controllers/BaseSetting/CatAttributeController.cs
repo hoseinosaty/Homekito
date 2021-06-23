@@ -20,12 +20,12 @@ namespace Barayand.Controllers.BaseSetting
     {
         private readonly IMapper _mapper;
         private readonly IPublicMethodRepsoitory<CatAttrRelationModel> _repository;
-        private readonly IPublicMethodRepsoitory<CatAttrRelationModel> _catattrrepo;
-        public CatAttributeController(IMapper mapper, IPublicMethodRepsoitory<CatAttrRelationModel> repository, IPublicMethodRepsoitory<CatAttrRelationModel> catattrrepo)
+        private readonly IPublicMethodRepsoitory<AttributeModel> _attrs;
+        public CatAttributeController(IMapper mapper, IPublicMethodRepsoitory<CatAttrRelationModel> repository, IPublicMethodRepsoitory<AttributeModel> attrs)
         {
             this._repository = repository;
             this._mapper = mapper;
-            _catattrrepo = catattrrepo;
+            _attrs = attrs;
         }
         [Route("AddCategoryAttribute")]
         [HttpPost]
@@ -48,12 +48,29 @@ namespace Barayand.Controllers.BaseSetting
             try
             {
                 CatAttrRelationRepository carr = new CatAttrRelationRepository(new DAL.Context.BarayandContext(null));
-                var attrs = ((List<CatAttrRelationModel>)(await _catattrrepo.GetAll()).Data);
-                return new JsonResult(await carr.GetAttrsByCat(catid));
+                var catattrs = ((List<CatAttrRelationModel>)(await _repository.GetAll()).Data).Where(x=>x.X_IsDeleted == false && x.X_Status && x.X_CatId == catid).ToList();
+                List<AttributeModel> data = ((List<AttributeModel>)(await _attrs.GetAll()).Data);
+                List<object> Data = new List<object>();
+
+                foreach (var item in catattrs)
+                {
+                    var attribute = data.FirstOrDefault(x => x.A_Id == item.X_AttrId);
+                    if(attribute != null)
+                    {
+                        Data.Add(new
+                        {
+                            A_Title = attribute.A_Title,
+                            A_Id = attribute.A_Id,
+                            A_Status = item.X_Status,
+                            relationId = item.X_Id,
+                        });
+                    }
+                }
+                return new JsonResult(ResponseModel.Success(data:Data));
             }
             catch (Exception ex)
             {
-                return null;
+                return new JsonResult(ResponseModel.ServerInternalError(data:ex));
             }
         }
         [Route("UpdateCatAttribute")]
@@ -67,7 +84,7 @@ namespace Barayand.Controllers.BaseSetting
             }
             catch (Exception ex)
             {
-                return null;
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
         [Route("DeleteCatAttribute")]
@@ -85,7 +102,7 @@ namespace Barayand.Controllers.BaseSetting
             }
             catch (Exception ex)
             {
-                return null;
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
         [Route("ActiveCatAttribute")]
@@ -103,7 +120,7 @@ namespace Barayand.Controllers.BaseSetting
             }
             catch (Exception ex)
             {
-                return null;
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
         [Route("DisableCatAttribute")]
@@ -121,7 +138,7 @@ namespace Barayand.Controllers.BaseSetting
             }
             catch (Exception ex)
             {
-                return null;
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
     }

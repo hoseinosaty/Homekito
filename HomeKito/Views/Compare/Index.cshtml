@@ -16,59 +16,74 @@
                 <a href="/" class="breadc fas fa-chevron-left">خانه</a>
                 <a href="/Compare" class="breadc fas fa-chevron-left">مقایسه محصول</a>
             </div>
-            <a href="/Compare">Compare</a>
         </div>
 
         <section class="CompareContent">
             @foreach (var item in Model)
             {
                 var productAttr = (List<Barayand.OutModels.Miscellaneous.AttributeStructure>)item.P_AttributeStructures;
-
-                <div id="parentcompare" class="ItemCompare animated">
-                    <i class="ItemCompare__remove fas fa-times" onclick="removeCompare(@item.P_Id)"></i>
+                var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.P_Seo);
+                if (seo == null)
+                {
+                    seo.url = item.P_Title;
+                }
+                <div id="parentcompare@(item.P_Id)" class="ItemCompare animated">
+                    <i class="ItemCompare__remove fas fa-times" onclick="removeCompare(this,@item.P_Id)"></i>
                     <div class="ItemCompare__top">
                         <div class="ItemCompate__top__Pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);"></div>
                         <h4 class="ItemCompare__top__title">@item.P_Title</h4>
-                        @if (item.IsAvailable)
+                        @if (item.DefaultProductCombine != null && item.DefaultProductCombine.PriceModel != null && item.DefaultProductCombine.PriceModel.Price > 0 && item.DefaultProductCombine.PriceModel.Avl > 0)
                         {
-                            <span class="ItemCompare__top__price">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") تومان</span>
+                            if (item.DefaultProductCombine.PriceModel.HasDiscount)
+                            {
+                                <span class="ItemCompare__top__price">@item.DefaultProductCombine.PriceModel.DiscountedPrice.ToString("#,#") تومان</span>
+                            }
+                            else
+                            {
+                                <span class="ItemCompare__top__price">@item.DefaultProductCombine.PriceModel.Price.ToString("#,#") تومان</span>
+                            }
+
+                            <a href="/Product/@item.P_Id/@item.P_Code/@seo.url" class="ItemCompare__btnDetailprod">مشاهده و خرید محصول</a>
                         }
-                        <a href="#" class="ItemCompare__btnDetailprod">مشاهده و خرید محصول</a>
+                        else
+                        {
+                            <span class="ItemCompare__top__price" style="color: #000; position: relative; top: 39px;">ناموجود</span>
+                        }
                     </div>
                     <div class="ItemCompare__ProductCat">
                         @item.P_Title
                         <br />
-                       
+
                     </div>
                     <div class="ItemCompare__Properties">
                         @*<div class="ItemCompare__Properties__name">رنگ</div>
-                        <div class="ItemCompare__Properties__value">
-                            @if (item.Colors.Count > 0)
-                            {
-                                foreach (var color in item.Colors)
+                            <div class="ItemCompare__Properties__value">
+                                @if (item.Colors.Count > 0)
                                 {
-                                    <i class="itemColor" style="background-color: @color.ColorCode;"></i>
+                                    foreach (var color in item.Colors)
+                                    {
+                                        <i class="itemColor" style="background-color: @color.ColorCode;"></i>
+                                    }
                                 }
-                            }
-                        </div>*@
+                            </div>*@
                         <div class="ItemCompare__Properties__name">کشور سازنده</div>
                         <div class="ItemCompare__Properties__value">@item.Cuntry.M_Title</div>
                         @foreach (var atr in productAttr)
                         {
                             @*var existsAttr = await _attributes.GetById(atr.X_AttrId);
-                            if (existsAttr != null)
-                            {
-                                var existstAns = productAttr.FirstOrDefault(x => x.AttributeId == atr.X_AttrId);
-                                <div class="ItemCompare__Properties__name">@existsAttr.A_Title</div>
-                                <div class="ItemCompare__Properties__value">
-                                    @if (existstAns != null)
-                                    {
-                                        <span>@existstAns.AnswerTitle</span>
-                                    }
-                                </div>
-                            }*@
-                         <div class="ItemCompare__Properties__name">@atr.AttributeTitle</div>
-                        <div class="ItemCompare__Properties__value">@atr.AnswerTitle</div>
+                                if (existsAttr != null)
+                                {
+                                    var existstAns = productAttr.FirstOrDefault(x => x.AttributeId == atr.X_AttrId);
+                                    <div class="ItemCompare__Properties__name">@existsAttr.A_Title</div>
+                                    <div class="ItemCompare__Properties__value">
+                                        @if (existstAns != null)
+                                        {
+                                            <span>@existstAns.AnswerTitle</span>
+                                        }
+                                    </div>
+                                }*@
+                            <div class="ItemCompare__Properties__name">@atr.AttributeTitle</div>
+                            <div class="ItemCompare__Properties__value">@atr.AnswerTitle</div>
                         }
                     </div>
                 </div>
@@ -136,7 +151,7 @@
                         {
                             <lable>لطفا دسته بندی مورد نظر را انتخاب کنید</lable>
                         }
-                       </div>
+                    </div>
                 </div>
             </div>
         </div>

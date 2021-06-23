@@ -48,7 +48,7 @@
                 <a href="/Products/@cat1.PC_Id/@seo.url/@cat2.PC_Id/@seo2.url" class="breadc fas fa-chevron-left">@cat2.PC_Title</a>
 
             </div>
-            <a href="#" class="feedback fas fa-ellipsis-h itemModal" data-modalname="feedbackBox">بازخورد این کالا</a>
+            <a href="javascript:void(0)" class="feedback fas fa-ellipsis-h itemModal" data-modalname="feedbackBox">درمورد این کالا</a>
         </div>
         <section class="secDetailProduct">
             <div class="card">
@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="rateAndQuality">
                                         <div class="fivestars">
-                                            <label class="resultStar">(@Model.ManualRate)</label>
+                                            <label class="resultStar">امتیاز محصول : (@Model.ManualRate)</label>
                                             <div class="mystars">
                                                 <i class="progressStar" style="width:@((Model.ManualRate * 20) + "%")"></i>
                                             </div>
@@ -122,7 +122,7 @@
                                         </span>
                                         <span class="itembc">
                                             <label>دسته بندی : </label>
-                                            <a href="/Products/@Model.P_EndLevelCatId/@seo.url/@seo2.url">@Model.P_CatTitle</a>
+                                            <a href="/Products/@cat1.PC_Id/@seo.url/@cat2.PC_Id/@seo2.url">@Model.P_CatTitle</a>
                                         </span>
                                     </div>
                                     <div class="selectColor">
@@ -250,7 +250,7 @@
                                                 <button onclick="CountAvalible()" class="btnAvilable">موجود شد به من اطلاع بده</button>}}
                                     </div>
                                     <div class="priceIsRight">
-                                        <label>آیا قیمت مناسب تری سراغ دارید ؟</label>
+                                        <label>قیمت بهتری سراغ داری ؟</label>
                                         <span class="itemPriceRight yes itemModal"
                                               data-modalname="PriceIsRight">بلی</span> | <span class="itemPriceRight no">خیر</span>
                                     </div>
@@ -624,7 +624,7 @@
                 <h3 class="titleModal"><label>دفترچه راهنمای محصول</label></h3>
                 <div class="contentModal">
                     <div class="text rowPrice">
-                        قصد خرید به قیمت <span class="priceModal">@productmanual.M_Price</span> تومان دارید؟
+                        قصد خرید به قیمت <span class="priceModal">@productmanual.M_Price.ToString("#,#")</span> تومان دارید؟
                     </div>
                     <div class="rowCustom center">
                         <button id="btnAddToCartmanual" type="button" onclick="AddToBasketManual()" class="submit bg-info">بلی</button>
@@ -644,7 +644,7 @@
                     <div class="notiticationNotLogin">
                         <span>لطفا ابتدا وارد حساب کاربریتان شوید</span>
                         <div class="rowCustom center">
-                            <button class="submit bg-info">ورود</button>
+                            <button onclick="window.location.href = '/User'" class="submit bg-info">ورود</button>
                             <button class="btnBack" onclick="closeModal()">بازگشت</button>
                         </div>
                     </div> }
@@ -780,7 +780,7 @@
     <i class="bgModal" onclick="closeModal()"></i>
     <div class="BoxModal">
         <i class="close fas fa-times" onclick="closeModal()"></i>
-        <h3 class="titleModal"><label>بازخورد در مورد این کالا</label></h3>
+        <h3 class="titleModal"><label> در مورد این کالا</label></h3>
         <div class="contentModal">
             <div class="feedbackContent">
                 <div class="col">

@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Gallery\_GalleryListcatVideo.cshtml" />
+    <Content Remove="Views\Gallery\_GalleryListVideo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\distAcc\css\fonts\.idea\misc.xml" />
     <Content Include="wwwroot\distAcc\css\fonts\.idea\modules.xml" />
     <Content Include="wwwroot\distAcc\css\fonts\.idea\workspace.xml" />
@@ -39,6 +44,8 @@
     <None Include="Views\Gallery\VideoGalleryCategories.cshtml" />
     <None Include="Views\Gallery\_Catalogcatlist.cshtml" />
     <None Include="Views\Gallery\_Cataloglist.cshtml" />
+    <None Include="Views\Gallery\_GalleryListcatVideo.cshtml" />
+    <None Include="Views\Gallery\_GalleryListVideo.cshtml" />
     <None Include="Views\Gallery\_GalleryList.cshtml" />
     <None Include="Views\Home\AboutUs.cshtml" />
     <None Include="Views\Home\ContactUs.cshtml" />
@@ -287,7 +294,7 @@
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="GitForWindows" Version="2.31.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.11" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Wangkanai.Detection" Version="3.0.0" />
   </ItemGroup>
 

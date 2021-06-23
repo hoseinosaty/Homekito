@@ -27,7 +27,14 @@ namespace Barayand.Controllers.Cpanel.Requests
         private readonly IPublicMethodRepsoitory<ProductModel> _productrepo;
         private readonly IPublicMethodRepsoitory<OfflinRequestModel> _offreqrepo;
         private readonly IPublicMethodRepsoitory<CopponModel> _copponrepo;
-        public RequestController(IPublicMethodRepsoitory<InvoiceModel> invoicerepo, IPublicMethodRepsoitory<OrderModel> orderrepo, IUserRepository userrepo, ILogger<RequestController> logger, IPublicMethodRepsoitory<ProductModel> productrepo, IPublicMethodRepsoitory<CopponModel> copponrepo, IPublicMethodRepsoitory<OfflinRequestModel> offreqrepo)
+        private readonly IPublicMethodRepsoitory<ColorModel> _colorrepo;
+        private readonly IPublicMethodRepsoitory<WarrantyModel> _warrantyrepo;
+        private readonly IPublicMethodRepsoitory<Province> _provincerepo;
+        private readonly IPublicMethodRepsoitory<States> _staterepo;
+        private readonly IAddressRepository _addressrepo;
+        private readonly ICommentRepository _commentrepo;
+        private readonly IPublicMethodRepsoitory<NoticesModel> _noticerepo;
+        public RequestController(IPublicMethodRepsoitory<InvoiceModel> invoicerepo, IPublicMethodRepsoitory<OrderModel> orderrepo, IUserRepository userrepo, ILogger<RequestController> logger, IPublicMethodRepsoitory<ProductModel> productrepo, IPublicMethodRepsoitory<CopponModel> copponrepo, IPublicMethodRepsoitory<OfflinRequestModel> offreqrepo, IPublicMethodRepsoitory<ColorModel> colorrepo, IPublicMethodRepsoitory<WarrantyModel> warrantyrepo, IPublicMethodRepsoitory<Province> provincerepo, IPublicMethodRepsoitory<States> staterepo, IAddressRepository addressrepo, ICommentRepository commentrepo, IPublicMethodRepsoitory<NoticesModel> noticerepo)
         {
             _invoicerepo = invoicerepo;
             _orderrepo = orderrepo;
@@ -36,7 +43,114 @@ namespace Barayand.Controllers.Cpanel.Requests
             _productrepo = productrepo;
             _copponrepo = copponrepo;
             _offreqrepo = offreqrepo;
+            _colorrepo = colorrepo;
+            _warrantyrepo = warrantyrepo;
+            _provincerepo = provincerepo;
+            _staterepo = staterepo;
+            _addressrepo = addressrepo;
+            _commentrepo = commentrepo;
+            _noticerepo = noticerepo;
         }
+
+        [Route("LoadComments")]
+        [HttpPost]
+        public async Task<ActionResult> LoadComments()
+        {
+            try
+            {
+                var invoices = ((List<CommentModel>)(await _commentrepo.GetAll()).Data);
+                List<object> result = new List<object>();
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fa");
+                int i = 1;
+                foreach (var item in invoices.OrderByDescending(x => x.Created_At))
+                {
+
+                    string entityTitle = "";
+                    if (item.C_Type == 1)
+                    {
+                        var prd = await _productrepo.GetById(item.C_EntityId);
+                        if (prd != null)
+                        {
+                            entityTitle = prd.P_Title;
+                        }
+                    }
+                    if (item.C_Type == 5)
+                    {
+                        var prd = await _noticerepo.GetById(item.C_EntityId);
+                        if (prd != null)
+                        {
+                            entityTitle = prd.N_Title;
+                        }
+                    }
+                    result.Add(new
+                    {
+                        id = item.C_Id,
+                        etitle = entityTitle,
+                        user = item.C_UserName,
+                        email = item.C_UserEmail,
+                        date = ((DateTime)item.Created_At).ToString("yyyy/MM/dd HH:mm"),
+                        body = item.C_Body,
+                        state = item.C_Status
+                    });
+                    i++;
+                }
+                return new JsonResult(ResponseModel.Success(data: result));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error in loading Comments", ex);
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
+            }
+        }
+
+        [Route("AcceptComment/{cid}")]
+        [HttpPost]
+        public async Task<ActionResult> AcceptComment(int cid)
+        {
+            try
+            {
+                var invoices = ((List<CommentModel>)(await _commentrepo.GetAll()).Data);
+                List<object> result = new List<object>();
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fa");
+                var cmnt = invoices.FirstOrDefault(x => x.C_Id == cid);
+                if (cmnt != null)
+                {
+                    cmnt.C_Status = 2;
+                    await _commentrepo.Update(cmnt);
+
+                }
+                return new JsonResult(ResponseModel.Success(data: result));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error in loading Comments", ex);
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
+            }
+        }
+
+        [Route("DeleteComment/{cid}")]
+        [HttpPost]
+        public async Task<ActionResult> DeleteComment(int cid)
+        {
+            try
+            {
+                var invoices = ((List<CommentModel>)(await _commentrepo.GetAll()).Data);
+                List<object> result = new List<object>();
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fa");
+
+
+
+
+                return new JsonResult(await _commentrepo.LogicalDelete(cid));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error in loading Comments", ex);
+                return new JsonResult(ResponseModel.ServerInternalError(data: ex));
+            }
+        }
+
+
         [Route("LoadInvoices")]
         [HttpPost]
         public async Task<ActionResult> LoadInvoices()

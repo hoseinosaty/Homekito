@@ -1,0 +1,23 @@
+﻿@model List<Barayand.Models.Entity.VideoGalleryModel>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="contentMain">
+    <div class="container">
+        <div class="BoxBreads">
+            <div class="breadcrumbs">
+                <a href="/" class="breadc fas fa-chevron-left">خانه</a>
+                <a href="/VideoGallery" class="breadc fas fa-chevron-left">گالری ویدئو</a>
+            </div>
+        </div>
+
+        <div id="GalleryListcatVideo">
+            @await Html.PartialAsync("_GalleryListcatVideo", Model)
+        </div>
+    </div>
+</div>

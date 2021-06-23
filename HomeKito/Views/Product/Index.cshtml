@@ -152,8 +152,8 @@
                             </div>
                             <div class="contentAccordion">
                                 <div class="ContentRangePrice">
-                                    <div class="showRagePrice" data-rtl="1" data-start="0" data-end="@(ViewBag.MaxPrice + 1)"
-                                         data-min="@ViewBag.Minprice" data-max="@(ViewBag.MaxPrice + 1)" data-step="1000">
+                                    <div class="showRagePrice" data-rtl="1" data-start="@((long)ViewBag.Minprice)" data-end="@(((long)ViewBag.MaxPrice))"
+                                         data-min="@((long)ViewBag.Minprice)" data-max="@((long)ViewBag.MaxPrice)" data-step="100">
                                         <div class="box-sliderrange">
                                             <label>تا</label>
                                             <input type="text" id="input-with-keypress-1" onchange="separateNum(this.value, this)" data-type="rageSlider"
@@ -259,7 +259,7 @@
         </section>
         <section class="secCheapStore">
             @{
-                var staticsec1 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 25 && x.B_EntityId == catid);
+                var staticsec1 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 25 && x.B_EntityId == catid);
 
 
             }
@@ -283,7 +283,7 @@
         <section class="windowProd">
             <div class="col1">
                 @{
-                    var staticsec2 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 26 && x.B_EntityId == catid);
+                    var staticsec2 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 26 && x.B_EntityId == catid);
 
                 }
                 @if (staticsec2 != null)
@@ -304,7 +304,7 @@
                     }
                 }
                 @{
-                    var staticsec3 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 27 && x.B_EntityId == catid);
+                    var staticsec3 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 27 && x.B_EntityId == catid);
 
                 }
                 @if (staticsec3 != null)
@@ -328,7 +328,7 @@
             <div class="col2">
 
                 @{
-                    var staticsec4 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 28 && x.B_EntityId == catid);
+                    var staticsec4 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 28 && x.B_EntityId == catid);
 
                 }
                 @if (staticsec4 != null)
@@ -350,7 +350,7 @@
                 }
 
                 @{
-                    var staticsec5 = StaticBoxes.FirstOrDefault(x => x.B_SectionId == 29 && x.B_EntityId == catid);
+                    var staticsec5 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 29 && x.B_EntityId == catid);
 
 
                 }

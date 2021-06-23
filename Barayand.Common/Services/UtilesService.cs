@@ -86,7 +86,7 @@ namespace Barayand.Common.Services
                 case "ProductCatMainImage":
                     return host + "api/fm/dl/ELOGO/PRDCATIMG/";
                 case "Seo":
-                    return host + "api/fm/dl/ESEO/";
+                    return host + "api/fm/dl/ESEO/PRDCATSEOIMG/";
                 case "ProductImageGallery":
                     return host + "api/fm/dl/GALLERYCHILD/PRODUCTGALLERY/";
                 case "UserProfile":

@@ -20,6 +20,7 @@
         // var prodLabels = AllLabelRels.Where(x => x.X_Pid == item.P_Id).ToList();
         <div class="itemProductBox">
             <a href="/Product/@item.P_Id/@item.P_Code/@seo.url" target="_blank" class="hoverLink"></a>
+
             <div class="labelsProd">
                 @foreach (var lbl in item.P_Labels)
                 {
@@ -30,7 +31,7 @@
                 <div class="mystars">
                     <i class="progressStar" style="width: @((item.ManualRate * 20)+"%")"></i>
                 </div>
-                @if (item.DefaultProductCombine != null && item.DefaultProductCombine.PriceModel.HasDiscount)
+                @if (item.DefaultProductCombine != null && item.DefaultProductCombine.PriceModel != null && item.DefaultProductCombine.PriceModel.Price > 0 && item.DefaultProductCombine.PriceModel.Avl > 0 && item.DefaultProductCombine.PriceModel.HasDiscount)
                 {
                     <div class="discountProd">
                         <label>تخفیف</label>
@@ -49,6 +50,15 @@
                         }
                     }
                 </div>
+
+            </div>
+            <div class="rowCompare">
+                <div class="checkboxs">
+                    <input type="checkbox" value="@item.P_Id" id="compare@(item.P_Id)" name="compare" onchange="addTocompare(@item.P_Id,this,true)">
+                    <label for="compare@(item.P_Id)" class="lblinput">
+                        <span>مقایسه</span>
+                    </label>
+                </div>
             </div>
             <h3 class="titleProd">
                 @item.P_Title
@@ -56,7 +66,7 @@
             @if (item.DefaultProductCombine != null && item.DefaultProductCombine.PriceModel.Timer != null)
             {
                 <div class="discountTimer">
-                    <div class="Timer far fa-clock" class="" data="@item.DefaultProductCombine.PriceModel.Timer"></div>
+                    <div class="Timer far fa-clock"  data="@item.DefaultProductCombine.PriceModel.Timer"></div>
                 </div>
             }
 
@@ -82,7 +92,7 @@
         }
         else
         {
-            <div class="priceRealAndPrecent Descount">
+            <div class="priceRealAndPrecent Descount forceBlack">
                 <label class="valPrice">@item.DefaultProductCombine.PriceModel.Price.ToString("#,#")</label>
                 <span class="unit">تومان</span>
             </div>
@@ -112,6 +122,7 @@ else
 }
             </div>
         </div>
+
     }
 </div>
 

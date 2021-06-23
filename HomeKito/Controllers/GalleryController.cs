@@ -108,37 +108,36 @@ namespace HomeKito.Controllers
             }
         }
 
-      ////Video Gallery
-     
-        //public async Task<IActionResult> VideoGalleryCategories(int cat = 0,int page = 1,string title=null)
-        //{
+        ////Video Gallery
+        [Route("videogallery/{cat}/{page?}/{title?}")]
+        public async Task<IActionResult> VideoGalleryVideos(int cat = 0, int page = 1, string title = null)
+        {
 
-        //    try
-        //    {
-        //        var galleris = ((List<VideoGalleryModel>)(await _videorepo.GetAll()).Data).Where(x => x.VG_Status && x.Lang == _lang.GetLang()).OrderBy(x => x.VG_SortField).ToList();
-        //        var existsGCat = await _gallerycatrepo.GetById(cat);
-        //        if (existsGCat != null)
-        //        {
-        //            galleris = galleris.Where(x => x.VG_CatId == cat).ToList();
-        //            ViewBag.PageSeo = existsGCat.GC_Seo;
-        //        }
-               
-        //        int pageSize = 10;
-        //        int totalPage = (int)Math.Ceiling((double)galleris.Count() / pageSize);
-        //        galleris = galleris.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            try
+            {
+                var galleris = ((List<VideoGalleryModel>)(await _videorepo.GetAll()).Data).Where(x => x.VG_Status && x.VG_IsDeleted == false).OrderBy(x => x.VG_SortField).ToList();
+                var existsGCat = await _gallerycatrepo.GetById(cat);
+                if (existsGCat != null)
+                {
+                    galleris = galleris.Where(x => x.VG_CatId == cat).ToList();
+                    ViewBag.PageSeo = existsGCat.GC_Seo;
+                }
 
-        //        ViewBag.CurrentPage = page;
-        //        ViewBag.TotalPages = totalPage;
-        //        ViewBag.Cat = cat;
-        //        ViewBag.Categories = ((List<GalleryCategoryModel>)(await _gallerycatrepo.GetAll()).Data).Where(x => x.GC_Status && x.GC_Type == 2 && x.Lang == _lang.GetLang()).OrderBy(x => x.GC_SortField).ToList();
-        //        return View(galleris);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError("ErrorGalleryController", ex);
-        //        return View(new List<GalleryCategoryModel>());
-        //    }
-        //}
+                int pageSize = 10;
+                int totalPage = (int)Math.Ceiling((double)galleris.Count() / pageSize);
+                
+                ViewBag.CurrentPage = page;
+                ViewBag.TotalPages = totalPage;
+                ViewBag.Cat = cat;
+                ViewBag.Categories = ((List<GalleryCategoryModel>)(await _gallerycatrepo.GetAll()).Data).Where(x => x.GC_Status && x.GC_Type == 2 && x.Lang == _lang.GetLang()).OrderBy(x => x.GC_SortField).ToList();
+                return View(galleris);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("ErrorGalleryController", ex);
+                return View(new List<GalleryCategoryModel>());
+            }
+        }
         [Route("VideoGallery/Detail/{id}/{title}")]
         public async Task<IActionResult> VideoDetail(int id, string title = null)
         {

@@ -24,6 +24,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link defer rel="stylesheet" href="~/css/style.min.css">
+    <link rel="shortcut icon" href="@Barayand.Common.Services.UtilesService.MediaUrls("Favicon")@IndexSeo.icon" />
+    <link rel="icon" href="@Barayand.Common.Services.UtilesService.MediaUrls("Favicon")@IndexSeo.icon" />
     <link defer rel="stylesheet" href="~/dist/css/fonts.css">
     @RenderSection("Styles", required: false)
 </head>
@@ -91,13 +93,13 @@
                     <a href="/User" class="SignInNav">ورود به حساب کاربری</a>}
                 </div>
 
-
+                 <div class="showSidebar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-            <div class="showSidebar">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+           
         </div>
         </div>
         <div class="MenuTopNav">
@@ -113,7 +115,7 @@
                        style="background-image: url(/dist/img/icons/OtherIcons/7.png);">همکاری با ما</a>
                     <a href="/Blog" class="linkMenuTop"
                        style="background-image: url(/dist/img/icons/OtherIcons/8.png);">مجله</a>
-                    <a href="#" class="linkMenuTop"
+                    <a href="/videogallery" class="linkMenuTop"
                        style="background-image: url(/dist/img/icons/OtherIcons/9.png);">ویدئوها</a>
                 </div>
                 <a href="tel:@IndexSeo.phone" class="CallUs" style="background-image: url(/dist/img/icons/OtherIcons/10.png);">
@@ -229,7 +231,7 @@
                 <h3 class="title">فروشگاه هومکیتو</h3>
                 <div class="text">
                     @{ var footercontect = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo"); }
-                    @footercontect.PageContent
+                    @Html.Raw(footercontect.PageContent)
                 </div>
                 <div class="LogosCertificate">
                     <div class="LogoCer">
@@ -265,7 +267,7 @@
                 </div>
             </div>
             <div class="container footerBrandCenter">
-                @foreach (var item in footlogo)
+                @foreach (var item in footlogo.Where(x=>x.E_IsDeleted == false && x.E_Status).Take(4))
                 {
                     <a href="@item.E_Link" class="ItemBrandFooter" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image);">
                         <img src="@Barayand.Common.Services.UtilesService.MediaUrls("BrandImage")@item.E_Image" alt="@item.E_Title">

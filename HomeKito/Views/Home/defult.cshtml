@@ -353,7 +353,7 @@
                         <div class="card">
                             <h3 class="titleCard">
                                 <label>@secmove4.B_Title</label>
-                                <a href="/Productbox/@secmove4.B_SectionId/@seosec8.url" class="moreSee">مشاهده بیشتر</a>
+                                @*<a href="/Productbox/@secmove4.B_SectionId/@seosec8.url" class="moreSee">مشاهده بیشتر</a>*@
                             </h3>
                             <div class="contentCard">
                                 <div id="progressslider"></div>
@@ -910,7 +910,7 @@
             </div>
         </section>
         <div class="newsLetterBox" style="background-image:url(@Barayand.Common.Services.UtilesService.MediaUrls("Content")@IndexSeo.Newsletter.bgimage)">
-            <div class="ContentNewsLetter" data-icon="@Barayand.Common.Services.UtilesService.MediaUrls("Content")@IndexSeo.Newsletter.compeletimage">
+            <div class="ContentNewsLetter" style="--bgIcon:url(@Barayand.Common.Services.UtilesService.MediaUrls("Content")@IndexSeo.Newsletter.compeletimage) no-repeat bottom center/50px">
                 <h3 class="titleNewsletter">
                     @IndexSeo.Newsletter.title
                 </h3>
@@ -932,7 +932,7 @@
                 <div class="brands">
                     <div class="SlidPromotion6 arrowCustom swiper-container">
                         <div class="swiper-wrapper">
-                            @foreach (var item in Brands)
+                            @foreach (var item in Brands.Where(x=>x.B_IsDeleted == false && x.B_Status).ToList())
                             {
                                 var seobrand = Barayand.Common.Services.UtilesService.ParseSeoData(item.B_Seo);
                                     <div class="swiper-slide">

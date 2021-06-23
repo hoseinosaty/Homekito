@@ -111,6 +111,7 @@ namespace HomeKito
             services.AddScoped(typeof(IPromotionRepository), typeof(PromotionRepository));
             services.AddScoped(typeof(IPRRepository), typeof(RelationProductRepository));
             services.AddScoped(typeof(IPerfectProductRepository), typeof(PerfectProductRepository));
+            services.AddScoped(typeof(IReportService), typeof(ReportService));
             services.AddScoped(typeof(ISetProductRepository), typeof(SetProductRepository));
             services.AddScoped(typeof(IGiftProductRepository), typeof(GiftProductRepository));
             services.AddScoped(typeof(ILocalizationService), typeof(LocalizationService));

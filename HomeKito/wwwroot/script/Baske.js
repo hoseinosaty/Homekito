@@ -140,7 +140,7 @@ async function AddToBasketManual() {
                 'flipOutX',
                 '5'
             ]);
-            //GetBasketAmount();
+            GetBasketAmount();
         }
         else {
             ErrorDialog(data.msg);
@@ -236,11 +236,12 @@ async function GetBasketAmount() {
 
     await axios.post('/cart/GetTotalBasketAmount', {})
         .then(function (res) {
+            console.warn("BasketAmount : ", res);
             var data = res.data;
             if (data.status) {
-                var c = parseInt(data.data);
+                var c = parseInt(data.data.count);
                 if (c > 0) {
-                    $("#basketAmountHolder").html(data.data);
+                    $("#basketAmountHolder").html(c);
                     $("#basketAmountHolder").css('display', 'flex');
                 }
                 else {

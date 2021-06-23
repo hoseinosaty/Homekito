@@ -1,0 +1,203 @@
+﻿@using Barayand.DAL
+@using Barayand.Models
+@using Barayand.OutModels
+@using Barayand.Common
+@using Newtonsoft;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.InvoiceModel> _invoicerepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.OrderModel> _orderrepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.ProductModel> _productrepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.CopponModel> _copponrepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.ColorModel> _colorrepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.WarrantyModel> _warrantyrepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.Province> _provicerepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.States> _staterepo;
+@inject Barayand.DAL.Interfaces.IAddressRepository _addressrepo;
+@inject Barayand.DAL.Interfaces.IUserRepository _userrepo;
+
+@{
+    Layout = null;
+    System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fa-IR");
+    Barayand.Models.Entity.InvoiceModel invoice = new Barayand.Models.Entity.InvoiceModel();
+    Barayand.Models.Entity.UserModel user = new Barayand.Models.Entity.UserModel();
+    if (ViewBag.inv != null && ViewBag.inv != "")
+    {
+        var AllInvoices = ((List<Barayand.Models.Entity.InvoiceModel>)(await _invoicerepo.GetAll()).Data);
+        invoice = AllInvoices.FirstOrDefault(x => x.I_Id == ViewBag.inv);
+        user = await _userrepo.GetById(invoice.I_UserId);
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>فاکتور فروش - @(invoice != null ? invoice.I_Id : "یافت نشد")</title>
+    <style>
+        body {
+            direction: rtl;
+            font-family: Tahoma;
+            font-size: 9pt;
+            font-weight: bold;
+        }
+
+        .invoice {
+            position: relative;
+            width: 680px;
+            margin: auto;
+            box-sizing: border-box;
+            border: 1px solid #000;
+            padding: 5px
+        }
+
+        header .info {
+            position: relative;
+            width: calc(100% - 167px);
+            padding-top: 10px;
+            margin-right: 10px;
+            float: right;
+        }
+
+            header .info .right {
+                position: relative;
+                width: 300px;
+                float: right;
+                height: 150px;
+            }
+
+            header .info .left {
+                position: relative;
+                float: left;
+                width: 180px;
+            }
+
+            header .info span {
+                padding: 10px 0;
+                position: relative;
+                display: block;
+            }
+
+        .logs {
+            position: relative;
+            width: 100%;
+            margin: 20px 0 20px;
+        }
+
+            .logs span {
+                position: relative;
+                width: 100%;
+                display: block;
+                margin: 20px 10px;
+                font-size: 14px;
+            }
+
+        table * {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    @if (invoice != null)
+    {
+        Barayand.OutModels.Miscellaneous.ReciptientInfoModel reciptientInfo = (invoice.I_RecipientInfo != null) ? Newtonsoft.Json.JsonConvert.DeserializeObject<Barayand.OutModels.Miscellaneous.ReciptientInfoModel>(invoice.I_RecipientInfo) : null;
+        var province = "";
+        if (reciptientInfo != null && reciptientInfo.Province != 0)
+        {
+            var prov = await _provicerepo.GetById(reciptientInfo.Province);
+            if (prov != null)
+            {
+                province = "استان " + prov.name + " ، ";
+            }
+        }
+        if (reciptientInfo != null && reciptientInfo.State != 0)
+        {
+            var prov = await _staterepo.GetById(reciptientInfo.State);
+            if (prov != null)
+            {
+                province += "شهرستان " + prov.Name + " ، ";
+            }
+        }
+        if (reciptientInfo != null && reciptientInfo.AddressId != 0 )
+        {
+            var address = await _addressrepo.GetById(reciptientInfo.AddressId);
+            if (address != null)
+            {
+                province += address.A_Address;
+            }
+
+        }
+        <div class="invoice">
+            <header style="height:137px">
+                <img src="/dist/img/logo.png" width="150" style="float: right;">
+                <div class="info">
+                    <div class="right">
+                        <span>کاربر : @user.U_Name @user.U_Family - @user.U_IdentityCode</span>
+                        <span>تلفن : @user.U_Phone</span>
+                        <span>@province </span>
+                    </div>
+                    <div class="left">
+                        <span>سفارش  : @invoice.I_Id</span>
+                        <span>تاریخ سفارش : @(((DateTime)invoice.Created_At).ToString("yyyy/MM/dd"))</span>
+                    </div>
+                </div>
+            </header>
+            <div style="padding-top:10px;padding-bottom:20px;border-top:2px solid #000">
+                مشتری گرامی ، از حسن انتخاب شما متشکریم.<br />
+                شرح فاکتور :
+            </div>
+            <table width=670 border=1 cellpadding=5 cellspacing=0>
+                <tr>
+                    <th>#</th>
+                    <th>عنوان</th>
+                    <th>گارانتی</th>
+                    <th>رنگ </th>
+                    <th>قیمت</th>
+                    <th>قیمت با تخفیف</th>
+                    <th>تعداد</th>
+                    <th>جمع</th>
+                </tr>
+                @{ int i = 1;}
+                @foreach (var order in ((List<Barayand.Models.Entity.OrderModel>)(await _orderrepo.GetAll()).Data).Where(x => x.O_ReciptId == invoice.I_Id).ToList())
+                {
+                    var product = await _productrepo.GetById(order.O_ProductId);
+                    var color = await _colorrepo.GetById(order.O_ColorId);
+                    var warranty = await _warrantyrepo.GetById(order.O_WarrantyId);
+
+                    <tr align=center>
+                        <td>@i</td>
+                        <td>@product.P_Title</td>
+                        <td>@warranty.W_Title</td>
+                        <td>@color.C_Title</td>
+                        <td>@order.O_Price.ToString("#,# تومان")</td>
+                        <td>@order.O_Discount.ToString("#,#")</td>
+                        <td>@order.O_Quantity.ToString("#,#")</td>
+                        <td>@((order.O_Quantity * order.O_Price).ToString("#,# تومان"))</td>
+                    </tr>
+
+
+                    i++;
+                }
+            </table>
+
+            <div class="logs">
+                <span>جمع : @invoice.I_TotalProductAmount.ToString("#,# تومان")</span>
+                <span>هزینه ارسال : @invoice.I_ShippingCost.ToString("#,# تومان")</span>
+                <span>جمع کل : @invoice.I_TotalAmount.ToString("#,# تومان")</span>
+                <span>تاریخ پرداخت : @(invoice.I_Status > 1 ? ((DateTime)invoice.Updated_At).ToString("yyyy/MM/dd") : "پرداخت نشده / ناموفق")</span>
+            </div>
+        </div>
+        <script>
+            window.print();
+        </script>
+
+    }
+    else
+    {
+        <div style="display:flex;align-items:center;justify-content:center">
+            فاکتور مورد نظر یافت نشد
+        </div>
+    }
+
+</body>
+
+</html>

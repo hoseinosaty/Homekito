@@ -2,6 +2,7 @@
 @inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
 
 @{
+    var AllBrands = (List<Barayand.Models.Entity.BrandModel>)ViewBag.Brands;
     var Country = (Barayand.Models.Entity.ManufacturContryModel)ViewBag.country;
     var Catlvl2 = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.Catlvl2;
     var Catlvl1 = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.Catlvl1;
@@ -83,14 +84,14 @@ else
                                         }
                                         <span class="parentCatProd @openattr">
                                             <i class="openparent fal fa-chevron-left"></i>
-                                            <a href="/Products/Country/@Country.M_Id/@Country.M_Title/@item.PC_Id/@seocatlvl1.url" class="linkcat">@item.PC_Title</a>
+                                            <a href="/offer/@item.PC_Id" class="linkcat">@item.PC_Title</a>
 
                                             @foreach (var item2 in cat2)
                                             {
                                                 var seocatlvl2 = Barayand.Common.Services.UtilesService.ParseSeoData(item2.PC_Seo);
                                                 <span class="childCatProd">
                                                     <i class="openchild"></i>
-                                                    <a href="/Products/Country/@Country.M_Id/@Country.M_Title/@item2.PC_Id/@seocatlvl2.url" class="linkcat">@item2.PC_Title</a>
+                                                    <a href="/offer/@item2.PC_Id" class="linkcat">@item2.PC_Title</a>
                                                 </span>
                                             }
                                         </span>
