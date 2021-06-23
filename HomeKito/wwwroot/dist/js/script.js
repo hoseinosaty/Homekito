@@ -152,7 +152,7 @@ $(".menuTopSlider").each(function(i){
 
 
     var sliderSix = new Swiper(`.sliderTopmenu${i}`, {
-        autoHeight: true, //enable auto height
+       // autoHeight: true, //enable auto height
         slidesPerView: 13,
         spaceBetween: 0,
         slidesPerGroup: 1,
@@ -785,7 +785,7 @@ function TimerReverce(element) {
         // If the count down is over, write some text
         if (distance < 0) {
             clearInterval(x);
-            element.html("پایان یافت");
+            element.html("Ù¾Ø§ÛŒØ§Ù† ÛŒØ§ÙØª");
         }
     }, 1000);
 }
@@ -831,7 +831,7 @@ if ($("button.btnTabDP").length) {
 //                'danger',
 //                picProd,
 //                'fa-heart',
-//                "Ã™â€¦Ã˜Â­Ã˜ÂµÃ™Ë†Ã™â€ž Ã™â€¦Ã™Ë†Ã˜Â±Ã˜Â¯ Ã™â€ Ã˜Â¸Ã˜Â± Ã˜Â¨Ã˜Â§ Ã™â€¦Ã™Ë†Ã™ÂÃ™â€šÃ›Å’Ã˜Âª Ã˜Â¨Ã™â€¡ Ã™â€žÃ›Å’Ã˜Â³Ã˜Âª Ã˜Â¹Ã™â€žÃ˜Â§Ã™â€šÃ™â€¦Ã™â€ Ã˜Â¯Ã›Å’ Ã™â€¡Ã˜Â§ Ã˜Â§Ã˜Â¶Ã˜Â§Ã™ÂÃ™â€¡ Ã˜Â´Ã˜Â¯",
+//                "Ãƒâ„¢Ã¢â‚¬Â¦ÃƒËœÃ‚Â­ÃƒËœÃ‚ÂµÃƒâ„¢Ã‹â€ Ãƒâ„¢Ã¢â‚¬Å¾ Ãƒâ„¢Ã¢â‚¬Â¦Ãƒâ„¢Ã‹â€ ÃƒËœÃ‚Â±ÃƒËœÃ‚Â¯ Ãƒâ„¢Ã¢â‚¬ ÃƒËœÃ‚Â¸ÃƒËœÃ‚Â± ÃƒËœÃ‚Â¨ÃƒËœÃ‚Â§ Ãƒâ„¢Ã¢â‚¬Â¦Ãƒâ„¢Ã‹â€ Ãƒâ„¢Ã‚ÂÃƒâ„¢Ã¢â‚¬Å¡Ãƒâ€ºÃ…â€™ÃƒËœÃ‚Âª ÃƒËœÃ‚Â¨Ãƒâ„¢Ã¢â‚¬Â¡ Ãƒâ„¢Ã¢â‚¬Å¾Ãƒâ€ºÃ…â€™ÃƒËœÃ‚Â³ÃƒËœÃ‚Âª ÃƒËœÃ‚Â¹Ãƒâ„¢Ã¢â‚¬Å¾ÃƒËœÃ‚Â§Ãƒâ„¢Ã¢â‚¬Å¡Ãƒâ„¢Ã¢â‚¬Â¦Ãƒâ„¢Ã¢â‚¬ ÃƒËœÃ‚Â¯Ãƒâ€ºÃ…â€™ Ãƒâ„¢Ã¢â‚¬Â¡ÃƒËœÃ‚Â§ ÃƒËœÃ‚Â§ÃƒËœÃ‚Â¶ÃƒËœÃ‚Â§Ãƒâ„¢Ã‚ÂÃƒâ„¢Ã¢â‚¬Â¡ ÃƒËœÃ‚Â´ÃƒËœÃ‚Â¯",
 //                'bottomLeft',
 //                'flipInY',
 //                'flipOutX',
@@ -877,7 +877,7 @@ if ($('.copyPathUrl').length) {
             'success',
             picProd,
             'fa-copy',
-            "آدرس صفحه با موفقیت کپی شد",
+            "Ø¢Ø¯Ø±Ø³ ØµÙØ­Ù‡ Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ú©Ù¾ÛŒ Ø´Ø¯",
             'bottomLeft',
             'flipInY',
             'flipOutX',
@@ -892,7 +892,7 @@ if ($('.copyPathUrl').length) {
 //            'homekito',
 //            picProd,
 //            'fa-basket',
-//            "محصول مورد نظر با موفقیت به سبد خرید اضافه شد",
+//            "Ù…Ø­ØµÙˆÙ„ Ù…ÙˆØ±Ø¯ Ù†Ø¸Ø± Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø¨Ù‡ Ø³Ø¨Ø¯ Ø®Ø±ÛŒØ¯ Ø§Ø¶Ø§ÙÙ‡ Ø´Ø¯",
 //            'bottomLeft',
 //            'flipInY',
 //            'flipOutX',
@@ -907,7 +907,7 @@ function addToCompare(t) {
             'warning',
             picProd,
             'fa-exchange',
-            "این محصول قبلا به لیست مقایسه اضافه شده است",
+            "Ø§ÛŒÙ† Ù…Ø­ØµÙˆÙ„ Ù‚Ø¨Ù„Ø§ Ø¨Ù‡ Ù„ÛŒØ³Øª Ù…Ù‚Ø§ÛŒØ³Ù‡ Ø§Ø¶Ø§ÙÙ‡ Ø´Ø¯Ù‡ Ø§Ø³Øª",
             'bottomLeft',
             'flipInY',
             'flipOutX',
@@ -918,7 +918,7 @@ function addToCompare(t) {
             'info',
             picProd,
             'fa-exchange',
-            "محصول مورد نظر با موفقیت به لیست مقایسه اضافه شد",
+            "Ù…Ø­ØµÙˆÙ„ Ù…ÙˆØ±Ø¯ Ù†Ø¸Ø± Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø¨Ù‡ Ù„ÛŒØ³Øª Ù…Ù‚Ø§ÛŒØ³Ù‡ Ø§Ø¶Ø§ÙÙ‡ Ø´Ø¯",
             'bottomLeft',
             'flipInY',
             'flipOutX',
@@ -1031,7 +1031,7 @@ if ($("button.btnsubmitFillter").length) {
         $(".BoxesFilterSelected .itemSelectedFilter[data-id=rageSlider]").remove()
         $(".BoxesFilterSelected").append(`
             <div class="itemSelectedFilter" data-id="rageSlider" data-name="rageSlider" data-type="rageSlider">
-                <span>Ã™â€šÃ›Å’Ã™â€¦Ã˜Âª Ã˜Â§Ã˜Â² : ${myValues[0].split(".")[0]} Ã˜ÂªÃ˜Â§ : ${myValues[1].split(".")[0]}</span>
+                <span>Ãƒâ„¢Ã¢â‚¬Å¡Ãƒâ€ºÃ…â€™Ãƒâ„¢Ã¢â‚¬Â¦ÃƒËœÃ‚Âª ÃƒËœÃ‚Â§ÃƒËœÃ‚Â² : ${myValues[0].split(".")[0]} ÃƒËœÃ‚ÂªÃƒËœÃ‚Â§ : ${myValues[1].split(".")[0]}</span>
                 <i class="remove" onclick="removeIS('rageSlider',$(this))"></i>
             </div>
         `)
@@ -1050,10 +1050,10 @@ if ($(".textMore span.more").length) {
     $(".textMore span.more").click(function () {
         if ($(this).parent().hasClass("more")) {
             $(this).parent().removeClass("more");
-            $(this).html("مشاهده متن کامل")
+            $(this).html("Ù…Ø´Ø§Ù‡Ø¯Ù‡ Ù…ØªÙ† Ú©Ø§Ù…Ù„")
         } else {
             $(this).parent().addClass("more");
-            $(this).html("نمایش خلاصه متن")
+            $(this).html("Ù†Ù…Ø§ÛŒØ´ Ø®Ù„Ø§ØµÙ‡ Ù…ØªÙ†")
         }
     })
 }
