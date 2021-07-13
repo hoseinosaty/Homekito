@@ -1,8 +1,10 @@
-﻿using Barayand.OutModels.Models;
+﻿using Barayand.Models.RuntimeModels;
+using Barayand.OutModels.Models;
 using Barayand.OutModels.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Barayand.DAL.Interfaces
@@ -32,6 +34,8 @@ namespace Barayand.DAL.Interfaces
         /// <returns></returns>
         Task<TEntity> GetById(object id);
 
+        Task<List<TEntity>> ApplyFilter(Expression<Func<TEntity, bool>> filter = null);
+        Task<PaginationModel<TEntity>> ApplyFilter(int Take,Expression<Func<TEntity, bool>> filter = null);
         /// <summary>
         /// Insert new TEntity to Database
         /// </summary>

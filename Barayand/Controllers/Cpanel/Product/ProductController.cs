@@ -160,15 +160,15 @@ namespace Barayand.Controllers.Cpanel.Product
         {
             try
             {
-                List<ProductModel> data = (List<ProductModel>)(await this._repository.GetAll()).Data;
+                
                 List<OutModels.Models.Product> result = new List<OutModels.Models.Product>();
                 if (catid != 0)
                 {
-                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>(data.Where(x => x.P_EndLevelCatId == catid).OrderByDescending(x => x.Created_At).ToList());
+                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>((await _repository.ApplyFilter(x => x.P_EndLevelCatId == catid)).OrderByDescending(x => x.Created_At).ToList());
                 }
                 else
                 {
-                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>(data.OrderBy(x => x.Created_At).ToList());
+                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>((await _repository.ApplyFilter()).OrderBy(x => x.Created_At).ToList());
                 }
                 return new JsonResult(ResponseModel.Success("PRODUCTS_LIST_RETURNED", result));
             }
@@ -183,32 +183,24 @@ namespace Barayand.Controllers.Cpanel.Product
         {
             try
             {
-                List<ProductModel> data = (List<ProductModel>)(await this._repository.GetAll()).Data;
-                List<OutModels.Models.Product> result = new List<OutModels.Models.Product>();
-                if(title != null)
-                {
-                    data = data.Where(x =>x.P_Title.Contains(title,StringComparison.InvariantCultureIgnoreCase) || x.P_Code.Contains(title, StringComparison.InvariantCultureIgnoreCase)).ToList();
-                }
-                if(code != null)
-                {
-                    data = data.Where(x => x.P_Code.Contains(code, StringComparison.InvariantCultureIgnoreCase)).ToList();
-                }
-                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>(data.OrderByDescending(x => x.Created_At).ToList());
-                
-                return new JsonResult(ResponseModel.Success("PRODUCTS_LIST_RETURNED", result));
+                return new JsonResult(ResponseModel.Success("PRODUCTS_LIST_RETURNED", await _repository.ApplyFilter(x=>(title != null && x.P_Title.Contains(title, StringComparison.InvariantCultureIgnoreCase) || x.P_Code.Contains(title, StringComparison.InvariantCultureIgnoreCase)) || (code != null && x.P_Code.Contains(code, StringComparison.InvariantCultureIgnoreCase)))));
             }
             catch (Exception ex)
             {
                 return new JsonResult(ResponseModel.ServerInternalError(data: ex));
             }
         }
-        [Route("LoadProductsForBoxs/{pid}/{page?}/{count?}/{title?}/{code?}")]
+        [Route("LoadProductsForBoxs/{cat?}/{pid}/{page?}/{count?}/{title?}/{code?}")]
         [HttpPost]
-        public async Task<ActionResult> LoadProductsForBoxs(int page = 1, int count = 5, int pid = 0, string title = null, string code = null)
+        public async Task<ActionResult> LoadProductsForBoxs(int cat = 0,int page = 1, int count = 5, int pid = 0, string title = null, string code = null)
         {
             try
             {
                 List<ProductModel> data = (List<ProductModel>)(await this._repository.GetAll()).Data;
+                if(cat != 0)
+                {
+                    data = data.Where(x=>x.P_EndLevelCatId == cat).ToList();
+                }
                 List<ProductCombineModel> AllCombines = ((List<ProductCombineModel>)(await this._combinerepository.GetAll()).Data).Where(x => !x.X_IsDeleted).ToList();
                 List<OutModels.Models.Product> result = new List<OutModels.Models.Product>();
                 if (pid != 0)
@@ -281,16 +273,15 @@ namespace Barayand.Controllers.Cpanel.Product
         {
             try
             {
-                List<ProductModel> data = (List<ProductModel>)(await this._repository.GetAll()).Data;
-                List<ProductCombineModel> AllCombines = ((List<ProductCombineModel>)(await this._combinerepository.GetAll()).Data).Where(x => !x.X_IsDeleted).ToList();
+
                 List<OutModels.Models.Product> result = new List<OutModels.Models.Product>();
                 if (pid != 0)
                 {
-                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>(data.Where(x => x.P_Id != pid).ToList());
+                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>(await _repository.ApplyFilter(x => x.P_Id != pid));
                 }
                 else
                 {
-                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>(data.ToList());
+                    result = _mapper.Map<List<ProductModel>, List<OutModels.Models.Product>>(await _repository.ApplyFilter());
                 }
 
                 if (title != null)
@@ -301,7 +292,7 @@ namespace Barayand.Controllers.Cpanel.Product
                 {
                     result = result.Where(x => x.P_Code.Contains(code, StringComparison.InvariantCultureIgnoreCase)).ToList();
                 }
-
+               var  AllCombines = await _combinerepository.ApplyFilter(x => result.Count(i=>i.P_Id == x.X_ProductId) > 0  && x.X_Status && !x.X_IsDeleted);
                 List<object> Prods = new List<object>();
                 foreach (var item in result)
                 {
@@ -539,7 +530,7 @@ namespace Barayand.Controllers.Cpanel.Product
         {
             try
             {
-                var AllCombines = ((List<ProductCombineModel>)(await _combinerepository.GetAll()).Data).Where(x => !x.X_IsDeleted && x.X_ProductId == product.X_ProductId).OrderByDescending(x => x.Created_At).ToList();
+                var AllCombines = (await _combinerepository.ApplyFilter(x => !x.X_IsDeleted && x.X_ProductId == product.X_ProductId)).OrderByDescending(x => x.Created_At).ToList();
                 foreach (var item in AllCombines)
                 {
                     item.WarrantyModel = await _warrantyrepo.GetById(item.X_WarrantyId);

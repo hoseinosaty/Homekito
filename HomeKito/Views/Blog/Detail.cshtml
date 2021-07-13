@@ -61,7 +61,7 @@
                     <a href="/Blog/Cat/@RoutCategory.NC_Id/@RoutCategory.NC_SeoUrl" class="breadc fas fa-chevron-left">@RoutCategory.NC_Title</a>
                     <a href="/Blog/Detail/@Model.N_Id/@Model.N_Title" class="breadc fas fa-chevron-left">@Model.N_Title</a>
                 </div>
-                <a href="#">News Details</a>
+               
             </div>
             <section class="SliderNewsDetail">
 
@@ -80,7 +80,7 @@
                                             @item.N_Title
                                         </h3>
                                         <span>
-                                            @item.N_Summary
+                                            @Html.Raw(item.N_Summary)
                                         </span>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
                 </div>
             </section>
             <div class="textContent">
-                @Model.N_Content
+                @Html.Raw(Model.N_Content)
             </div>
             <section class="VideoCm">
                 <div class="card">
@@ -148,7 +148,7 @@
                     <h3 class="titleCard ">
                         <label> اخبار مرتبط </label>
                     </h3>
-                    <div class="contentCard flexDir">
+                    <div class="contentCard slider flexDir">
 
                         <div class="slider5 arrowCustom swiper-container">
                             <div class="swiper-wrapper">
@@ -162,7 +162,7 @@
                                                      alt="@item.N_Title">
                                             </div>
                                             <div class="text">
-                                                @item.N_Summary
+                                                @Html.Raw(item.N_Summary)
 
                                             </div>
                                         </div>
@@ -188,7 +188,7 @@
                     @{
                         var footercontect = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo");
                     }
-                    @footercontect.PageContent
+                    @Html.Raw(footercontect.PageContent)
                 </div>
                 <div class="LogosCertificate">
                     <div class="LogoCer">
@@ -247,7 +247,6 @@
             <span>© 2020 “HomeKito” All Right Reserved</span>
         </div>
     </footer>
-    <div class="lightBoxADS" data-img="dist/img/lightbox-test.png" data-link="http://google.com"></div>
     <script src="/dist/js/jquery-3.2.1.min.js"></script>
     <script src="/dist/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="/dist/js/hrb_notify.js"></script>

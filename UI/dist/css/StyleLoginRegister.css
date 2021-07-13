@@ -1,0 +1,320 @@
+@import 'fonts.css';
+@import 'animate.css';
+
+html, body {
+    padding: 0;
+    margin: 0;
+    direction: rtl;
+    font-family: IranYekan;
+    font-size: 14px;
+    color: #838383;
+    line-height: normal;
+    min-width: 280px;
+    background: #fff;
+}
+html {
+    direction: rtl;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 1.15;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color: transparent
+}
+
+a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #1a1a18;
+    font-family: IranYekan;
+}
+h4 {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+}
+input, button, select, textarea {
+    font-family: IranYekan;
+    padding: 5px 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: none;
+    min-height: 50px;
+    font-weight: bold;
+    border: 1px solid #b0b0b0;
+}
+textarea {
+    min-height: 150px;
+    max-height: 150px;
+    max-width: 100%;
+    min-width: 100%;
+}
+select {
+    background: url(../img/arrowSelectBox.png) no-repeat 10px center / 15px !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    background-color: #efefef !important;
+    padding: 0 10px 0 35px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+* {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    outline: none !important;
+    -moz-outline: none !important;
+    -webkit-outline: none !important;
+    -ms-outline: none !important;
+}
+button {
+    position: relative;
+    padding: 0 30px;
+    font-weight: bold;
+    margin: 10px 0;
+    background: #fff;
+    color: #333;
+    border: 1px solid #333;
+    cursor: pointer;
+}
+button:hover {
+    /* background: #eee; */
+}
+button:active {
+    
+}
+.buttonAuth {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0046bf;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+.buttonAuth:hover {
+    background: #002d7a;
+    color: #fff;
+}
+.buttonAuth:active {
+    background: #87a9e4;
+    color: #002d7a;
+}
+
+.bg-primary {
+    border-color: rgb(0, 33, 124);
+    background-color: rgb(0, 68, 255);
+    color: #fff;
+}
+.bg-info {
+    border-color:  rgb(0, 94, 131);
+    background-color: rgb(0, 183, 255);
+    color: #fff;
+}
+.bg-info:hover {
+    background: #00BCD4;
+    border-color: #008b9c;
+}
+.bg-info:active {
+    background: #00fff2;
+    border-color: #00ccd3;
+    color: #00787c;
+}
+.bg-warning {
+    border-color:  rgb(255, 115, 0);
+    background-color: rgb(255, 186, 58);
+    color: rgb(223, 119, 0);
+}
+.bg-error {
+    background-color: rgb(177, 0, 15);
+    color: rgb(255, 255, 255);
+}
+button.btnBack {
+    background: #7d7d7d;
+    color: #fff;
+    border-color: #7d7d7d;
+}
+button.btnBack:hover {
+    background: #353535;
+    border-color: #353535;
+}
+button.btnBack:active {
+    background: #c4c4c4;
+    border-color: #c4c4c4;
+    color: #353535;
+}
+.boxInput {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 15px;
+}
+.boxInput label {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 0 5px;
+    padding: 0 5px 0 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+.RowButton {
+    position: relative;
+    width: 100%;
+    display: flex;
+    margin: 30px 0 0;
+}
+.RowButton.center {
+    justify-content: center;
+}
+.RowButton.around {
+    justify-content: space-around;
+}
+.RowButton.between {
+    justify-content: space-between;
+}
+button.inputFrm {
+    position: relative;
+    width: 100%;
+    border-radius: 40px;
+    border: 0;
+    background: #0046bf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button.inputFrm:hover {
+    background: #3e79df;
+}
+button.inputFrm:active {
+    background: #003ba1;
+}
+.container {
+    position: relative;
+    width: calc(100% - 40px);
+    margin: auto;
+    /* max-width: 1200px; */
+}
+.contentMain {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    padding: 40px;
+}
+.loginRegister {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px 20px 30px;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    align-items: center;
+}
+.loginRegister .logo {
+    margin: 20px 0;
+}
+.loginRegister .logo img {
+    width: 180px;
+}
+.loginRegister h1.title {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+.note {
+    position: relative;
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 24px;
+}
+.note a {
+    font-size: 10px;
+    padding: 0 0 1px 0;
+    border-bottom: 1px solid #0046bf;
+    color: #0046bf;
+}
+a.backSection {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: #5a5a5a;
+}
+a.backSection:hover {
+    color: #0046bf;
+}
+a.backSection:active {
+    color: #333;
+}
+label.err {
+    position: relative;
+    width: 100%;
+    font-size: 12px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    margin: -5px 0 15px;
+    font-weight: bold;
+}
+.hrb_timer {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #880034;
+    
+}
+.hrb_timer a {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background: #ff0060;
+    padding: 0 20px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0 0;
+    border-radius: 5px;
+}
+.hrb_timer a:hover {
+    color: #fff;
+    background: #880034;
+}
+.hrb_timer a:active {
+    color: #880034;
+    background: #e25d90;
+}

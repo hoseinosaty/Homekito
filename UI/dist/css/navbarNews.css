@@ -1,0 +1,121 @@
+nav.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    background: url(../img/newNavBg.png) repeat-x top right / auto 100%;
+    z-index: 1000;
+    box-shadow: 0px 0px 10px -6px #000;
+    z-index: 1000000;
+    height: 110px;
+}
+nav.navbar .container {
+    position: relative;
+    height: 85px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav.navbar a.logoRight {
+    position: relative;
+    width: 140px;
+    height: 35px;
+    background: url(../img/logoNewNav.png) no-repeat center / 100%;
+}
+span.showSidebar {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: #fdf026;
+    color: #0046bf;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+a.Announcements {
+    position: relative;
+    width: 100px;
+    height: 35px;
+    background: #fdf026;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #0046bf;
+}
+a.Announcements:hover , span.showSidebar:hover{
+    background: #dacb00;
+    color: #002a74;
+}
+a.Announcements:active ,span.showSidebar:active {
+    background:#336ed3;
+    color: #fdf026;
+}
+nav.navbar .MenuTop {
+    position: relative;
+    width: calc(100% - 280px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 85px;
+}
+nav.navbar .MenuTop .Menu {
+    position: relative;
+    width: calc(50% - 55px );
+    display: flex;
+    flex-wrap: wrap;
+    height: 85px;
+    align-items: center;
+    justify-content: space-between;
+}
+nav.navbar .MenuTop .Menu a.itemMenu {
+    position: relative;
+    padding: 0 4px;
+    color: #fff;
+    font-weight: bold;
+}
+nav.navbar .MenuTop .Menu a.itemMenu:hover {
+    color: #fdf026;
+}
+nav.navbar .MenuTop a.logoCenter {
+    position: relative;
+    width: 95px;
+    height: 130px;
+    background: url(../img/logoNewsNavCenter.png) no-repeat bottom center / 100%;
+}
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width:890px){
+    span.showSidebar {
+        display: flex;
+    }
+    nav.navbar .MenuTop {
+        justify-content: center;
+    }
+    nav.navbar .MenuTop .Menu {
+        display: none;
+    }
+}
+@media only screen and (max-width:480px){
+    a.Announcements {
+        display: none;
+    }
+    nav.navbar a.logoRight {
+        /* width: 100px; */
+    }
+    nav.navbar a.logoCenter {
+        display: none;
+    }
+}

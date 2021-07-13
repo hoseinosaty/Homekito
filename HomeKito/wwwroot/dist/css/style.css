@@ -265,7 +265,7 @@ section.secCheapStore, section.secBoxSpecial {
         padding-bottom: 5px;
         border-bottom: 1px solid #fdf026;
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: flex-end;
     }
 
@@ -439,13 +439,14 @@ section.secSurprisingly {
 
     section.secSurprisingly .col2 {
         position: relative;
-        width: calc(100% - 160px);
+        width: calc(100% - 140px);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding: 0 20px;
+        padding: 0 20px 0 0;
+        margin-left: -20px;
     }
 
     section.secSurprisingly .col1 .textSurprise {
@@ -667,8 +668,9 @@ a.hoverLink {
 
 .arrowCustom .NextPrevSlider {
     position: absolute;
-    top: 80px;
+    top: 0;
     width: 100%;
+    bottom: 0;
 }
 
     .arrowCustom .NextPrevSlider .swiper-button-next {
@@ -776,6 +778,7 @@ a.hoverLink {
     min-height: 50px;
     max-height: 50px;
     overflow: hidden;
+    margin-top: 11px;
 }
 .ql-align-center
 {
@@ -878,6 +881,7 @@ a.hoverLink {
     font-weight: bold;
     color: #333;
     min-height: 40px;
+    margin-top: 15px !important;
 }
 
 .todayRecomended h2.title {
@@ -890,6 +894,7 @@ a.hoverLink {
     color: #333;
     min-height: 40px;
     max-height: 40px;
+    margin-top: 23px;
 }
 
 .itemADDiscount .pricePromo, .todayRecomended .pricePromo {
@@ -898,9 +903,10 @@ a.hoverLink {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    color: #fea40c;
+    font-weight: bolder;
+    color: #000;
     font-size: 16px;
+    top:11px !important
 }
 
 .priceR {
@@ -2368,7 +2374,7 @@ span.itembc a {
 .radioColor {
     position: relative;
     display: flex;
-    width: 90px;
+    min-width: 50px;
     height: 35px;
     align-items: center;
     margin: 2px;
@@ -2385,7 +2391,6 @@ span.itembc a {
 
     .radioColor label {
         position: relative;
-        /* width: 110px; */
         height: 35px;
         border-radius: 5px;
         border: 1px solid #d2d2d2;
@@ -2395,7 +2400,7 @@ span.itembc a {
         padding: 0 35px 0 10px;
         cursor: pointer;
         font-weight: bold;
-        font-size: 12px;
+        font-size: 10px;
         word-wrap: break-word;
     }
 
@@ -2465,48 +2470,49 @@ span.itembc a {
 }
 
 .btnDetailProd {
-    position: relative;
-    width: 140px;
-    padding: 0 40px 0 0;
-    color: #4B4C53;
+    position: relative !important;
+    width: 140px !important;
+    padding: 0 40px 0 0 !important;
+    color: #4B4C53 !important;
     border: 1px solid #c7c7c7;
-    margin: 5px;
-    cursor: pointer;
-    align-items: center;
-    transition: all 0.2s;
-    display: flex;
-    font-size: 12px;
+    margin: 5px !important;
+    cursor: pointer !important;
+    align-items: center !important;
+    transition: all 0.2s !important;
+    display: flex !important;
+    font-size: 12px !important;
+    border-radius: 5px !important;
 }
 
     .btnDetailProd:hover {
-        filter: none;
-        border-color: #007f9a;
+        filter: none !important;
+        border-color: #007f9a !important;
     }
 
     .btnDetailProd:active {
-        filter: none;
-        border-color: #00a3e4;
-        background: #00a3e4;
-        color: #fff;
+        filter: none !important;
+        border-color: #00a3e4 !important;
+        background: #00a3e4 !important;
+        color: #fff !important;
     }
 
     .btnDetailProd:before {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 40px;
-        height: 40px;
-        content: '';
-        filter: grayscale(1);
-        transition: all 0.2s;
+        position: absolute !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 40px !important;
+        height: 40px !important;
+        content: '' !important;
+        filter: grayscale(1) !important;
+        transition: all 0.2s !important;
     }
 
     .btnDetailProd:hover:before {
-        filter: grayscale(0);
+        filter: grayscale(0) !important;
     }
 
     .btnDetailProd:active:before {
-        filter: grayscale(1) brightness(10);
+        filter: grayscale(1) brightness(10) !important;
     }
 
     .btnDetailProd.Warranty:before {
@@ -2534,7 +2540,8 @@ span.itembc a {
     position: relative;
     width: 100%;
     border: 1px solid #c8c8c8;
-    height: 50px;
+    min-height: 50px;
+    height: auto;
     display: flex;
     align-items: center;
     padding: 0 10px;
@@ -2652,19 +2659,20 @@ span.itembc a {
 
     .PriceBox span {
         position: relative;
-        font-size: 26px;
+        font-size: 20px;
         color: #ef394e;
         display: flex;
         align-items: center;
     }
 
         .PriceBox span small {
-            font-size: 18px;
+            font-size: 12px;
             padding: 0 5px 0 0;
         }
 
     .PriceBox.real span {
         color: #cccccc;
+        font-size: 16px;
     }
 
         .PriceBox.real span:before {
@@ -4109,6 +4117,7 @@ span.itemSort {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
     .itemProductBox .rowPriceProduct .priceRealAndPrecent {
@@ -4116,17 +4125,25 @@ span.itemSort {
         font-size: 18px;
         font-weight: bolder;
         color: #000;
+        display: flex;
+        align-items: center;
     }
 
         .itemProductBox .rowPriceProduct .priceRealAndPrecent.real {
             color: #bbb;
-            font-size: 12px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
         }
 
         .itemProductBox .rowPriceProduct .priceRealAndPrecent.Descount {
             color: #ff0023;
-            font-size: 16px;
+            font-size: 14px;
         }
+.priceRealAndPrecent .unit {
+    font-size: 10px;
+    margin: 0 4px 0 -4px;
+}
             .itemProductBox .rowPriceProduct .priceRealAndPrecent.Descount.forceBlack {
                 color: #000 !important;
             }
@@ -4414,6 +4431,7 @@ section.carouselPopup {
     right: 0;
     margin: auto;
     transition: all 0.5s;
+    border-radius: 20px;
 }
 
 .ItemOtherPic .contentItemOtherPic:before {
@@ -4425,6 +4443,7 @@ section.carouselPopup {
     transition: all 0.5s;
     content: '';
     z-index: 2;
+    border-radius: 20px;
 }
 
 .ItemOtherPic .contentItemOtherPic:after {
@@ -6005,20 +6024,31 @@ a.btnStep.btnGologin {
     overflow: hidden;
 }
 /* New CSS  */
+.rowCompare i.icon {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    display: block;
+    background: url(../img/icons/4.png) no-repeat center/100%;
+    cursor: pointer;
+}
+.rowCompare.noGift {
+    justify-content: flex-end;
+}
 .rowCompare {
     position: relative;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 .itemProductBox .checkboxs {
     position: relative;
-    left: 0;
+    /*left: 0;*/
     z-index: 2;
     width: 70px;
     opacity: 0;
     transition: all 0.2s;
     right: auto;
-    margin-top: -30px;
+    /*margin-top: -30px;*/
 }
 .itemProductBox:hover .checkboxs {
     opacity: 1;
@@ -6035,5 +6065,44 @@ a.btnStep.btnGologin {
     filter: hue-rotate( 75deg ) brightness(0.3);
 }
 input.tempUrl {
-    display: none !important;
+    display: block !important;
+    opacity:0 !important;
+    
+}
+.showDiscountTimer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    align-items: center;
+    font-weight: bold;
+}
+
+    .showDiscountTimer label {
+        position: relative;
+        width: 80px;
+    }
+
+    .showDiscountTimer .Timer {
+        width: calc(100% - 80px);
+        display: flex;
+        align-items: center;
+    }
+
+.contentCard.slider {
+    width: calc(100% + 40px);
+    margin: 0 -20px;
+}
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+    bottom: 20px !important;
+}
+.swiper-pagination-bullet {
+    width: 22px !important;
+    height: 6px !important;
+    border-radius: 6px !important;
+    background: #fff !important;
+}
+.swiper-pagination-bullet-active {
+    width: 36px !important;
 }

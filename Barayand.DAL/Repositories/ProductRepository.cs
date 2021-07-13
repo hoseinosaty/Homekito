@@ -344,6 +344,23 @@ namespace Barayand.DAL.Repositories
                     string brandtitle = "";
                     var cat = AllCategories.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
                     var brand = AllBrands.FirstOrDefault(x => x.B_Id == item.P_BrandId);
+                    var hasgift = _context.GiftProduct.FirstOrDefault(x => x.X_MainProdId == item.P_Id);
+                    if (hasgift != null)
+                    {
+                        var defcombine = _context.ProductCombine.FirstOrDefault(x => x.X_WarrantyId == hasgift.X_WarrantyId && x.X_ColorId == hasgift.X_ColorId && x.X_ProductId == hasgift.X_ProdId);
+                        if (defcombine != null)
+                        {
+                            ProductModel Gift = new ProductModel();
+                            var prod = _context.Product.FirstOrDefault(x => x.P_Id == hasgift.X_ProdId);
+                            if (prod != null)
+                            {
+                                Gift = prod;
+                                Gift.DefaultProductCombine = defcombine;
+                                item.Gift = Gift;
+                            }
+
+                        }
+                    }
                     if (cat != null)
                     {
                         cattitle = cat.PC_Title;
@@ -426,6 +443,16 @@ namespace Barayand.DAL.Repositories
             {
                 return ResponseModel.Error(msg: ex.Message, data: ex);
             }
+        }
+
+        Task<ResponseStructure> IPublicMethodRepsoitory<ProductModel>.LogicalAvailable(object id, bool newState)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<ResponseStructure> IPublicMethodRepsoitory<ProductModel>.LogicalDelete(object id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

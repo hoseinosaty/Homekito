@@ -73,6 +73,7 @@ namespace Barayand.Common.Services
             //string host = "https://valhallaplanet.art/";
             //string host = "http://homekito.barayand.net/";
             string host = "https://homekito.com/";
+            //string host = "http://localhost:44369/";
             switch (identifier)
             {
                 case "Root":

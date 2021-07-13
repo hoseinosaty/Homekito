@@ -236,6 +236,7 @@
                                         <div class="QAItemsNews">
                                             @if (Model != null && Model.Any())
                                             {
+                                                
                                                 foreach (var item in Model.Take(4))
                                                 {
                                                     <div class="QAitemNews">
@@ -244,7 +245,7 @@
                                                         </div>
                                                         <h2 class="title">
                                                             @Html.Raw(item.N_Title)
-                                                            <span class="dateTime fas fa-calendar-alt">@item.Created_At</span>
+                                                            <span class="dateTime fas fa-calendar-alt">@(((DateTime)item.Created_At).ToString("yyyy/MM/dd HH:mm:ss"))</span>
                                                         </h2>
                                                         <div class="text">
                                                             @Html.Raw(item.N_Summary)
@@ -265,7 +266,7 @@
             </div>
         </section>
         <div class="modal m800 round10 " data-modalName="videoaprat">
-            <i class="bgModal" onclick="closeModal()"></i>
+            <i class="bgModal" onclick="closeModal(true)"></i>
             <div class="BoxModal">
                 <i class="close fas fa-times" onclick="closeModal()"></i>
                 <h3 class="titleModal"><label>ویدئو</label></h3>
@@ -366,7 +367,7 @@
                     @{
                         var footercontect = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo");
                     }
-                    @footercontect.PageContent
+                    @Html.Raw(footercontect.PageContent)
                 </div>
                 <div class="LogosCertificate">
                     <div class="LogoCer">

@@ -1,0 +1,18 @@
+﻿@model List<Barayand.Models.Entity.VideoGalleryModel>
+@{
+    Layout = null;
+    var pagination = (Paging)ViewBag.paging;
+}
+
+<div class="contentGallery">
+    @foreach (var item in Model)
+    {
+        var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.VG_Seo);
+        <div class="boxGall" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("VideoGalleryCover")@item.VG_VideoImage);" dataLarg="@Barayand.Common.Services.UtilesService.MediaUrls("VideoGalleryCover")@item.VG_VideoImage">
+            <div class="hoverGl" id="hoverGl">
+                <a href="/videogallery/Detail/@item.VG_Id/@seo.url">@item.VG_Title</a>
+            </div>
+        </div>
+    }
+
+</div>

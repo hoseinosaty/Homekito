@@ -9,6 +9,7 @@
   <ItemGroup>
     <Content Remove="Views\Gallery\_GalleryListcatVideo.cshtml" />
     <Content Remove="Views\Gallery\_GalleryListVideo.cshtml" />
+    <Content Remove="Views\Shared\_GalleryListVideo.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +73,7 @@
     <None Include="Views\Search\_ProductList.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\View.cshtml" />
+    <None Include="Views\Shared\_GalleryListVideo.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_seo.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />

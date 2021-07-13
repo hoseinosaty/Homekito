@@ -7,7 +7,7 @@
     var AllProdCategory = (List<Barayand.Models.Entity.ProductCategoryModel>)ViewBag.ProductCategory;
     var AllBrands = (List<Barayand.Models.Entity.BrandModel>)ViewBag.Brands;
     var AllLabels = ((List<Barayand.Models.Entity.ProductLabelModel>)(await _Lablerepo.GetAll()).Data);
-    var catid = ViewBag.CatId;
+
     var StaticBoxes = await _promotionrepo.GetByType(4);
     var discuntedBoxes = await _promotionrepo.GetByType(3);
     var SlideBoxes = await _promotionrepo.GetByType(5);
@@ -15,6 +15,7 @@
     var pageseo = Barayand.Common.Services.UtilesService.ParseSeoData(seopage);
     var CatL1 = (Barayand.Models.Entity.ProductCategoryModel)ViewBag.CatL1;
     var CatL2 = ViewBag.CatL2 != null ? (Barayand.Models.Entity.ProductCategoryModel)ViewBag.CatL2 : null;
+    var catid = CatL2 == null ? ViewBag.CatId : CatL2.PC_Id;
     var CatL1Seo = Barayand.Common.Services.UtilesService.ParseSeoData(CatL1.PC_Seo);
     var CatL2Seo = CatL2 != null ? Barayand.Common.Services.UtilesService.ParseSeoData(CatL2.PC_Seo) : null;
     //var AllLabelRels = ((List<Barayand.Models.Entity.ProductLabelRelationModel>)(await _LableRelrepo.GetAll()).Data);
@@ -23,7 +24,7 @@
     <title>@pageseo.title</title>
     <meta name="keywords" content="@pageseo.keywords">
     <meta name="description" content="@pageseo.description">
-    <meta property='og:image' content="@pageseo.image"/>
+    <meta property='og:image' content="@pageseo.image" />
     <meta property='og:image:width' content="711" />
     <meta property='og:image:height' content="309" />
 }
@@ -38,7 +39,7 @@
                 <a href="/Products/@(CatL1.PC_Id)/@(CatL1Seo.url)" class="breadc fas fa-chevron-left">@CatL1.PC_Title</a>
                 @if (CatL2 != null)
                 {
-            <a href="/Products/@(CatL1.PC_Id)/@(CatL1Seo.url)/@(CatL2.PC_Id)/@(CatL2Seo.url)" class="breadc fas fa-chevron-left">@CatL2.PC_Title</a>
+                    <a href="/Products/@(CatL1.PC_Id)/@(CatL1Seo.url)/@(CatL2.PC_Id)/@(CatL2Seo.url)" class="breadc fas fa-chevron-left">@CatL2.PC_Title</a>
                 }
             </div>
             <a href="#">PRODUCTS</a>
@@ -252,11 +253,12 @@
                 <div class="contentCard">
                     <div class="textMore">
                         @Html.Raw(ViewBag.description)
-                        <span class="more fal fa-chevron-down">مشاهده بیشتر</span>
+                        <span class="more fal fa-chevron-down" data-show="مشاهده بیشتر" data-hide="بستن">مشاهده بیشتر</span>
                     </div>
                 </div>
             </div>
         </section>
+
         <section class="secCheapStore">
             @{
                 var staticsec1 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 25 && x.B_EntityId == catid);
@@ -268,111 +270,99 @@
                 var seosec3 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec1.B_Seo);
                 if (staticsec1.B_LoadType == 1)
                 {
-                    <a href="/Productbox/@staticsec1.B_SectionId/@seosec3.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image);">
+                    <a href="/Productbox/@staticsec1.B_SectionId/@seosec3.url" class="itemCheapStoreADS" style="background-repeat: no-repeat; background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image);">
                         <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image" alt="@staticsec1.B_Title">
                     </a>
                 }
                 else
                 {
-                    <a href="@staticsec1.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image);">
+                    <a href="@staticsec1.B_Link" class="itemCheapStoreADS" style="background-repeat: no-repeat; background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image);">
                         <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec1.B_Image" alt="@staticsec1.B_Title">
                     </a>
                 }
             }
         </section>
         <section class="windowProd">
-            <div class="col1">
-                @{
-                    var staticsec2 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 26 && x.B_EntityId == catid);
+            @{
+                var staticsec2 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 26 && x.B_EntityId == catid);
+                var staticsec3 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 27 && x.B_EntityId == catid);
+            }
 
-                }
+            <div class="col1">
                 @if (staticsec2 != null)
                 {
                     var seosec4 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec2.B_Seo);
-
                     if (staticsec2.B_LoadType == 1)
                     {
-                        <a href="/Productbox/@staticsec2.B_SectionId/@seosec4.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image);">
+                        <a href="/Productbox/@staticsec2.B_SectionId/@seosec4.url" class="itemWinProduct" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image);">
                             <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image" alt="@staticsec2.B_Title">
                         </a>
                     }
                     else
                     {
-                        <a href="@staticsec2.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image);">
+                        <a href="@staticsec2.B_Link" class="itemWinProduct" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image);">
                             <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image" alt="@staticsec2.B_Title">
                         </a>
                     }
-                }
-                @{
-                    var staticsec3 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 27 && x.B_EntityId == catid);
-
                 }
                 @if (staticsec3 != null)
                 {
                     var seosec5 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec3.B_Seo);
-
                     if (staticsec3.B_LoadType == 1)
                     {
-                        <a href="/Productbox/@staticsec3.B_SectionId/@seosec5.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image);">
-                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image" alt="@staticsec3.B_Title">
+                        <a href="/Productbox/@staticsec3.B_SectionId/@seosec5.url" class="itemWinProduct" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec2.B_Image" alt="@staticsec3.B_Title">
                         </a>
                     }
                     else
                     {
-                        <a href="@staticsec3.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image);">
+                        <a href="@staticsec3.B_Link" class="itemWinProduct" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image);">
                             <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec3.B_Image" alt="@staticsec3.B_Title">
                         </a>
                     }
                 }
             </div>
             <div class="col2">
-
                 @{
                     var staticsec4 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 28 && x.B_EntityId == catid);
-
+                    var staticsec5 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 29 && x.B_EntityId == catid);
                 }
                 @if (staticsec4 != null)
                 {
                     var seosec6 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec4.B_Seo);
-
                     if (staticsec4.B_LoadType == 1)
                     {
-                        <a href="/Productbox/@staticsec4.B_SectionId/@seosec6.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image);">
+                        <a href="/Productbox/@staticsec4.B_SectionId/@seosec6.url" class="itemWinProduct" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image);">
                             <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image" alt="@staticsec4.B_Title">
                         </a>
                     }
                     else
                     {
-                        <a href="@staticsec4.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image);">
+                        <a href="@staticsec4.B_Link" class="itemWinProduct" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image);">
                             <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec4.B_Image" alt="@staticsec4.B_Title">
                         </a>
                     }
-                }
-
-                @{
-                    var staticsec5 = discuntedBoxes.FirstOrDefault(x => x.B_SectionId == 29 && x.B_EntityId == catid);
-
-
                 }
                 @if (staticsec5 != null)
                 {
                     var seosec7 = Barayand.Common.Services.UtilesService.ParseSeoData(staticsec5.B_Seo);
-
                     if (staticsec5.B_LoadType == 1)
                     {
-                        <a href="/Productbox/@staticsec5.B_SectionId/@seosec7.url" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image);">
-                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image" alt="@staticsec1.B_Title">
+                        <a href="/Productbox/@staticsec5.B_SectionId/@seosec7.url" class="itemWinProduct" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image);">
+                            <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image" alt="@staticsec5.B_Title">
                         </a>
                     }
                     else
                     {
-                        <a href="@staticsec5.B_Link" class="itemCheapStoreADS" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image);">
+                        <a href="@staticsec5.B_Link" class="itemWinProduct" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image);">
                             <img src="@Barayand.Common.Services.UtilesService.MediaUrls("Root")@staticsec5.B_Image" alt="@staticsec5.B_Title">
                         </a>
                     }
                 }
             </div>
         </section>
+
+
         @if (SlideBoxes.Count(x => x.B_EntityId == catid) > 0)
         {
             <section class="sliderListProd">

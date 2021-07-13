@@ -86,8 +86,8 @@ namespace Barayand.DAL.Context
             //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=HomeKito;Trusted_Connection=True;");
             // optionsBuilder.UseSqlServer("Data Source=185.10.73.229;Database=homekitodb;Trusted_Connection=false;Password=HomEKitOUseR1234$;User=homekitouser;MultipleActiveResultSets=true;");
             //optionsBuilder.UseSqlServer("Data Source=homekito.barayand.net;Database=barayand_homekitodb;Trusted_Connection=false;Password=q6xB5_c1;User=barayand_homekitouser;MultipleActiveResultSets=true;");
-            optionsBuilder.UseSqlServer("Data Source=homekito.com;Database=homekito_db;Trusted_Connection=false;Password=4L82gr_j;User=homekito_user;MultipleActiveResultSets=true;");
-            //optionsBuilder.UseSqlServer("Data Source=.;Database=homekito_db;Trusted_Connection=true;MultipleActiveResultSets=true;");
+            //optionsBuilder.UseSqlServer("Data Source=homekito.com;Database=homekito_db;Trusted_Connection=false;Password=4L82gr_j;User=homekito_user;MultipleActiveResultSets=true;");
+            optionsBuilder.UseSqlServer("Data Source=.;Database=homekito_db;Trusted_Connection=true;MultipleActiveResultSets=true;");
 
 
         }

@@ -6,9 +6,15 @@
 @inject Barayand.DAL.Interfaces.IProductManualRepository _ProductManual
 @inject Barayand.DAL.Interfaces.IPCalcRepository _Calcrepo
 @inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.OptionsModel> _optionrepo;
+@inject Barayand.DAL.Interfaces.IPublicMethodRepsoitory<Barayand.Models.Entity.DynamicPagesContent> _dynamicpagerepo;
 
 @{ var Brand = (Barayand.Models.Entity.BrandModel)ViewBag.brand;
+    var AllPages = ((List<Barayand.Models.Entity.DynamicPagesContent>)(await _dynamicpagerepo.GetAll()).Data);
+    var warrantyPage = AllPages.FirstOrDefault(x => x.PageName == "Warranty");
+    var identityPage = AllPages.FirstOrDefault(x => x.PageName == "ProductAuthenticity");
 
+    var warrantySeo = Barayand.Common.Services.UtilesService.ParseSeoData(warrantyPage.PageSeo);
+    var identitySeo = Barayand.Common.Services.UtilesService.ParseSeoData(identityPage.PageSeo);
     var seobrand = Barayand.Common.Services.UtilesService.ParseSeoData(Brand.B_Seo);
     var GetCatAll = (List<Barayand.Models.Entity.ProductCategoryModel>)(await _categories.GetAll()).Data;
     var cat1 = GetCatAll.FirstOrDefault(x => x.PC_Id == Model.P_MainCatId);
@@ -48,6 +54,7 @@
                 <a href="/Products/@cat1.PC_Id/@seo.url/@cat2.PC_Id/@seo2.url" class="breadc fas fa-chevron-left">@cat2.PC_Title</a>
 
             </div>
+            <input type="text" hidden style="opacity:0 !important" class="tempUrl" id="tempUrl" value="https://@(Context.Request.Host)@(Context.Request.Path)" />
             <a href="javascript:void(0)" class="feedback fas fa-ellipsis-h itemModal" data-modalname="feedbackBox">درمورد این کالا</a>
         </div>
         <section class="secDetailProduct">
@@ -135,18 +142,18 @@
                                                 {
                                                     <div class="radioColor">
                                                         <input type="radio" id="c@(color.Id)" name="colorProd" checked="checked" value="@color.Id" onchange="ChangePrice(@Model.P_Id)" />
-                                                        <label for="c@(color.Id)">
+                                                        <label for="c@(color.Id)" title="@color.Title">
                                                             <i class="color"
-                                                               style="background-color: @color.ColorCode;"></i>@color.Title
+                                                               style="background-color: @color.ColorCode;"></i>
                                                         </label>
                                                     </div> }
                                                 else
                                                 {
                                                     <div class="radioColor">
                                                         <input type="radio" id="c@(color.Id)" name="colorProd" value="@color.Id" onchange="ChangePrice(@Model.P_Id)" />
-                                                        <label for="c@(color.Id)">
+                                                        <label for="c@(color.Id)" title="@color.Title">
                                                             <i class="color"
-                                                               style="background-color: @color.ColorCode;"></i>@color.Title
+                                                               style="background-color: @color.ColorCode;"></i>
                                                         </label>
                                                     </div>}
                                             }
@@ -170,8 +177,8 @@
                                         </span>
                                     </div>
                                     <div class="buttonsDetailProd">
-                                        <button class="btnDetailProd Warranty">ضمانت نامه </button>
-                                        <button class="btnDetailProd CheckOriginality">بررسی اصل بودن کالا</button>
+                                        <a href="/Pages/@warrantySeo.url" target="_blank" class="btnDetailProd Warranty">ضمانت نامه </a>
+                                        <a href="/Pages/@identitySeo.url" target="_blank" class="btnDetailProd CheckOriginality">بررسی اصل بودن کالا</a>
                                         <button class="btnDetailProd Compare" onclick="addTocompare(@Model.P_Id)">
                                             مقایسه
                                             محصول
@@ -272,7 +279,7 @@
                                 <label>محصولات همراه</label>
                                 <a href="/Products/More/@Model.P_Id/3/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
                             </h3>
-                            <div class="contentCard">
+                            <div class="contentCard slider">
                                 <div class="SlidPromotion6 arrowCustom swiper-container">
                                     <div class="swiper-wrapper">
                                         @foreach (var item in Model.CompletelyProducts)
@@ -392,9 +399,9 @@
                                     else
                                     {
                                         lastChld = @"<div class='rowProp rowdetailprod'>
-                                                                                        <div class='col1' >" + item.AttributeTitle + @"</div>
-                                                                                        <div class='col2' style='text-align: justify;'>" + item.AnswerTitle + @"</div>
-                                                                                        </div>";
+                                                                                                                                <div class='col1' >" + item.AttributeTitle + @"</div>
+                                                                                                                                <div class='col2' style='text-align: justify;'>" + item.AnswerTitle + @"</div>
+                                                                                                                                </div>";
                                     }
 
 
@@ -500,7 +507,7 @@
                 </div>
             </div>
         </section>
-        @if (Model.RelatedProducts.Count() > 0)
+        @if (((List<Barayand.Models.Entity.ProductModel>)ViewBag.RelationalProducts).Count() > 0)
         {
             <section class="secMostSale">
                 <div class="rowCustom Promotion2">
@@ -508,12 +515,12 @@
                         <div class="card">
                             <h3 class="titleCard">
                                 <label>محصولات مرتبط</label>
-                                <a href="/Products/More/@Model.P_Id/1/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                                <a href="/Products/@cat1.PC_Id/@seo.url/@cat2.PC_Id/@seo2.url">مشاهده همه </a>
                             </h3>
-                            <div class="contentCard">
+                            <div class="contentCard slider">
                                 <div class="SlidPromotion6 arrowCustom swiper-container">
                                     <div class="swiper-wrapper">
-                                        @foreach (var item in Model.RelatedProducts)
+                                        @foreach (var item in ((List<Barayand.Models.Entity.ProductModel>)ViewBag.RelationalProducts))
                                         {
                                             var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
                                             var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
@@ -529,7 +536,55 @@
                                                     <h2 class="title">@item.P_Title</h2>
                                                     @if (item.IsAvailable)
                                                     {
-                                                        <div class="priceD">@item.DefaultProductCombine.CalculatedPrice().ToString("#,#") <span>تومان</span></div>}
+                                                        <div class="priceD">@item.DefaultProductCombine.PriceModel.Price.ToString("#,#") <span>تومان</span></div>}
+                                                </div>
+                                            </div>}
+                                    </div>
+                                    <!-- Add Arrows -->
+                                    <div class="NextPrevSlider">
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </section>}
+        @if (Model.CompletelyProducts.Count() > 0)
+        {
+            <section class="secMostSale">
+                <div class="rowCustom Promotion2">
+                    <div class="col">
+                        <div class="card">
+                            <h3 class="titleCard">
+                                <label>محصولات مکمل</label>
+                                <a href="/Products/@cat1.PC_Id/@seo.url/@cat2.PC_Id/@seo2.url" style="opacity:0">مشاهده همه </a>
+                            </h3>
+                            <div class="contentCard slider">
+                                <div class="SlidPromotion6 arrowCustom swiper-container">
+                                    <div class="swiper-wrapper">
+                                        @foreach (var item in Model.CompletelyProducts)
+                                        {
+                                            var cat1titem = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_MainCatId);
+                                            var seoitem = Barayand.Common.Services.UtilesService.ParseSeoData(cat1.PC_Seo);
+                                            var cat2item = GetCatAll.FirstOrDefault(x => x.PC_Id == item.P_EndLevelCatId);
+                                            var seo2item = Barayand.Common.Services.UtilesService.ParseSeoData(cat2.PC_Seo);
+                                            <div class="swiper-slide">
+                                                <div class="todayRecomended">
+                                                    <a href="/Products/Detail/@item.P_Id/@seoitem.url/@seo2item.url" class="hoverLink"></a>
+                                                    <div class="pic" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image);">
+                                                        <img src="@Barayand.Common.Services.UtilesService.MediaUrls("ProductMainImage")@item.P_Image"
+                                                             alt="@item.P_Title">
+                                                    </div>
+                                                    <h2 class="title">@item.P_Title</h2>
+                                                    @if (item.IsAvailable)
+                                                    {
+                                                        <div class="priceD">@item.DefaultProductCombine.PriceModel.Price.ToString("#,#") <span>تومان</span></div>}
                                                 </div>
                                             </div>}
                                     </div>
@@ -557,9 +612,9 @@
                         <div class="card">
                             <h3 class="titleCard">
                                 <label>محصولات ست</label>
-                                <a href="/Products/More/@Model.P_Id/2/@seoProduct.url/" class="moreSee">مشاهده بیشتر</a>
+                                <a href="/Products/More/@Model.P_Id/2/@seoProduct.url/" style="opacity:0" class="moreSee">مشاهده همه</a>
                             </h3>
-                            <div class="contentCard">
+                            <div class="contentCard slider">
                                 <div class="SlidPromotion6 arrowCustom swiper-container">
                                     <div class="swiper-wrapper">
                                         @foreach (var item in Model.SetProducts)
@@ -607,10 +662,7 @@
                 <div class="ShareSocials">
                     <a href="tg://msg_url?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="sociali fab fa-telegram-plane"></a>
                     <a href="https://api.whatsapp.com/send?text=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-whatsapp"></a>
-                    <a href="http://www.facebook.com/share.php?u=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-facebook"></a>
-                    <a href="https://twitter.com/intent/tweet?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-twitter"></a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=@Context.Request.Host@Context.Request.Path" target="_blank" class="shareItem fab fa-linkedin"></a>
-                    <button class="copyPathUrl fal fa-copy">کپی لینک</button>
+                    <button onclick="copyLink()" class="copyPathUrl fal fa-copy">کپی لینک</button>
                 </div>
             </div>
         </div>
@@ -898,18 +950,18 @@
             $("#otherPicProducts").remove();
             $(".zoomContainer").remove();
             $("body").append(`
-                <style id="otherPicProducts">
-                    .zoomContainer {
-                        pointer-events: none !important;
-                    }
-                    .zoomWindowContainer>div, .zoomWindowContainer .zoomWindow {
-                        width: 100% !important;
-                        right: 0 !important;
-                        height: 100% !important;
-                        top: 0 !important;
-                    }
-                </style>
-            `);
+                    <style id="otherPicProducts">
+                        .zoomContainer {
+                            pointer-events: none !important;
+                        }
+                        .zoomWindowContainer>div, .zoomWindowContainer .zoomWindow {
+                            width: 100% !important;
+                            right: 0 !important;
+                            height: 100% !important;
+                            top: 0 !important;
+                        }
+                    </style>
+                `);
             $(`#${imgID}`).elevateZoom({
                 easing: true,
                 zoomType: "inner",

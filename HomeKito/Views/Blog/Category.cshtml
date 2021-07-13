@@ -171,7 +171,7 @@
                                                     <span class="dateTime fas fa-calendar-alt">@item.Created_At</span>
                                                 </h2>
                                                 <div class="text">
-                                                    @item.N_Summary
+                                                    @Html.Raw(item.N_Summary)
                                                 </div>
                                                 <a href="/Blog/Detail/@item.N_Id/@item.N_Title" class="showMoreNews">
                                                     <span>مشاهده</span>
@@ -219,7 +219,7 @@
                     @{
                         var footercontect = AllPages.FirstOrDefault(x => x.PageName == "IndexSeo");
                     }
-                    @footercontect.PageContent
+                    @Html.Raw(footercontect.PageContent)
                 </div>
                 <div class="LogosCertificate">
                     <div class="LogoCer">

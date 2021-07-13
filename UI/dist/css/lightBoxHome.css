@@ -1,0 +1,53 @@
+.lightBoxADS {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000000000000000000;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+}
+.lightBoxADS.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+.lightBoxADS i.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+.lightBoxADS .ContentlightBoxADS {
+    position: relative;
+    z-index: 1;
+    max-width: 400px;
+}
+.lightBoxADS .ContentlightBoxADS img {
+    width: 100%;
+}
+.lightBoxADS i.close {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.lightBoxADS i.close:hover {
+    background: rgba(255,255,255,0.5);
+    color: yellow;
+}

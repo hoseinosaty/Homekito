@@ -161,7 +161,7 @@ $(".menuTopSlider").each(function(i){
         roundLengths: true,
         loop: false,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -241,7 +241,7 @@ if ($(".SliderSurprising").length) {
         slidesPerGroup: 1,
         // loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -298,7 +298,7 @@ if ($(".SlidPromotion3").length) {
         slidesPerGroup: 1,
         // loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -355,7 +355,7 @@ if ($(".SliderAllDayDiscount").length) {
         slidesPerGroup: 1,
         // loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -412,7 +412,7 @@ if ($(".SlidPromotion6").length) {
         slidesPerGroup: 1,
         // loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -477,7 +477,7 @@ if ($(".BrandFooter").length) {
         slidesPerGroup: 1,
         // loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -539,7 +539,7 @@ if ($(".slider5").length) {
         slidesPerGroup: 1,
         // loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -601,7 +601,7 @@ if ($(".SliderOneNews").length) {
         slidesPerGroup: 1,
         // loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -621,7 +621,7 @@ if ($(".SliderOneVideo").length) {
         slidesPerGroup: 1, simulateTouch: false,
         // loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -651,7 +651,7 @@ if ($(".SliderOne").length) {
         slidesPerView: 1,
         spaceBetween: 10,
         slidesPerGroup: 1,
-        // loop: true,
+        loop: true,
         effect: "cube",
         cube: {
             slideShadows: true,
@@ -680,7 +680,7 @@ if ($(".SliderSingle").length) {
         slidesPerGroup: 1,
         loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -848,8 +848,11 @@ if ($(".itemModal[data-modalName]")) {
     });
 }
 
-function closeModal() {
+function closeModal(closeVideo = false) {
     $(".modal").removeClass("active");
+    if (closeVideo) {
+        $("#aparatVideo").remove();
+    }
     if ($("#myimage1").length || $(".img-zoom-result").length) {
         zoomRemove();
     }
@@ -863,26 +866,28 @@ if ($("span.itemPriceRight.no").length) {
         $(this).parent().addClass("hide");
     })
 }
-
+function copyLink() {
+    var copyText = document.querySelector(".tempUrl");
+    copyText.focus();
+    copyText.select();
+   // copyText.setSelectionRange(0, 99999);
+    var state = document.execCommand('copy');
+    hrb_notify([
+        'success',
+        picProd,
+        'fa-copy',
+        "لینک محصول با موفقیت کپی شد",
+        'bottomLeft',
+        'flipInY',
+        'flipOutX',
+        '5'
+    ]);
+}
 
 if ($('.copyPathUrl').length) {
-    var $url = $(location).attr('href')
-    $("body").append(`<input class="tempUrl" value="${$url}"/>`);
+
     $('.copyPathUrl').on('click', function () {
-        var copyText = document.querySelector(".tempUrl");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        hrb_notify([
-            'success',
-            picProd,
-            'fa-copy',
-            "Ø¢Ø¯Ø±Ø³ ØµÙØ­Ù‡ Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ú©Ù¾ÛŒ Ø´Ø¯",
-            'bottomLeft',
-            'flipInY',
-            'flipOutX',
-            '5'
-        ]);
+        
     });
 }
 
@@ -1050,10 +1055,10 @@ if ($(".textMore span.more").length) {
     $(".textMore span.more").click(function () {
         if ($(this).parent().hasClass("more")) {
             $(this).parent().removeClass("more");
-            $(this).html("Ù…Ø´Ø§Ù‡Ø¯Ù‡ Ù…ØªÙ† Ú©Ø§Ù…Ù„")
+            $(this).html($(this).attr("data-show"))
         } else {
             $(this).parent().addClass("more");
-            $(this).html("Ù†Ù…Ø§ÛŒØ´ Ø®Ù„Ø§ØµÙ‡ Ù…ØªÙ†")
+            $(this).html($(this).attr("data-hide"))
         }
     })
 }
@@ -1077,9 +1082,9 @@ if ($(".slider5Item").length) {
         slidesPerView: 6,
         // spaceBetween: 30,
         slidesPerGroup: 1,
-        loop: true,
+        //loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el:  $(this).find('.swiper-pagination'),
             clickable: true,
         },
         navigation: {
@@ -1217,7 +1222,7 @@ if ($(".js-map").length) {
 if ($(".itemVideoSlide .pic").length) {
     $(".itemVideoSlide .pic").click(function () {
         var aparat = $(this).data("aparat");
-        var htmlaparat = `<div class="h_iframe-aparat_embed_frame"><span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash/${aparat}/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div>`
+        var htmlaparat = `<div class="h_iframe-aparat_embed_frame" id="aparatVideo"><span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash/${aparat}/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div>`
         $(".showVideoAparat").html("");
         $(".showVideoAparat").html(htmlaparat);
     })

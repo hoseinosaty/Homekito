@@ -1,0 +1,216 @@
+html, body {
+    direction: ltr;
+}
+nav.navbar .col1.navlogo:before {
+    right: -15px;
+    left: auto;
+    width: 35px;
+    transform: skew(13deg, 0deg);
+    background: rgb(216,99,18);
+    background: linear-gradient(20deg, rgb(216,99,18) 0%, rgb(237, 128, 23) 100%);
+}
+nav.navbar .col2.one .subNav .menutop {
+    padding: 0 0px 0 10px;
+}
+.menutop span.itemMenu:before {
+    transform: skew(14deg, 0deg);
+}
+nav.navbar .col2.one .topNav span.TNitem:before {
+    left: auto;
+    right: 100%;
+    transform: skew(10deg, 0deg);
+}
+nav.navbar .col2.one .topNav .col2 {
+    position: relative;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    justify-content: flex-end;
+}
+span.TNitem.icon .AccountBox {
+    right: auto;
+    left: 6px;
+    width: 180px;
+    border-radius: 0 8px 8px 8px;
+}
+span.TNitem.icon .AccountBox a.itemAccount {
+    padding: 0 0 0 30px;
+}
+span.TNitem.icon .AccountBox a.itemAccount:before {
+    right: auto;
+    left: 0;
+}
+span.TNitem.langs .boxLangSelect {
+    left: auto;
+    right: 100%;
+    width: auto;
+    padding: 0 7px;
+    transform-origin: right center;
+    transform: translate(50px, 0px) scale(0);
+}
+span.TNitem.langs .boxLangSelect a.selLang {
+    margin: 0 3px;
+}
+.sliderHome .contentSearchBox button.btnSearch {
+    left: auto;
+    right: 0px;
+}
+body.scrollDown nav.navbar .col1.navlogo:before {
+    left: auto;
+    right: -20px;
+}
+.titleCarousel .col:last-child {
+    left: auto;
+    right: 70px;
+}
+.slidersix.swiper-container .Arrows {
+    position: absolute;
+    top: -62px;
+    width: 60px;
+}
+.titleCarousel .col span {
+    margin-right: 20px;
+    margin-left: 0px;
+}
+.titleCarousel .col span:after {
+    right: auto;
+    left: 55%;
+    transform: skewX(20deg) translateX(10px);
+}    
+.rowbtn {
+    justify-content: flex-start;
+}
+footer h2.titleFooter label:before {
+    left: auto;
+    right: -5px;
+    background: #ca500f;
+    transform: skew(14deg, 0deg);
+}
+.subfooter .PoweredBy:before {
+    transform: skew(14deg, 0deg);
+    left: -20px;
+    box-sizing: border-box;
+}
+.subfooter .PoweredBy:after {
+    left: 100%;
+    transform: skew(14deg, 0deg);
+    right: auto;
+}
+.subfooter .Copy {
+    padding: 0 10px 0 0;
+}
+.step {
+    margin: 0px 25% 0 0;
+}
+
+.stepsBasket:after {
+    right: auto;
+    left: 50px;
+}
+.categoriesProduct i.openparent, .categoriesProduct i.openchild, .categoriesProduct i.openchildchild {
+    transform: scale(-1);
+}
+.categoriesProduct span.parentCatProd span.childCatProd {
+    padding: 0 0 0 15px;
+}
+.categoriesProduct span.parentCatProd span.childCatProd.open span.childChildCatProd {
+    padding: 0 0 0 15px;
+}
+.accordion .titleAccordion span {
+    left: auto;
+    right: 0;
+}
+a.PrevPage, a.NextPage {
+    transform: scaleX(-1);
+}
+.breadcrumbs span.fa-chevron-left {
+    transform: scale(-1);
+}
+.contactMap .col1:before {
+    transform: skewX(10deg);
+    right: auto;
+    left: calc(100% - 40px);
+    border-right: 3px solid #ca500f;
+    border-left: 0px;
+}
+.contentContact {
+    padding-right: 0;
+    border-right: 0px;
+    padding-left: 20px;
+    border-left: 2px solid #ca500f;
+}
+.detailProdSlider .owl-dots {
+    left: auto;
+    right: -100px;
+}
+.ProductContent .titlePage .Title {
+    padding: 0 10px 0 20px;
+}
+.ProductContent .titlePage .Title:before {
+    left: auto;
+    right: -12px;
+    transform: skewX(15deg);
+}
+.titlePage:before {
+    transform: scaleX(-1);
+}
+.countProduct i.up, .countProduct i.down {
+    left: auto;
+    right: 4px;
+}
+.ItemLIdesc.shareAndBtns span.fa-share:after {
+    right: -8px;
+    left: auto;
+    transform: skewX(20deg);
+}
+.SendCM .group-input select , .RequestOfflineForm .group-input select {
+    background-position: calc(100% - 10px) center;
+}
+.sidebar {
+    right: 0;
+    left: auto;
+    transform: translate(290px, 0px);
+}
+.getRate span.label:before {
+    left: 5px;
+    right: auto;
+}
+.getRate span.label {
+    padding: 0 0 0 20px;
+}
+span.userOnlineBox .AccountBox a.itemAccount {
+    padding: 0 0 0 30px;
+}
+span.userOnlineBox .AccountBox a.itemAccount:before {
+    right: auto;
+    left: 0;
+}
+section.user_account {
+    direction: ltr !important;
+}
+div.boxFavorite .remove_fav {
+    left: auto;
+    right: 10px;
+}
+.other_links.box_profile a {
+    padding: 10px 5px 10px 40px;
+}
+.other_links.box_profile a i {
+    right: auto;
+    left: 10px;
+}
+.boxInputBox input {
+    border-radius: 5px 0 0 5px;
+}
+
+.boxInputBox button.btnBox {
+    border-radius: 0 5px 5px 0;
+    border-right: 0;
+    border-left: 2px solid #18955f;
+}
+.right_profile span.barRightProfile {
+    border-radius: 0px 5px 0px 20px;
+    left: auto;
+    right: 0;
+}

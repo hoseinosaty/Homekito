@@ -1,0 +1,39 @@
+﻿@model List<Barayand.Models.Entity.GalleryCategoryModel>
+@{
+    Layout = null;
+    var pagination = (Paging)ViewBag.paging;
+}
+
+<div class="contentGallery">
+    @foreach (var item in Model)
+    {
+        var seo = Barayand.Common.Services.UtilesService.ParseSeoData(item.GC_Seo);
+        <div class="boxGall" style="background-image: url(@Barayand.Common.Services.UtilesService.MediaUrls("GalleryCategory")@item.GC_Icon);" dataLarg="@Barayand.Common.Services.UtilesService.MediaUrls("GalleryCategory")@item.GC_Icon">
+            <div class="hoverGl" id="hoverGl">
+                <a href="/videogallery/@item.GC_Id/1/@seo.url">@item.GC_Titles</a>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="pagination">
+    @if (pagination.CurrentPage > 1)
+    {
+        <a href="javascrip:void(0)" onclick="GalleryCatPaging(@pagination.CurrentPage-1)" class=" prevPage fal fa-angle-double-right"></a>
+    }
+    @for (int i = 1; i <= pagination.TotalPages; i++)
+    {
+        if (pagination.CurrentPage == i)
+        {
+            <span onclick="GalleryCatPaging(@i)" class="pageLink">@i</span>
+        }
+        else
+        {
+            <a href="javascrip:void(0)" onclick="GalleryCatPaging(@i)" class="pageLink">@i</a>
+        }
+    }
+    @if (pagination.CurrentPage < pagination.TotalPages)
+    {
+        <a href="javascrip:void(0)" onclick="GalleryCatPaging(@pagination.CurrentPage+1)" class=" nextPage fal fa-angle-double-left"></a>
+    }
+</div>

@@ -1,0 +1,33 @@
+@import "all.css";
+
+@font-face {
+    font-family: 'IRANSharp';
+    src: url('fonts/IRANSharp.eot');
+    src: url('fonts/IRANSharp.eot?#iefix') format('embedded-opentype'),
+    url('fonts/IRANSharp.woff2') format('woff2'),
+    url('fonts/IRANSharp.woff') format('woff'),
+    url('fonts/IRANSharp.ttf') format('truetype'),
+    url('fonts/IRANSharp.svg#IRANSharp') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: IranYekan;
+    font-style: normal;
+    font-weight: 300;
+    src: url('fonts/iranyekanweblight(fanum).woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('fonts/iranyekanweblight(fanum).svg#Champagne-Limousines') format('svg'),
+        url('fonts/iranyekanweblight(fanum).eot'),
+        url('fonts/iranyekanweblight(fanum).eot?#iefix') format('embedded-opentype'),
+        url('fonts/iranyekanweblight(fanum).ttf') format('truetype');
+}
+@font-face {
+    font-family: IranYekan;
+    font-style: normal;
+    font-weight: bold;
+    src: url('fonts/iranyekanwebbold(fanum).woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url('fonts/iranyekanwebbold(fanum).svg#Champagne-Limousines') format('svg'),
+        url('fonts/iranyekanwebbold(fanum).eot'),
+        url('fonts/iranyekanwebbold(fanum).eot?#iefix') format('embedded-opentype'),
+        url('fonts/iranyekanwebbold(fanum).ttf') format('truetype');
+}

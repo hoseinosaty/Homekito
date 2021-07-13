@@ -1,10 +1,13 @@
 ﻿using Barayand.DAL.Context;
 using Barayand.DAL.Interfaces;
+using Barayand.Models.RuntimeModels;
 using Barayand.OutModels.Response;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Barayand.DAL.Repositories
@@ -144,7 +147,42 @@ namespace Barayand.DAL.Repositories
         {
             throw new NotImplementedException();
         }
+        public async Task<List<TEntity>> ApplyFilter(Expression<Func<TEntity, bool>> filter = null)
+        {
+            try
+            {
+                if(filter != null)
+                {
+                    return await this.DbSet.Where(filter).ToListAsync();
+                }
+                return await this.DbSet.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return new List<TEntity>();
+            }
+        }
 
+        public async Task<List<TEntity>> ApplyFilter(int Take, Expression<Func<TEntity, bool>> filter = null)
+        {
+            try
+            {
+                if (filter != null)
+                {
+                    return await this.DbSet.Where(filter).Take(Take).ToListAsync();
+                }
+                return await this.DbSet.Take(Take).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return new List<TEntity>();
+            }
+        }
+
+        Task<PaginationModel<TEntity>> IGenericRepository<TEntity>.ApplyFilter(int Take, Expression<Func<TEntity, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
 
 
         /*****************************/

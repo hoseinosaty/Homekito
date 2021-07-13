@@ -263,15 +263,16 @@ namespace HomeKito.Controllers
             if (id != 0)
             {
                 ViewBag.LikedIt = false;
-
+                
                 var product = await _productrepo.GetById(id);
                 int auth = Barayand.Common.Services.TokenService.AuthorizeUser(Request);
                 if (auth > 0)
                 {
                     ViewBag.LikedIt = await _favoritrepostory.ChekExistsInList(product.P_Id, auth, 1);
                 }
-                ViewBag.loggedin = auth > 0;
-
+                List<ProductModel> AllProducts = ((List<ProductModel>)(await _productrepo.GetAll()).Data).Where(x=>x.P_EndLevelCatId == product.P_EndLevelCatId).OrderBy(x=>Guid.NewGuid()).Take(10).ToList();
+                 ViewBag.loggedin = auth > 0;
+                ViewBag.RelationalProducts = AllProducts;
                 ViewBag.brand = await _brandrepo.GetById(product.P_BrandId);
                 #region Paging
                 Paging paging = new Paging();

@@ -825,10 +825,10 @@ async function RegisterNewsLetter() {
         el.next("div").html("Email is required.").addClass("active");
         return false;
     }
-    if (!EF.test(el.val())) {
-        el.next("div").html("Email format not correct.").addClass("active");
-        return false;
-    }
+    //if (!EF.test(el.val())) {
+    //    el.next("div").html("Email format not correct.").addClass("active");
+    //    return false;
+    //}
     var enc = await InitilizeElement(el.val(), "Entity");
     await axios.post('api/cpanel/publicform/AddNewsLetter', {}, {
         headers: {
